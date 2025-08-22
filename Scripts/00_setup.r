@@ -22,3 +22,6 @@
     conflicts_prefer(ggplot2::margin)
   #+ 0.4: Set seed for reproducibility
     set.seed(2025)
+  #+ Set Vroom connection size
+    Sys.setenv("VROOM_CONNECTION_SIZE" = 2^22)
+
