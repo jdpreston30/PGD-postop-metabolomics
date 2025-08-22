@@ -1,92 +1,57 @@
 #* 3: Combined Clustering analysis
 #+ 3.1: Run Exploratory PCAs
   #- 3.1.1: Define datasets
-    variant_data <- UFT_metaboanalyst_log2_path %>% 
-      select(Patient_ID, Variant, all_of(feature_cols))
-    T_stage_data <- UFT_metaboanalyst_log2_path %>%
-      select(Patient_ID, T_computed_bin, all_of(feature_cols))
-    LVI_data <- UFT_metaboanalyst_log2_path %>%
-      select(Patient_ID, LVI, all_of(feature_cols))
-    Sex_data <- UFT_metaboanalyst_log2_path %>%
-    select(Patient_ID, Sex, all_of(feature_cols))
-  #- 3.1.2: Create variant PCAs
-    variant_pca_12 <- make_PCA(
-      data = variant_data,
-      ellipse_colors = variant_colors,
-      comp_x = 1, comp_y = 2
+   cluster_colors <- c(
+      "Y" = "#94001E",
+      "N" = "#03507D"
     )
-    variant_pca_23 <- make_PCA(
-      data = variant_data,
-      ellipse_colors = variant_colors,
-      comp_x = 2, comp_y = 3
+    str(UFT_12h)
+    UFT_metaboanalyst_log2$Clinical_PGD[UFT_metaboanalyst_log2$Clinical_PGD == "Y'"] <- 'Y'
+    UFT_12h <- UFT_metaboanalyst_log2 %>% 
+      filter(Time == 12) %>%
+      select(Sample_ID, Time, Clinical_PGD, all_of(features_to_keep))
+    UFT_24h <- UFT_metaboanalyst_log2 %>%
+      filter(Time == 24) %>%
+      select(Sample_ID, Time, Clinical_PGD, all_of(features_to_keep))
+    UFT_12and24 <- UFT_metaboanalyst_log2 %>%
+      select(Sample_ID, Time, Clinical_PGD, all_of(features_to_keep))
+    UFT_YPGD <- UFT_metaboanalyst_log2 %>%
+      filter(Clinical_PGD == 'Y') %>%
+      select(Sample_ID, Time, all_of(features_to_keep))
+    UFT_NPGD <- UFT_metaboanalyst_log2 %>%
+      filter(Clinical_PGD == 'N') %>%
+      select(Sample_ID, Time, all_of(features_to_keep))
+  #- 3.1.2: Create 12h only PCAs
+    pca_12only <- make_PCA(
+      data = UFT_12h,
+      comp_x = , comp_y = 2, group_var = "Clinical_PGD", method = "PLSDA"
     )
-    variant_pca_34 <- make_PCA(
-      data = variant_data,
-      ellipse_colors = variant_colors,
-      comp_x = 3, comp_y = 4
+    ggplot2::ggsave(paste0("C://Users//amshu//OneDrive - Emory//Preston, Joshua's files - Amshu Josh PGD//Final Analysis//PLSDA_12h_ComparePGD.png"), pca_12only$plot, width = 5, height = 5, units = "in", dpi = 600)
+    
+  #- 3.1.3: Create T-24h only PCAs
+    pca_24only <- make_PCA(
+      data = UFT_24h,
+      comp_x = 1, comp_y = 2, group_var = "Clinical_PGD", method = "PLSDA"
     )
-  #- 3.1.3: Create T-stage PCAs
-    T_stage_PCA_12 <- make_PCA(
-      data = T_stage_data,
-      ellipse_colors = T_stage_colors,
-      comp_x = 1, comp_y = 2
-    )
-    T_stage_PCA_23 <- make_PCA(
-      data = T_stage_data,
-      ellipse_colors = T_stage_colors,
-      comp_x = 2, comp_y = 3
-    )
-    T_stage_PCA_34 <- make_PCA(
-      data = T_stage_data,
-      ellipse_colors = T_stage_colors,
-      comp_x = 3, comp_y = 4
-    )
-  #- 3.1.4: Create LVI PCAs
-    LVI_PCA_12 <- make_PCA(
-      data = LVI_data,
-      ellipse_colors = LVI_colors,
-      comp_x = 1, comp_y = 2
-    )
-    LVI_PCA_23 <- make_PCA(
-      data = LVI_data,
-      ellipse_colors = LVI_colors,
-      comp_x = 2, comp_y = 3
-    )
-    LVI_PCA_34 <- make_PCA(
-      data = LVI_data,
-      ellipse_colors = LVI_colors,
-      comp_x = 3, comp_y = 4
-    )
-  #- 3.1.5: Create Sex PCAs
-    Sex_PCA_12 <- make_PCA(
-      data = Sex_data,
-      ellipse_colors = sex_colors,
-      comp_x = 1, comp_y = 2
-    )
-    Sex_PCA_23 <- make_PCA(
-      data = Sex_data,
-      ellipse_colors = sex_colors,
-      comp_x = 2, comp_y = 3
-    )
-    Sex_PCA_34 <- make_PCA(
-      data = Sex_data,
-      ellipse_colors = sex_colors,
-      comp_x = 3, comp_y = 4
-    )
+    ggplot2::ggsave(paste0("C://Users//amshu//OneDrive - Emory//Preston, Joshua's files - Amshu Josh PGD//Final Analysis//PLSDA_24h_ComparePGD.png"), pca_24only$plot, width = 5, height = 5, units = "in", dpi = 600)
+
+  #- 3.1.4: Create combined 12h and 24h PCAs
+    pca_time_combined <- make_PCA(
+      data = UFT_12and24,
+      comp_x = 1, comp_y = 2, group_var = "Clinical_PGD", method = "PLSDA"
+    )    
+    ggplot2::ggsave(paste0("C://Users//amshu//OneDrive - Emory//Preston, Joshua's files - Amshu Josh PGD//Final Analysis//PLSDA_combinedTime_ComparePGD.png"), pca_time_combined$plot, width = 5, height = 5, units = "in", dpi = 600)
+    
 #+ 3.2: Create heatmaps
   #- 3.2.1: Prepare data for heatmap
-    heatmap_data_T <- UFT_metaboanalyst_log2_path %>%
-    select(Patient_ID, Variant, T_computed_bin, any_of(feature_cols)) %>%
-    rename("T_stage" = T_computed_bin)
+    heatmap_data_12h <- UFT_12h %>%
+    select(Sample_ID, Clinical_PGD, Time, any_of(features_to_keep))
   #- 3.2.2: Create heatmaps with different feature selections
-    variance_1000 <- make_heatmap(
-      heatmap_data_T,
-      variant_colors = variant_colors,
-      feature_selector = "variance",
+    anova_1000 <- make_heatmap(
+      heatmap_data_12h,
+      feature_selector = "ttest",
       top_features = 1000,
-      annotate_t_stage = TRUE,
-      T_stage_colors = T_stage_bin_colors,
-      cluster_colors = cluster_colors
+      p_anova = 'pgd'
     )
     anova_1000 <- make_heatmap(
       heatmap_data_T,
@@ -110,7 +75,7 @@
     UFT_with_clusters <- UFT_metaboanalyst_log2_path %>%
       left_join(variance_1000$cluster_df, by = "Patient_ID") %>%
       mutate(Cluster = factor(paste0("Cluster ", Cluster), levels = c("Cluster 1", "Cluster 2"))) %>%
-      select(Patient_ID, Cluster, any_of(feature_cols)) %>%
+      select(Patient_ID, Cluster, any_of(features_to_keep)) %>%
       arrange(Cluster)
 #+ 3.4: Run PERMANOVA analysis
   #- 3.4.1: Define feature columns
