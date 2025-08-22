@@ -109,8 +109,7 @@
       mutate(Clinical_PGD = as.factor(if_else(Clinical_PGD == "Y'", "Y", Clinical_PGD))) %>%
       filter(Patient != "H3") %>% #! Missing 12 and 24, removing
       filter(Time != -12) %>%
-      filter(Sample_ID != "H19S2") %>%
-      select(-Sample_ID)
+      filter(Sample_ID != "H19S2")
   #- Filter to Incomplete Cases
     incomplete_patients <- combined_TFT_ii %>%
       select(Patient, Time, Clinical_PGD) %>%
@@ -121,14 +120,22 @@
     #! H5 is missing 12 hour (PGD Y)
     #! H19 is missing 24 hour (PGD Y)
   #- Define metabolite columns by exclusion (robust)
-    meta_cols <- c("Patient", "Time", "Sex", "Age", "Clinical_PGD")
+    meta_cols <- c("Patient", "Time", "Sex", "Age", "Clinical_PGD", "Sample_ID")
     met_cols <- setdiff(names(combined_TFT_ii), meta_cols)
   #- Build placeholder rows for the missing patient–time combos
     new_rows <- incomplete_patients %>%
       select(Patient, Time, Clinical_PGD) %>%
       mutate(Sex = NA_character_, Age = NA_real_) %>%
       tibble::add_column(!!!setNames(rep(list(NA_real_), length(met_cols)), met_cols)) %>%
-      mutate(Time = if_else(Time == 12, 24, 12))
+      mutate(Time = if_else(Time == 12, 24, 12)) %>%
+      mutate(
+        Sample_ID = case_when(
+          Patient == "H19" & Time == 24 ~ paste0(Patient, "S2"),
+          Patient == "H2" & Time == 12 ~ paste0(Patient, "S1"),
+          Patient == "H5" & Time == 12 ~ paste0(Patient, "S1"),
+          TRUE ~ NA_character_
+        )
+      )
   #- Time-matched means for each metabolite (ignore PGD)
     time_means <- combined_TFT_ii %>%
       group_by(Time) %>%
@@ -159,27 +166,34 @@
       mutate(Clinical_PGD = as.factor(if_else(Clinical_PGD == "Y'", "Y", Clinical_PGD))) %>%
       filter(Patient != "H3") %>% # ! Missing 12 and 24, removing
       filter(Time != -12) %>%
-      filter(Sample_ID != "H19S2") %>%
-      select(-Sample_ID)
+      filter(Sample_ID != "H19S2")
   #- Filter to Incomplete Cases
     incomplete_patients_unt <- UFT_metaboanalyst_log2_ii %>%
       select(Patient, Time, Clinical_PGD) %>%
       group_by(Patient) %>%
       filter(!all(c(12, 24) %in% Time)) %>%
       ungroup()
-   #- Define metabolite columns by exclusion (robust)
+  #- Define metabolite columns by exclusion (robust)
     met_cols_unt <- setdiff(names(UFT_metaboanalyst_log2_ii), meta_cols)
-   #- Build placeholder rows for the missing patient–time combos
+  #- Build placeholder rows for the missing patient–time combos
     new_rows_unt <- incomplete_patients_unt %>%
       select(Patient, Time, Clinical_PGD) %>%
       mutate(Sex = NA_character_, Age = NA_real_) %>%
       tibble::add_column(!!!setNames(rep(list(NA_real_), length(met_cols_unt)), met_cols_unt)) %>%
-      mutate(Time = if_else(Time == 12, 24, 12))
-   #- Time-matched means for each metabolite (ignore PGD)
-    time_means_unt <- UFT_metaboanalyst_log2_ii %>%
-      group_by(Time) %>%
-      summarise(across(all_of(met_cols_unt), ~ mean(.x, na.rm = TRUE)), .groups = "drop")
-   #- Fill metabolite NAs in new rows with the time means
+      mutate(Time = if_else(Time == 12, 24, 12)) %>%
+      mutate(
+        Sample_ID = case_when(
+          Patient == "H19" & Time == 24 ~ paste0(Patient, "S2"),
+          Patient == "H2" & Time == 12 ~ paste0(Patient, "S1"),
+          Patient == "H5" & Time == 12 ~ paste0(Patient, "S1"),
+          TRUE ~ NA_character_
+        )
+      )
+  #- Time-matched means for each metabolite (ignore PGD)
+  time_means_unt <- UFT_metaboanalyst_log2_ii %>%
+    group_by(Time) %>%
+    summarise(across(all_of(met_cols_unt), ~ mean(.x, na.rm = TRUE)), .groups = "drop")
+  #- Fill metabolite NAs in new rows with the time means
     new_rows_filled_unt <- new_rows_unt %>%
       left_join(time_means_unt, by = "Time", suffix = c("", "_mean")) %>%
       mutate(across(
@@ -187,7 +201,7 @@
         ~ coalesce(.x, get(paste0(cur_column(), "_mean")))
       )) %>%
       select(-ends_with("_mean"))
-   #- Append to the wide table
+  #- Append to the wide table
     combined_UFT <- bind_rows(UFT_metaboanalyst_log2_ii, new_rows_filled_unt) %>%
       select(-c(Sex, Age)) %>%
       left_join(metadata %>% select(Patient, Sex, Age) %>% distinct(), by = "Patient") %>%
