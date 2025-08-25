@@ -137,19 +137,30 @@
         )
       )
   #- Time-matched means for each metabolite (ignore PGD)
-    time_means <- combined_TFT_ii %>%
-      group_by(Time) %>%
+    # time_means <- combined_TFT_ii %>%
+    #   group_by(Time) %>%
+    #   summarise(across(all_of(met_cols), ~ mean(.x, na.rm = TRUE)), .groups = "drop")
+    time_pgd_means <- combined_TFT_ii %>%
+      group_by(Time, Clinical_PGD) %>%
       summarise(across(all_of(met_cols), ~ mean(.x, na.rm = TRUE)), .groups = "drop")
-  #- Fill metabolite NAs in new rows with the time means
+  # --- Fill metabolite NAs in new rows with the time × PGD group means
     new_rows_filled <- new_rows %>%
-      left_join(time_means, by = "Time", suffix = c("", "_mean")) %>%
+      left_join(time_pgd_means, by = c("Time", "Clinical_PGD"), suffix = c("", "_mean")) %>%
       mutate(across(
         all_of(met_cols),
         ~ coalesce(.x, get(paste0(cur_column(), "_mean")))
       )) %>%
       select(-ends_with("_mean"))
+  #- Fill metabolite NAs in new rows with the time means
+    # new_rows_filled <- new_rows %>%
+    #   left_join(time_means, by = "Time", suffix = c("", "_mean")) %>%
+    #   mutate(across(
+    #     all_of(met_cols),
+    #     ~ coalesce(.x, get(paste0(cur_column(), "_mean")))
+    #   )) %>%
+    #   select(-ends_with("_mean"))
   #- Append to the wide table
-    combined_TFT <- bind_rows(combined_TFT_ii, new_rows_filled) %>%
+    combined_TFT_s <- bind_rows(combined_TFT_ii, new_rows_filled) %>%
       select(-c(Sex,Age)) %>%
       left_join(metadata %>% select(Patient, Sex, Age) %>% distinct(), by = "Patient") %>%
       arrange(Patient) %>%
@@ -160,6 +171,46 @@
         Clinical_PGD = factor(Clinical_PGD, levels = c("N", "Y")),
         Sex = factor(Sex, levels = c("M", "F"))
       )
+#+ Append asterisks onto targeted with isomers
+  #- Get list of targeted annotations with more than one identity
+    collapsed_all_isomers <- feature_key %>%
+      mutate(Mode = sub(".*_(HILIC|C18)$", "\\1", Name)) %>%
+      select(Name, KEGGID, Mode, mz_time, Formula, Identified_Name) %>%
+      mutate(.rowid = row_number()) %>% # preserve original order
+      arrange(.rowid) %>%
+      group_by(Mode, mz_time) %>%
+      summarise(
+        Metabolite = first(Name),
+        primary_KEGGID = first(KEGGID),
+        primary_Name = first(Identified_Name),
+        other_KEGGIDs = if (n() > 1) paste(KEGGID[-1], collapse = ", ") else NA_character_,
+        other_Names = if (n() > 1) paste(Identified_Name[-1], collapse = ", ") else NA_character_,
+        n_candidates = n(),
+        .groups = "drop"
+      ) %>%
+      arrange(desc(n_candidates))
+  #- Filter to duplicate metabolites
+    dup_mets <- collapsed_all_isomers %>%
+      filter(n_candidates > 1) %>%
+      distinct(Metabolite) %>%
+      pull()
+  #- compact lookup table of the duplicates
+    dup_lookup <- collapsed_all_isomers %>%
+      filter(n_candidates > 1) %>%
+      select(Metabolite, primary_KEGGID, primary_Name, other_KEGGIDs, other_Names, n_candidates)
+  #- Set columns to mark, mark on original for final TFT
+    combined_TFT <- combined_TFT_s %>%
+      rename_with(~ paste0(.x, "*"), any_of(intersect(dup_mets, colnames(combined_TFT_s))))
+  #- Add asterisks to original feature key
+    dup_mets <- collapsed_all_isomers %>%
+      filter(n_candidates > 1) %>%
+      pull(Metabolite)
+    feature_key_isomark <- feature_key %>%
+      mutate(Name = if_else(Name %in% dup_mets, paste0(Name, "*"), Name))
+  #- Create a clean key for rejoining
+    combined_key <- feature_key_isomark %>%
+      rename(Metabolite = Name) %>%
+      select(Metabolite, Identified_Name)
 #+ Final Data Processing for Untargeted
   #- Touch up TFT and remove NA sample (H19S2), H3, and all preop timepoints
     UFT_metaboanalyst_log2_ii <- UFT_metaboanalyst_log2_i %>%
