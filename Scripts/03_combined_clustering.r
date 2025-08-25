@@ -6,19 +6,19 @@
       "N" = "#03507D"
     )
     str(UFT_12h)
-    UFT_metaboanalyst_log2$Clinical_PGD[UFT_metaboanalyst_log2$Clinical_PGD == "Y'"] <- 'Y'
-    UFT_12h <- UFT_metaboanalyst_log2 %>% 
+    combined_UFT$Clinical_PGD[combined_UFT$Clinical_PGD == "Y'"] <- 'Y'
+    UFT_12h <- combined_UFT %>% 
       filter(Time == 12) %>%
       select(Sample_ID, Time, Clinical_PGD, all_of(features_to_keep))
-    UFT_24h <- UFT_metaboanalyst_log2 %>%
+    UFT_24h <- combined_UFT %>%
       filter(Time == 24) %>%
       select(Sample_ID, Time, Clinical_PGD, all_of(features_to_keep))
-    UFT_12and24 <- UFT_metaboanalyst_log2 %>%
+    UFT_12and24 <- combined_UFT %>%
       select(Sample_ID, Time, Clinical_PGD, all_of(features_to_keep))
-    UFT_YPGD <- UFT_metaboanalyst_log2 %>%
+    UFT_YPGD <- combined_UFT %>%
       filter(Clinical_PGD == 'Y') %>%
       select(Sample_ID, Time, all_of(features_to_keep))
-    UFT_NPGD <- UFT_metaboanalyst_log2 %>%
+    UFT_NPGD <- combined_UFT %>%
       filter(Clinical_PGD == 'N') %>%
       select(Sample_ID, Time, all_of(features_to_keep))
   #- 3.1.2: Create 12h only PCAs
@@ -46,73 +46,63 @@
   #- 3.2.1: Prepare data for heatmap
     heatmap_data_12h <- UFT_12h %>%
     select(Sample_ID, Clinical_PGD, Time, any_of(features_to_keep))
+    heatmap_data_24h <- UFT_24h %>%
+    select(Sample_ID, Clinical_PGD, Time, any_of(features_to_keep))
+    heatmap_data_combTime <- UFT_12and24 %>%
+    select(Sample_ID, Clinical_PGD, Time, any_of(features_to_keep))
   #- 3.2.2: Create heatmaps with different feature selections
     anova_1000 <- make_heatmap(
+      heatmap_data_combTime,
+      feature_selector = "ttest",
+      top_features = 250,
+      filename = "CombinedTime_TimeTtest"
+      )
+    anova_250 <- make_heatmap(
+      heatmap_data_combTime,
+      feature_selector = "anova",
+      top_features = 250,
+      filename = "CombinedTime_ANOVA"
+    )
+    hmap_pgd_12 <- make_heatmap(
       heatmap_data_12h,
       feature_selector = "ttest",
-      top_features = 1000,
-      p_anova = 'pgd'
-    )
-    anova_1000 <- make_heatmap(
-      heatmap_data_T,
-      variant_colors = variant_colors,
-      feature_selector = "anova",
-      top_features = 1000,
-      annotate_t_stage = TRUE,
-      T_stage_colors = T_stage_colors_heatmap,
-      cluster_colors = cluster_colors
-    )
-    variance_full <- make_heatmap(
-      heatmap_data_T,
-      variant_colors = variant_colors,
+      top_features = 250,
+      filename = "12h_ttest"
+      )
+    hmap_pgd_24 <- make_heatmap(
+      heatmap_data_24h,
+      feature_selector = "ttest",
+      top_features = 250,
+      filename = "24h_ttest"
+      )
+    variance_combined_1000 <- make_heatmap(
+      heatmap_data_combTime,
       feature_selector = "variance",
       top_features = FALSE,
-      annotate_t_stage = TRUE,
-      T_stage_colors = T_stage_bin_colors,
-      cluster_colors = cluster_colors
+      filename = "comb_variance"
     )
   #- 3.2.3: Create cluster data for PCA analysis
-    UFT_with_clusters <- UFT_metaboanalyst_log2_path %>%
-      left_join(variance_1000$cluster_df, by = "Patient_ID") %>%
+    UFT_with_clusters <- combined_UFT %>%
+      left_join(variance_combined_1000$cluster_df, by = "Sample_ID") %>%
       mutate(Cluster = factor(paste0("Cluster ", Cluster), levels = c("Cluster 1", "Cluster 2"))) %>%
       select(Patient_ID, Cluster, any_of(features_to_keep)) %>%
       arrange(Cluster)
 #+ 3.4: Run PERMANOVA analysis
   #- 3.4.1: Define feature columns
-    permanova_features <- rownames(variance_1000$M)
+    permanova_features <- rownames(variance_combined_1000$M)
   #- 3.4.1: Extract features and prepare data
-    variance_study <- UFT_metaboanalyst_log2_path %>%
-      left_join(variance_1000$cluster_df, by = "Patient_ID") %>%
-      select(Patient_ID, Cluster, Variant, T_computed_bin, Sex, Age, MFC, LVI, any_of(permanova_features)) %>%
-      rename(T_stage = T_computed_bin) %>%
+    variance_study <- combined_UFT %>%
+      left_join(variance_combined_1000$cluster_df, by = "Sample_ID") %>%
+      select(Sample_ID, Time, Age, Sex, Clinical_PGD, Patient, any_of(permanova_features)) %>%
       mutate(
-        across(c(Sex, LVI, Variant, MFC), as.factor),
+        across(c(Sex, Time, Clinical_PGD, Age), as.factor),
         Age = as.numeric(Age),
-        T_stage = factor(T_stage, levels = c("T1-T2", "T3-T4")),
-        Cluster = factor(if_else(Cluster == 1, "Cluster 1", "Cluster 2"), 
-                        levels = c("Cluster 1", "Cluster 2"))
-      ) %>%
-      arrange(Cluster)
+        Clinical_PGD = factor(Clinical_PGD, levels = c("Y", "N")),
+        Time = factor(Time, levels = c("12", "24")),
+        Sex = factor(Sex, levels = c("M", "F"))
+      )
   #- 3.4.2: Define PERMANOVA variables
-    permanova_variables <-  c("T_stage", "Sex", "LVI", "Variant", "MFC", "Age", "Cluster")
-  #- 3.4.3: Impute missing values
-    #! IMPUTED for LVI variable, one sample missing data
-    meta_i <- variance_study %>% 
-      select(all_of(permanova_variables))
-    meta <- complete(mice(
-      meta_i,
-      m = 1,
-      method = replace(setNames(rep("", ncol(meta_i)), colnames(meta_i)), "LVI", "logreg"),
-      predictorMatrix = {
-        p <- matrix(0, ncol(meta_i), ncol(meta_i),
-          dimnames = list(colnames(meta_i), colnames(meta_i))
-        )
-        p["LVI", c("T_stage", "Sex", "Variant", "MFC", "Age")] <- 1
-        p
-      },
-      seed = 123,
-      printFlag = FALSE
-    ), 1)
+    permanova_variables <-  c("Time", "Clinical_PGD", "Age", "Sex")
   #- 3.4.4: Extract feature data for analysis
     features_1000 <- variance_study %>%
       select(any_of(permanova_features))
@@ -120,7 +110,7 @@
     meta_use <- variance_study %>%
       select(all_of(permanova_variables)) %>%
       mutate(
-        across(c(T_stage, Sex, LVI, Variant, MFC, Cluster), as.factor),
+        across(c(Time, Clinical_PGD, Sex), as.factor),
         Age = as.numeric(Age)
       )
   #- 3.4.6: Run PERMANOVA for each variable
@@ -202,3 +192,12 @@
     coord_cartesian(xlim = c(0, 0.7), clip = "off") +
     theme_pub_simple() +
     labs(y = NULL, x = expression(bold("R"^2 * " (Explained Variance)")))
+    ggsave(
+      filename = "./Permanova.png",
+      plot = last_plot(),
+      device = 'png',
+      width = 4,
+      height = 4,
+      unit = 'in',
+      dpi = 600
+    )
