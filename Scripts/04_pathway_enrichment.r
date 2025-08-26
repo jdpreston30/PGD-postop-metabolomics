@@ -1,8 +1,9 @@
-#+ 3.1: Run t-tests for pairwise variant comparisons
-  #- 3.5.0: Set up data for comparisons
+#* 4: Pathway Enrichment Analysis
+#+ 4.1: Run t-tests for pairwise variant comparisons
+  #- 4.1.1: Set up data for comparisons
     combined_UFT_mummichog <- combined_UFT %>%
       rename(PGD = Clinical_PGD, Patient_ID = Patient)
-  #- 3.5.1: 12h PGD comparison
+  #- 4.1.2: 12h PGD comparison
     PGD_assign_12 <- combined_UFT_mummichog %>%
       filter(Time != "24") %>%
       select(Patient_ID, PGD)
@@ -14,7 +15,7 @@
       group1_value = "N",
       group2_value = "Y"
     )
-  #- 3.5.2: 24h Comparison
+  #- 4.1.3: 24h Comparison
     PGD_assign_24 <- combined_UFT_mummichog %>%
       filter(Time == "24") %>%
       select(Patient_ID, PGD)
@@ -26,7 +27,7 @@
       group1_value = "N",
       group2_value = "Y"
     )
-  #- 3.5.3: Full Comparison
+  #- 4.1.4: Full Comparison
     PGD_assign_full <- combined_UFT_mummichog %>%
       select(Patient_ID, PGD) %>%
       unique()
@@ -38,17 +39,17 @@
       group1_value = "N",
       group2_value = "Y"
     )
-#+ 3.1: Pathway Enrichment Plot Import
-  #- 3.6.1: Import results from mummichog (MFN)
+#+ 4.2: Pathway Enrichment Plot Import
+  #- 4.2.1: Import results from mummichog (MFN)
     PGD_12h_MFN <- read_xlsx("Outputs/Mummichog Outputs/mummichog_outputs.xlsx", sheet = "12h") %>% mutate(Comparisons = "12h")
     PGD_24h_MFN <- read_xlsx("Outputs/Mummichog Outputs/mummichog_outputs.xlsx", sheet = "24h") %>% mutate(Comparisons = "24h")
     PGD_all_MFN <- read_xlsx("Outputs/Mummichog Outputs/mummichog_outputs.xlsx", sheet = "All") %>% mutate(Comparisons = "Combined")
-  #- 3.6.1: Import results from mummichog (KEGG)
+  #- 4.2.2: Import results from mummichog (KEGG)
     PGD_12h_KEGG <- read_xlsx("Outputs/Mummichog Outputs/mummichog_outputs.xlsx", sheet = "12h_KEGG") %>% mutate(Comparisons = "12h")
     PGD_24h_KEGG <- read_xlsx("Outputs/Mummichog Outputs/mummichog_outputs.xlsx", sheet = "24h_KEGG") %>% mutate(Comparisons = "24h")
     PGD_all_KEGG <- read_xlsx("Outputs/Mummichog Outputs/mummichog_outputs.xlsx", sheet = "All_KEGG") %>% mutate(Comparisons = "Combined")
-#+ 3.3: Prep data for enrichment plots
-#- 3.3.0: Define abbreviations to rename amino acids
+#+ 4.3: Prep data for enrichment plots
+#- 4.3.1: Define abbreviations to rename amino acids
   amino_map <- c(
     "Valine" = "Val",
     "Leucine" = "Leu",
@@ -61,7 +62,7 @@
     "Cysteine" = "Cys",
     "Valine" = "Val"
   )
-#- 3.3.1: Bind rows then filter to important variables (MFN)
+#- 4.3.2: Bind rows then filter to important variables (KEGG)
   KEGG_enrichment <- bind_rows(PGD_12h_KEGG, PGD_24h_KEGG, PGD_all_KEGG) %>%
     rename(p_fisher = "P(Fisher)") %>%
       mutate(enrichment_factor = Hits.sig / Expected) %>%
@@ -105,7 +106,7 @@
         )
       ) %>%
       filter(!is.na(p_fisher))
-#- 3.3.2: BInd rows then filter to important variables (MFN)
+#- 4.3.3: Bind rows then filter to important variables (MFN)
   MFN_enrichment <- bind_rows(PGD_12h_MFN, PGD_24h_MFN, PGD_all_MFN) %>%
     rename(p_fisher = "P(Fisher)") %>%
     mutate(enrichment_factor = Hits.sig / Expected) %>%
@@ -184,10 +185,10 @@
           levels = levels_all
         ))
     }
-#+ 3.4: Plot
-  #- 3.4.0: Set conflicts
+#+ 4.4: Plot
+  #- 4.4.1: Set conflicts
     conflicts_prefer(ggplot2::margin)
-  #- 3.6.3: Plot
+  #- 4.4.2: Plot
     MFN_plot <- ggplot(
       MFN_enrichment,
       aes(x = 0.5, y = 0.5, size = enrichment_factor, color = p_fisher)
@@ -259,7 +260,7 @@
       plot.margin = margin(t = 20, r = 40, b = 10, l = 40)
     ) +
     coord_cartesian(clip = "off")
-  #- 3.6.4: Export Plot
+  #- 4.4.3: Export Plot
 {
   panel_size <- 0.3 # tweak this until happy
   n_rows <- length(unique(MFN_enrichment$pathway_name))

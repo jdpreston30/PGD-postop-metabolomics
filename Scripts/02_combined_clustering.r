@@ -1,4 +1,3 @@
-#* 2: Combined Clustering analysis
 #+ 2.1: Run Exploratory PLSDA
   #- 2.1.1: Define datasets
     UFT_12h <- UFT_nomiss %>% 
@@ -67,10 +66,10 @@
     filename = "comb_variance"
   )
 
-#+ 3.4: Run PERMANOVA analysis
-  #- 3.4.1: Define feature columns
+#+ 2.3: Run PERMANOVA analysis
+  #- 2.3.1: Define feature columns
     permanova_features <- rownames(variance_combined_1000$M)
-  #- 3.4.1: Extract features and prepare data
+  #- 2.3.2: Extract features and prepare data
     variance_study <- combined_UFT %>%
       left_join(variance_combined_1000$cluster_df, by = "Sample_ID") %>%
       select(Sample_ID, Time, Age, Sex, Clinical_PGD, Patient, any_of(permanova_features)) %>%
@@ -81,19 +80,19 @@
         Time = factor(Time, levels = c("12", "24")),
         Sex = factor(Sex, levels = c("M", "F"))
       )
-  #- 3.4.2: Define PERMANOVA variables
+  #- 2.3.3: Define PERMANOVA variables
     permanova_variables <-  c("Time", "Clinical_PGD", "Age", "Sex")
-  #- 3.4.4: Extract feature data for analysis
+  #- 2.3.4: Extract feature data for analysis
     features_1000 <- variance_study %>%
       select(any_of(permanova_features))
-  #- 3.4.5: Prepare metadata for individual tests
+  #- 2.3.5: Prepare metadata for individual tests
     meta_use <- variance_study %>%
       select(all_of(permanova_variables)) %>%
       mutate(
         across(c(Time, Clinical_PGD, Sex), as.factor),
         Age = as.numeric(Age)
       )
-  #- 3.4.6: Run PERMANOVA for each variable
+  #- 2.3.6: Run PERMANOVA for each variable
     permanova_results_1000 <- bind_rows(lapply(
       permanova_variables, 
       get_permanova,
@@ -103,7 +102,7 @@
       seed = 2025)) %>%
       arrange(p_value) %>%
       mutate(Variable = if_else(Variable == "T_stage", "T stage", Variable))
-  #- 3.4.7: Create PERMANOVA visualiation data
+  #- 2.3.7: Create PERMANOVA visualiation data
     permanova_viz <- permanova_results_1000 %>%
       mutate(
         Significance = case_when(
@@ -120,7 +119,7 @@
           TRUE ~ paste0("p = ", round(p_value, 2))
         )
       )
-#- 3.4.8: Create PERMANOVA bar plot (vertical with horizontal bars)
+#- 2.3.8: Create PERMANOVA bar plot (vertical with horizontal bars)
   permanova_1B <- ggplot(permanova_viz, aes(y = reorder(Variable, -p_value), x = R2)) +
     geom_col(
       width = 0.72,
