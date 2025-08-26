@@ -67,7 +67,7 @@ volc_targ <- function(FC_list, ttest_res, key){
           plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
           ) +
           guides(color = guide_legend(override.aes = list(shape = 16, size=4)))
-        return(list(
+        list(
             volcano_data = volcano_data,
-            volcano_plot = volcano_plot))
+            volcano_plot = volcano_plot)
     }

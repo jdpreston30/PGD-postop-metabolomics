@@ -27,8 +27,8 @@ balloon_plot <- function(balloon_dat){
             size = 'Magnitude',
             color = 'Direction'
           )
-        return(list(
+        list(
             balloon_dat = balloon_dat,
             ball_plot = ball_plot
-        ))
+        )
 }
