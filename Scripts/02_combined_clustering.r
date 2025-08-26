@@ -42,101 +42,30 @@
     select(Sample_ID, Clinical_PGD, Time, any_of(untargeted_features))
     heatmap_data_combTime <- UFT_12and24 %>%
     select(Sample_ID, Clinical_PGD, Time, any_of(untargeted_features))
-#* HCA with heatmaps, PLS-DA, and volcano plots
-# Divide data into groups based on clinical PGD status and time
-unt_24 <- UFT_nomiss %>%
-  filter(Time == 24) %>%
-  select(-Patient, -Time, -Sex, -Age)
-unt_12 <- UFT_nomiss %>%
-  filter(Time == 12) %>%
-  select(-Patient, -Time, -Sex, -Age)
-# Metabolite values averaged between 12h and 24h
-metcols <- names(unt_24)[1:2]
-geomean <- function(x, na.rm = TRUE) {
-  if (na.rm) x <- x[!is.na(x)]
-  exp(mean(log(x + 1))) - 1
-}
-unt_avg <- bind_rows(unt_12, unt_24) %>%
-  group_by(Clinical_PGD) %>%
-  summarise(across(-Sample_ID, geomean, na.rm = TRUE), .groups = "drop")
-#+ Heatmap of metabolite clusters
-# Function to create heatmap with hierarchical clustering
-create_heatmap <- function(data, title) {
-  # Extract metabolite data and set row names
-  df_sub <- data
-
-  # Extract metabolite matrix only
-  met_cols <- c("Sample_ID", "Clinical_PGD")
-  data_cols <- setdiff(colnames(df_sub), met_cols)
-  met_data <- as.matrix(df_sub[, data_cols])
-  is.numeric(met_data)
-  met_scaled <- as.matrix(scale(met_data))
-  row_order <- order(df_sub$Clinical_PGD)
-  rownames(met_scaled) <- df_sub$Sample_ID
-  met_scaled <- met_scaled[, colSums(is.na(met_scaled)) == 0]
-  met_scaled <- met_scaled[row_order, ]
-  annotation <- data.frame(Clinical_PGD = df_sub$Clinical_PGD)
-  rownames(annotation) <- df_sub$Sample_ID
-  annotation <- annotation[row_order, , drop = FALSE]
-
-  # Define colors
-  ann_colors <- list(
-    Clinical_PGD = c("Y" = "#800017", "N" = "#113d6a")
-  )
-  pheatmap(
-    met_scaled,
-    cluster_rows = FALSE, # hierarchical clustering of samples
-    cluster_cols = TRUE, # hierarchical clustering of metabolites
-    annotation_row = annotation,
-    annotation_colors = ann_colors,
-    scale = "row", # optional: scale metabolites to mean=0, sd=1
-    show_rownames = TRUE,
-    show_colnames = TRUE,
-    fontsize_row = 8,
-    fontsize_col = 8,
-    main = title,
-    filename = paste0("./Outputs/Heatmaps/Heatmap_", title, ".png"),
-  )
-}
-# Create heatmaps for each group
-heatmap_24h <- create_heatmap(unt_24, "PGD vs Non-PGD at 24h")
-
-
-
-
-
-
-
-
-    anova_1000 <- make_heatmap(
-      UFT_nomiss,
-      feature_selector = "ttest",
-      top_features = 250,
-      filename = "CombinedTime_TimeTtest"
-      )
-    anova_250 <- make_heatmap(
-      heatmap_data_combTime,
-      feature_selector = "anova",
-      top_features = 250,
-      filename = "CombinedTime_ANOVA"
-    )
+  #- 2.2.2: Create heatmaps
+    # Set file path for saving heatmaps
+    save_path <- "C://Users//amshu//Desktop//PGD_time_course-1//Outputs//Heatmaps//"
     hmap_pgd_12 <- make_heatmap(
-      UFT_12h,
+      heatmap_data_12h,
       feature_selector = "ttest",
-      top_features = 250
+      top_features = 250,
+      file_path = save_path,
+      file_name = '12h_heatmap'
       )
+
     hmap_pgd_24 <- make_heatmap(
       heatmap_data_24h,
       feature_selector = "ttest",
       top_features = 250,
-      filename = "24h_ttest"
+      file_path = save_path,
+      file_name = '24h_heatmap'
       )
-    variance_combined_1000 <- make_heatmap(
-      heatmap_data_combTime,
-      feature_selector = "variance",
-      top_features = FALSE,
-      filename = "comb_variance"
-    )
+  variance_combined_1000 <- make_heatmap(
+    heatmap_data_combTime,
+    feature_selector = "variance",
+    top_features = FALSE,
+    filename = "comb_variance"
+  )
 
 #+ 3.4: Run PERMANOVA analysis
   #- 3.4.1: Define feature columns
