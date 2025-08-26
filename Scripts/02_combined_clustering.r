@@ -1,58 +1,115 @@
 #* 3: Combined Clustering analysis
-#+ 3.1: Run Exploratory PCAs
+#+ 3.1: Run Exploratory PLSDA
   #- 3.1.1: Define datasets
-   cluster_colors <- c(
+    UFT_12h <- UFT_nomiss %>% 
+      filter(Time == 12) %>%
+      select(Sample_ID, Time, Clinical_PGD, all_of(untargeted_features))
+    UFT_24h <- UFT_nomiss %>%
+      filter(Time == 24) %>%
+      select(Sample_ID, Time, Clinical_PGD, all_of(untargeted_features))
+    UFT_12and24 <- UFT_nomiss %>%
+      select(Sample_ID, Time, Clinical_PGD, all_of(untargeted_features))
+  #- 3.1.2: Define colors
+    cluster_colors <- c(
       "Y" = "#94001E",
       "N" = "#03507D"
     )
-    str(UFT_12h)
-    combined_UFT$Clinical_PGD[combined_UFT$Clinical_PGD == "Y'"] <- 'Y'
-    UFT_12h <- combined_UFT %>% 
-      filter(Time == 12) %>%
-      select(Sample_ID, Time, Clinical_PGD, all_of(features_to_keep))
-    UFT_24h <- combined_UFT %>%
-      filter(Time == 24) %>%
-      select(Sample_ID, Time, Clinical_PGD, all_of(features_to_keep))
-    UFT_12and24 <- combined_UFT %>%
-      select(Sample_ID, Time, Clinical_PGD, all_of(features_to_keep))
-    UFT_YPGD <- combined_UFT %>%
-      filter(Clinical_PGD == 'Y') %>%
-      select(Sample_ID, Time, all_of(features_to_keep))
-    UFT_NPGD <- combined_UFT %>%
-      filter(Clinical_PGD == 'N') %>%
-      select(Sample_ID, Time, all_of(features_to_keep))
-  #- 3.1.2: Create 12h only PCAs
-    pca_12only <- make_PCA(
-      data = UFT_12h,
-      comp_x = , comp_y = 2, group_var = "Clinical_PGD", method = "PLSDA"
+  #- 3.1.3: Set Plot Specs
+    plot_specs <- tribble(
+      ~data, ~comp_x, ~comp_y, ~method, ~outpath,
+      UFT_12h, 1, 2, "PLSDA", "Outputs/PLSDA/PLSDA_12h_ComparePGD.png",
+      UFT_24h, 1, 2, "PLSDA", "Outputs/PLSDA/PLSDA_24h_ComparePGD.png",
+      UFT_12and24, 1, 2, "PLSDA", "Outputs/PLSDA/PLSDA_combinedTime_ComparePGD.png",
+      UFT_12h, 1, 2, "PCA", "Outputs/PCA/PCA_12h_ComparePGD.png",
+      UFT_24h, 1, 2, "PCA", "Outputs/PCA/PCA_24h_ComparePGD.png",
+      UFT_12and24, 1, 2, "PCA", "Outputs/PCA/PCA_combinedTime_ComparePGD.png"
     )
-    ggplot2::ggsave(paste0("C://Users//amshu//OneDrive - Emory//Preston, Joshua's files - Amshu Josh PGD//Final Analysis//PLSDA_12h_ComparePGD.png"), pca_12only$plot, width = 5, height = 5, units = "in", dpi = 600)
-    
-  #- 3.1.3: Create T-24h only PCAs
-    pca_24only <- make_PCA(
-      data = UFT_24h,
-      comp_x = 1, comp_y = 2, group_var = "Clinical_PGD", method = "PLSDA"
+  #- Run all the PLSDAs and PCAs in one sweep
+    walk2(
+      .x = pmap(plot_specs, ~ make_PCA(..1,
+        comp_x = ..2, comp_y = ..3,
+        group_var = "Clinical_PGD", method = ..4
+      )),
+      .y = plot_specs$outpath,
+      ~ ggsave(.y, .x$plot, width = 5, height = 5, units = "in", dpi = 600)
     )
-    ggplot2::ggsave(paste0("C://Users//amshu//OneDrive - Emory//Preston, Joshua's files - Amshu Josh PGD//Final Analysis//PLSDA_24h_ComparePGD.png"), pca_24only$plot, width = 5, height = 5, units = "in", dpi = 600)
-
-  #- 3.1.4: Create combined 12h and 24h PCAs
-    pca_time_combined <- make_PCA(
-      data = UFT_12and24,
-      comp_x = 1, comp_y = 2, group_var = "Clinical_PGD", method = "PLSDA"
-    )    
-    ggplot2::ggsave(paste0("C://Users//amshu//OneDrive - Emory//Preston, Joshua's files - Amshu Josh PGD//Final Analysis//PLSDA_combinedTime_ComparePGD.png"), pca_time_combined$plot, width = 5, height = 5, units = "in", dpi = 600)
-    
 #+ 3.2: Create heatmaps
   #- 3.2.1: Prepare data for heatmap
     heatmap_data_12h <- UFT_12h %>%
-    select(Sample_ID, Clinical_PGD, Time, any_of(features_to_keep))
+    select(Sample_ID, Clinical_PGD, Time, any_of(untargeted_features))
     heatmap_data_24h <- UFT_24h %>%
-    select(Sample_ID, Clinical_PGD, Time, any_of(features_to_keep))
+    select(Sample_ID, Clinical_PGD, Time, any_of(untargeted_features))
     heatmap_data_combTime <- UFT_12and24 %>%
-    select(Sample_ID, Clinical_PGD, Time, any_of(features_to_keep))
+    select(Sample_ID, Clinical_PGD, Time, any_of(untargeted_features))
   #- 3.2.2: Create heatmaps with different feature selections
+#* HCA with heatmaps, PLS-DA, and volcano plots
+# Divide data into groups based on clinical PGD status and time
+unt_24 <- UFT_nomiss %>%
+  filter(Time == 24) %>%
+  select(-Patient, -Time, -Sex, -Age)
+unt_12 <- UFT_nomiss %>%
+  filter(Time == 12) %>%
+  select(-Patient, -Time, -Sex, -Age)
+# Metabolite values averaged between 12h and 24h
+metcols <- names(unt_24)[1:2]
+geomean <- function(x, na.rm = TRUE) {
+  if (na.rm) x <- x[!is.na(x)]
+  exp(mean(log(x + 1))) - 1
+}
+unt_avg <- bind_rows(unt_12, unt_24) %>%
+  group_by(Clinical_PGD) %>%
+  summarise(across(-Sample_ID, geomean, na.rm = TRUE), .groups = "drop")
+#+ Heatmap of metabolite clusters
+# Function to create heatmap with hierarchical clustering
+create_heatmap <- function(data, title) {
+  # Extract metabolite data and set row names
+  df_sub <- data
+
+  # Extract metabolite matrix only
+  met_cols <- c("Sample_ID", "Clinical_PGD")
+  data_cols <- setdiff(colnames(df_sub), met_cols)
+  met_data <- as.matrix(df_sub[, data_cols])
+  is.numeric(met_data)
+  met_scaled <- as.matrix(scale(met_data))
+  row_order <- order(df_sub$Clinical_PGD)
+  rownames(met_scaled) <- df_sub$Sample_ID
+  met_scaled <- met_scaled[, colSums(is.na(met_scaled)) == 0]
+  met_scaled <- met_scaled[row_order, ]
+  annotation <- data.frame(Clinical_PGD = df_sub$Clinical_PGD)
+  rownames(annotation) <- df_sub$Sample_ID
+  annotation <- annotation[row_order, , drop = FALSE]
+
+  # Define colors
+  ann_colors <- list(
+    Clinical_PGD = c("Y" = "#800017", "N" = "#113d6a")
+  )
+  pheatmap(
+    met_scaled,
+    cluster_rows = FALSE, # hierarchical clustering of samples
+    cluster_cols = TRUE, # hierarchical clustering of metabolites
+    annotation_row = annotation,
+    annotation_colors = ann_colors,
+    scale = "row", # optional: scale metabolites to mean=0, sd=1
+    show_rownames = TRUE,
+    show_colnames = TRUE,
+    fontsize_row = 8,
+    fontsize_col = 8,
+    main = title,
+    filename = paste0("./Outputs/Heatmaps/Heatmap_", title, ".png"),
+  )
+}
+# Create heatmaps for each group
+heatmap_24h <- create_heatmap(unt_24, "PGD vs Non-PGD at 24h")
+
+
+
+
+
+
+
+
     anova_1000 <- make_heatmap(
-      heatmap_data_combTime,
+      UFT_nomiss,
       feature_selector = "ttest",
       top_features = 250,
       filename = "CombinedTime_TimeTtest"
@@ -64,10 +121,9 @@
       filename = "CombinedTime_ANOVA"
     )
     hmap_pgd_12 <- make_heatmap(
-      heatmap_data_12h,
+      UFT_12h,
       feature_selector = "ttest",
-      top_features = 250,
-      filename = "12h_ttest"
+      top_features = 250
       )
     hmap_pgd_24 <- make_heatmap(
       heatmap_data_24h,
@@ -140,43 +196,6 @@
           TRUE ~ paste0("p = ", round(p_value, 2))
         )
       )
-#+ 3.5: Final Figure Creations
-#- 3.5.1: Create heatmap for Figure 1
-  heatmap_1A <- patchwork::wrap_elements(variance_1000$heatmap_plot$gtable)
-#- 3.5.2 PCAs - Safe execution (uses unified theme)
-  tryCatch(
-    {
-      pca_1D <- make_PCA(
-        data = variant_data,
-        ellipse_colors = variant_colors,
-        point_size = 1
-      )$plot + theme_pub_pca()
-
-      pca_1F <- make_PCA(
-        data = T_stage_data,
-        ellipse_colors = T_stage_bin_colors,
-        point_size = 1
-      )$plot + theme_pub_pca()
-
-      pca_1E <- make_PCA(
-        data = Sex_data,
-        ellipse_colors = sex_colors,
-        point_size = 1
-      )$plot + theme_pub_pca()
-
-      pca_1C <- make_PCA(
-        data = UFT_with_clusters,
-        ellipse_colors = cluster_colors,
-        point_size = 1
-      )$plot + theme_pub_pca()
-
-      cat("✅ All PCA plots created successfully!\n")
-    },
-    error = function(e) {
-      cat("❌ Error creating PCA plots:", e$message, "\n")
-      cat("Check your data and color definitions.\n")
-    }
-  )
 #- 3.4.8: Create PERMANOVA bar plot (vertical with horizontal bars)
   permanova_1B <- ggplot(permanova_viz, aes(y = reorder(Variable, -p_value), x = R2)) +
     geom_col(

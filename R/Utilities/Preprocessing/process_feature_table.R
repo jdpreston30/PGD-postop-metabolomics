@@ -8,6 +8,5 @@ process_feature_table <- function(data_tibble, sequence_tibble, data_type) {
     left_join(sequence_tibble, by = "File_Name") %>%
     select(Sample_ID, everything(), -File_Name) %>%
     mutate(Sample_ID = sub("_.*", "", Sample_ID)) %>%
-    arrange(Sample_ID) %>%
-    select(-Batch)
+    arrange(Sample_ID)
 }

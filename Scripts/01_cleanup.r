@@ -1,177 +1,24 @@
 #* 1: Cleanup
 #+ Import Data
-  #- Path set Amshu
-    raw_path <- "C://Users//amshu//OneDrive - Emory//Preston, Joshua's files - Amshu Josh PGD//Old Analysis"
-  #- Path set Josh
-    raw_path <- "/Users/jdp2019/Library/CloudStorage/OneDrive-Emory/Research/Manuscripts and Projects/Active Projects/Chan Lab/TPMO/Metabolomics - Postop PGD_Amshu/Old Analysis"
-  #- Import Metadata
-    metadata <- read_csv(paste0(raw_path, "/metadata.csv"))
+  #- Path set
+    raw_path <- "/Users/jdp2019/Library/CloudStorage/OneDrive-Emory/Research/Manuscripts and Projects/Active Projects/Chan Lab/TPMO/Metabolomics - Postop PGD_Amshu/raw_data/"
+  #- Import Metadata and Sequence and Key
+    metadata <- read_csv(paste0(raw_path, "metadata.csv"))
+    sequence <- read_csv(paste0(raw_path, "sequence.csv")) %>%
+      mutate(
+        Sample_ID = Sample_ID %>%
+          str_replace_all("NIST_1", "NIST1") %>%
+          str_replace_all("NIST_2", "NIST2")
+      )
+    feature_key <- read_csv(paste0(raw_path, "targeted_feature_key.csv"))
   #- Import Untargeted
     Sys.setenv("VROOM_CONNECTION_SIZE" = 2^22)
-    C18_unt <- read_csv(paste0(raw_path, "/C18_untargeted.csv"))
-    HILIC_unt <- read_csv(paste0(raw_path, "/HILIC_untargeted.csv"))
-  #- Import targeted_metabolite_comparison
-    C18_targeted_raw <- read_csv(paste0(raw_path, "/C18_targeted.csv"))
-    HILIC_targeted_raw <- read_csv(paste0(raw_path, "/HILIC_targeted.csv"))
-#+ Skip and import objects
-  #- Path set Amshu
-    all_objects_path <- "C://Users//amshu//OneDrive - Emory//Preston, Joshua's files - Amshu Josh PGD//all_objects.rds"
-  #- Path set Josh
-    all_objects_path <- "/Users/jdp2019/Library/CloudStorage/OneDrive-Emory/Research/Manuscripts and Projects/Active Projects/Chan Lab/TPMO/Metabolomics - Postop PGD_Amshu/all_objects.rds"
-  #- Load and list RDS
-    all_objects <- readRDS(all_objects_path)
-    list2env(all_objects, envir = .GlobalEnv)
-#+ Set up untargeted data
-  #- Preprocess and join
-    C18_merged_data <- metadata %>%
-      left_join(C18_unt, by = c("Sample_ID" = "Sample_Name"))
-    HILIC_merged_data <- metadata %>%
-      left_join(HILIC_unt, by = c("Sample_ID" = "Sample_Name"))
-    common_cols <- setdiff(intersect(names(HILIC_merged_data), names(C18_merged_data)), "Sample_ID")
-    combined_unt <- HILIC_merged_data %>%
-      left_join(C18_merged_data %>% select(-all_of(common_cols)), by = "Sample_ID")
-  #- Remove any columns with > 20% missing values
-    feature_cols <- names(combined_unt)[!names(combined_unt) %in% c(common_cols, "Sample_ID")]
-    zero_percentages <- combined_unt %>%
-      select(all_of(feature_cols)) %>%
-      summarise(across(everything(), ~ sum(.x == 0, na.rm = TRUE) / length(.x))) %>%
-      pivot_longer(everything(), names_to = "feature", values_to = "zero_pct")
-  #- Identify features with <= 20% zeros (keep these)
-    features_to_keep <- zero_percentages %>%
-      filter(zero_pct <= 0.20) %>%
-      pull(feature)
-  #- Filter UFT_metaboanalyst to keep only good features
-    UFT_metaboanalyst_raw <- combined_unt %>%
-      select(all_of(c(common_cols, "Sample_ID")), all_of(features_to_keep))
-  #- Replace 0 values which remain with 1/2 the column minimum
-    UFT_metaboanalyst_halfmin <- UFT_metaboanalyst_raw %>%
-      mutate(across(all_of(features_to_keep), ~ ifelse(.x == 0, 0.5 * min(.x[.x > 0], na.rm = TRUE), .x)))
-  #- Log2 transform dataset
-    UFT_metaboanalyst_log2_i <- UFT_metaboanalyst_halfmin %>%
-      mutate(across(all_of(features_to_keep), ~ log2(.x)))
-#+ Set up targeted data
-  #- HILIC
-    C18_targeted <- C18_targeted_raw %>%
-      filter(str_starts(Sample_ID, "H")) %>%
-      mutate(across(where(is.numeric), ~.)) %>%
-      select(Sample_ID, where(~ is.numeric(.) && mean(. == 0) <= 0.20)) %>%
-      mutate(across(where(is.numeric), ~ ifelse(. == 0, min(.[. > 0], na.rm = TRUE) / 2, .))) %>%
-      mutate(across(where(is.numeric), log2)) %>%
-      left_join(metadata %>% select(Sample_ID, Clinical_PGD, Time, Patient), by = "Sample_ID") %>%
-      select(Patient, Sample_ID, Time, Clinical_PGD, everything()) %>%
-      arrange(Clinical_PGD)
-  #- C18
-    HILIC_targeted <- HILIC_targeted_raw %>%
-      filter(str_starts(Sample_ID, "H")) %>%
-      mutate(across(where(is.numeric), ~.)) %>%
-      select(Sample_ID, where(~ is.numeric(.) && mean(. == 0) <= 0.20)) %>%
-      mutate(across(where(is.numeric), ~ ifelse(. == 0, min(.[. > 0], na.rm = TRUE) / 2, .))) %>%
-      # Log2 transform the data
-      mutate(across(where(is.numeric), log2)) %>%
-      left_join(metadata %>% select(Sample_ID, Clinical_PGD, Time, Patient), by = "Sample_ID") %>%
-      select(Patient, Sample_ID, Time, Clinical_PGD, everything()) %>%
-      arrange(Clinical_PGD)
-  #- Read metabolite key
-    feature_key <- read_csv(paste0(raw_path, "/targeted_feature_key.csv"))
-    HILIC_key <- feature_key[grepl("HILIC", feature_key$Name), c(1, 3)]
-    C18_key <- feature_key[grepl("C18", feature_key$Name), c(1, 3)]
-  #- Pivot the data to long format for easier merging
-    C18_targeted_proc <- C18_targeted %>%
-      pivot_longer(cols = -c(Sample_ID, Patient, Time, Clinical_PGD), names_to = "Metabolite", values_to = "Value")
-    HILIC_targeted_proc <- HILIC_targeted %>%
-      pivot_longer(cols = -c(Sample_ID, Patient, Time, Clinical_PGD), names_to = "Metabolite", values_to = "Value")
-  #- Merge the metabolite key with the C18 and HILIC data
-    C18_targeted_named <- C18_targeted_proc %>%
-      left_join(C18_key, by = c("Metabolite" = "Name")) %>%
-      select(Patient, Sample_ID, Time, Clinical_PGD, everything())
-    HILIC_targeted_named <- HILIC_targeted_proc %>%
-      left_join(HILIC_key, by = c("Metabolite" = "Name")) %>%
-      select(Patient, Sample_ID, Time, Clinical_PGD, everything())
-  #- Combine C18 and HILIC targeted data
-    combined_targeted <- rbind(C18_targeted_named, HILIC_targeted_named)
-  #- Pull the combined name key
-    combined_key <- combined_targeted %>%
-      select(Metabolite, Identified_Name) %>%
-      distinct()
-  #- Create combined TFT, remove -12 and non-complete samples
-    combined_TFT_i <- combined_targeted %>%
-      select(Patient,Sample_ID,Time,Clinical_PGD,Metabolite,Value) %>%
-      tidyr::pivot_wider(
-        id_cols = c(Sample_ID),
-        names_from = Metabolite,
-        values_from = Value
-      ) %>%
-      left_join(metadata, by = "Sample_ID") %>%
-      select(Patient, Time, Sex, Age, Clinical_PGD, Sample_ID, everything())
-#+ Final Data Processing for Targeted
-  #- Touch up TFT and remove NA sample (H19S2), H3, and all preop timepoints
-    combined_TFT_ii <- combined_TFT_i %>%
-      mutate(Clinical_PGD = as.factor(if_else(Clinical_PGD == "Y'", "Y", Clinical_PGD))) %>%
-      filter(Patient != "H3") %>% #! Missing 12 and 24, removing
-      filter(Time != -12) %>%
-      filter(Sample_ID != "H19S2")
-  #- Filter to Incomplete Cases
-    incomplete_patients <- combined_TFT_ii %>%
-      select(Patient, Time, Clinical_PGD) %>%
-      group_by(Patient) %>%
-      filter(!all(c(12, 24) %in% Time)) %>%
-      ungroup()
-    #! H2 is missing 12 hour (PGD Y)
-    #! H5 is missing 12 hour (PGD Y)
-    #! H19 is missing 24 hour (PGD Y)
-  #- Define metabolite columns by exclusion (robust)
-    meta_cols <- c("Patient", "Time", "Sex", "Age", "Clinical_PGD", "Sample_ID")
-    met_cols <- setdiff(names(combined_TFT_ii), meta_cols)
-  #- Build placeholder rows for the missing patient–time combos
-    new_rows <- incomplete_patients %>%
-      select(Patient, Time, Clinical_PGD) %>%
-      mutate(Sex = NA_character_, Age = NA_real_) %>%
-      tibble::add_column(!!!setNames(rep(list(NA_real_), length(met_cols)), met_cols)) %>%
-      mutate(Time = if_else(Time == 12, 24, 12)) %>%
-      mutate(
-        Sample_ID = case_when(
-          Patient == "H19" & Time == 24 ~ paste0(Patient, "S2"),
-          Patient == "H2" & Time == 12 ~ paste0(Patient, "S1"),
-          Patient == "H5" & Time == 12 ~ paste0(Patient, "S1"),
-          TRUE ~ NA_character_
-        )
-      )
-  #- Time-matched means for each metabolite (ignore PGD)
-    # time_means <- combined_TFT_ii %>%
-    #   group_by(Time) %>%
-    #   summarise(across(all_of(met_cols), ~ mean(.x, na.rm = TRUE)), .groups = "drop")
-    time_pgd_means <- combined_TFT_ii %>%
-      group_by(Time, Clinical_PGD) %>%
-      summarise(across(all_of(met_cols), ~ mean(.x, na.rm = TRUE)), .groups = "drop")
-  # --- Fill metabolite NAs in new rows with the time × PGD group means
-    new_rows_filled <- new_rows %>%
-      left_join(time_pgd_means, by = c("Time", "Clinical_PGD"), suffix = c("", "_mean")) %>%
-      mutate(across(
-        all_of(met_cols),
-        ~ coalesce(.x, get(paste0(cur_column(), "_mean")))
-      )) %>%
-      select(-ends_with("_mean"))
-  #- Fill metabolite NAs in new rows with the time means
-    # new_rows_filled <- new_rows %>%
-    #   left_join(time_means, by = "Time", suffix = c("", "_mean")) %>%
-    #   mutate(across(
-    #     all_of(met_cols),
-    #     ~ coalesce(.x, get(paste0(cur_column(), "_mean")))
-    #   )) %>%
-    #   select(-ends_with("_mean"))
-  #- Append to the wide table
-    combined_TFT_s <- bind_rows(combined_TFT_ii, new_rows_filled) %>%
-      select(-c(Sex,Age)) %>%
-      left_join(metadata %>% select(Patient, Sex, Age) %>% distinct(), by = "Patient") %>%
-      arrange(Patient) %>%
-      select(all_of(meta_cols), all_of(met_cols)) %>%
-      mutate(
-        Patient = factor(Patient),
-        Time = factor(Time, levels = c(12, 24)),
-        Clinical_PGD = factor(Clinical_PGD, levels = c("N", "Y")),
-        Sex = factor(Sex, levels = c("M", "F"))
-      )
-#+ Append asterisks onto targeted with isomers
+    C18_unt_UP <- read_csv(paste0(raw_path, "/C18_neg_untargeted_FT.csv"))
+    HILIC_unt_UP <- read_csv(paste0(raw_path, "/HILIC_pos_untargeted_FT.csv"))
+  #- Import targeted
+    C18_targeted_raw <- read_csv(paste0(raw_path, "Tidy/C18_targeted.csv"))
+    HILIC_targeted_raw <- read_csv(paste0(raw_path, "Tidy/HILIC_targeted.csv"))
+#+ Prep to append asterisks onto targeted with isomers for targeted
   #- Get list of targeted annotations with more than one identity
     collapsed_all_isomers <- feature_key %>%
       mutate(Mode = sub(".*_(HILIC|C18)$", "\\1", Name)) %>%
@@ -194,73 +41,150 @@
       filter(n_candidates > 1) %>%
       distinct(Metabolite) %>%
       pull()
-  #- compact lookup table of the duplicates
+  #- Compact lookup table of the duplicates
     dup_lookup <- collapsed_all_isomers %>%
       filter(n_candidates > 1) %>%
       select(Metabolite, primary_KEGGID, primary_Name, other_KEGGIDs, other_Names, n_candidates)
-  #- Set columns to mark, mark on original for final TFT
-    combined_TFT <- combined_TFT_s %>%
-      rename_with(~ paste0(.x, "*"), any_of(intersect(dup_mets, colnames(combined_TFT_s))))
   #- Add asterisks to original feature key
     dup_mets <- collapsed_all_isomers %>%
       filter(n_candidates > 1) %>%
       pull(Metabolite)
     feature_key_isomark <- feature_key %>%
-      mutate(Name = if_else(Name %in% dup_mets, paste0(Name, "*"), Name))
+      mutate(Rename = if_else(Name %in% dup_mets, paste0(Name, "*"), Name))
   #- Create a clean key for rejoining
     combined_key <- feature_key_isomark %>%
       rename(Metabolite = Name) %>%
-      select(Metabolite, Identified_Name)
-#+ Final Data Processing for Untargeted
-  #- Touch up TFT and remove NA sample (H19S2), H3, and all preop timepoints
-    UFT_metaboanalyst_log2_ii <- UFT_metaboanalyst_log2_i %>%
-      mutate(Clinical_PGD = as.factor(if_else(Clinical_PGD == "Y'", "Y", Clinical_PGD))) %>%
-      filter(Patient != "H3") %>% # ! Missing 12 and 24, removing
-      filter(Time != -12) %>%
-      filter(Sample_ID != "H19S2")
-  #- Filter to Incomplete Cases
-    incomplete_patients_unt <- UFT_metaboanalyst_log2_ii %>%
-      select(Patient, Time, Clinical_PGD) %>%
-      group_by(Patient) %>%
-      filter(!all(c(12, 24) %in% Time)) %>%
-      ungroup()
-  #- Define metabolite columns by exclusion (robust)
-    met_cols_unt <- setdiff(names(UFT_metaboanalyst_log2_ii), meta_cols)
-  #- Build placeholder rows for the missing patient–time combos
-    new_rows_unt <- incomplete_patients_unt %>%
-      select(Patient, Time, Clinical_PGD) %>%
-      mutate(Sex = NA_character_, Age = NA_real_) %>%
-      tibble::add_column(!!!setNames(rep(list(NA_real_), length(met_cols_unt)), met_cols_unt)) %>%
-      mutate(Time = if_else(Time == 12, 24, 12)) %>%
+      select(Rename, Metabolite, Identified_Name)
+#+ Preprocess Untargeted Feature Tables into Tidy format
+  #! Targeted FTs were already processed into this format during annotation with MSMICA
+  #- Set QC pattern
+    qc_pattern <- "^(NIST1|NIST2|NIST_1|NIST_2|q[1-9]+)$" # adjust if needed
+  #- Create synthetic rows for the two missing time points
+    missing_pts <- metadata %>%
+      filter(Patient %in% c("H2", "H5")) %>%
+      distinct(Patient, Sex, Age, Clinical_PGD) %>%
+      mutate(
+        Time = 12,
+        Sample_ID = paste0(Patient, "_", Time)
+      ) %>%
+      select(Sample_ID, Patient, Time, Sex, Age, Clinical_PGD)
+  #- For C18
+    C18_unt_proc <- process_feature_table(C18_unt_UP, sequence, "C18") %>%
+      filter(Sample_ID != "Blank") %>%
+      filter(!str_detect(Sample_ID, "(D0|S0)$")) %>%
+      add_row(Sample_ID = "H19S2") %>% #! H19S2 missing for C18 only
+      arrange(Sample_ID) 
+  #- For HILIC
+    HILIC_unt_proc <- process_feature_table(HILIC_unt_UP, sequence, "HILIC") %>%
+      filter(Sample_ID != "Blank") %>%
+      filter(!str_detect(Sample_ID, "(D0|S0)$")) %>%
+      arrange(Sample_ID) 
+  #- Join together, add metadata
+    C18_HILIC_unt_proc <- full_join(C18_unt_proc, HILIC_unt_proc, by = "Sample_ID") %>%
+      select(Sample_ID, starts_with("HILIC"), starts_with("C18")) %>%
+      left_join(metadata, by = "Sample_ID") %>%
+      select(Sample_ID, all_of(colnames(metadata)), everything()) %>%
+        # rebuild Sample_ID only for non-QC rows; QC rows keep original
+        mutate(
+          .orig_id = Sample_ID,
+          Sample_ID = if_else(
+            str_detect(.orig_id, qc_pattern) | is.na(Patient) | is.na(Time),
+            .orig_id,
+            paste0(as.character(Patient), "_", as.character(Time))
+          )
+        ) %>%
+      select(Sample_ID, everything(), -.orig_id) %>%
+      bind_rows(missing_pts) %>%
+      arrange(Patient, Time) %>%
+      mutate(
+        Sample_ID = factor(Sample_ID),
+        Patient = factor(Patient),
+        Time = factor(Time, levels = c(12, 24)),
+        Clinical_PGD = factor(Clinical_PGD, levels = c("N", "Y")),
+        Sex = factor(Sex, levels = c("M", "F"))
+      )
+#+ Clean up targeted
+  #- For C18
+    C18_targeted <- C18_targeted_raw %>%
+      filter(Sample_ID != "Blank_1" & Sample_ID != "Blank_2") %>%
       mutate(
         Sample_ID = case_when(
-          Patient == "H19" & Time == 24 ~ paste0(Patient, "S2"),
-          Patient == "H2" & Time == 12 ~ paste0(Patient, "S1"),
-          Patient == "H5" & Time == 12 ~ paste0(Patient, "S1"),
-          TRUE ~ NA_character_
+          Sample_ID == "NIST_1" ~ "NIST1",
+          Sample_ID == "NIST_2" ~ "NIST2",
+          TRUE ~ Sample_ID
         )
+      ) %>%
+      filter(!str_detect(Sample_ID, "(D0|S0)$")) %>%
+      add_row(Sample_ID = "H19S2") %>% #! H19S2 missing for C18 only
+      arrange(Sample_ID)
+  #- For HILIC
+    HILIC_targeted <- HILIC_targeted_raw %>%
+      filter(Sample_ID != "Blank_1" & Sample_ID != "Blank_2") %>%
+      mutate(
+        Sample_ID = case_when(
+          Sample_ID == "NIST_1" ~ "NIST1",
+          Sample_ID == "NIST_2" ~ "NIST2",
+          TRUE ~ Sample_ID
+        )
+      ) %>%
+      filter(!str_detect(Sample_ID, "(D0|S0)$")) %>%
+      arrange(Sample_ID)
+  #- Set metadata and feature columns
+    meta_cols <- c("Patient", "Time", "Clinical_PGD", "Sex", "Age", "Sample_ID")
+    feature_cols_targ <- setdiff(names(C18_HILIC_targeted), meta_cols)
+  #- Join together, add metadata, rename columns with asterisks append
+    C18_HILIC_targeted_i <- full_join(C18_targeted, HILIC_targeted, by = "Sample_ID") %>%
+      left_join(metadata, by = "Sample_ID") %>%
+      select(Sample_ID, all_of(colnames(metadata)), everything()) %>%
+      mutate(
+        .orig_id = Sample_ID,
+        Sample_ID = if_else(
+          str_detect(.orig_id, qc_pattern) | is.na(Patient) | is.na(Time),
+          .orig_id,
+          paste0(as.character(Patient), "_", as.character(Time))
+        )
+      ) %>%
+      select(Sample_ID, everything(), -.orig_id) %>%
+      bind_rows(missing_pts) %>%
+      arrange(Patient, Time) %>%
+      mutate(
+        Sample_ID = factor(Sample_ID),
+        Patient = factor(Patient),
+        Time = factor(Time, levels = c(12, 24)),
+        Clinical_PGD = factor(Clinical_PGD, levels = c("N", "Y")),
+        Sex = factor(Sex, levels = c("M", "F"))
       )
-  #- Time-matched means for each metabolite (ignore PGD)
-  time_means_unt <- UFT_metaboanalyst_log2_ii %>%
-    group_by(Time) %>%
-    summarise(across(all_of(met_cols_unt), ~ mean(.x, na.rm = TRUE)), .groups = "drop")
-  #- Fill metabolite NAs in new rows with the time means
-    new_rows_filled_unt <- new_rows_unt %>%
-      left_join(time_means_unt, by = "Time", suffix = c("", "_mean")) %>%
-      mutate(across(
-        all_of(met_cols_unt),
-        ~ coalesce(.x, get(paste0(cur_column(), "_mean")))
-      )) %>%
-      select(-ends_with("_mean"))
-  #- Append to the wide table
-    combined_UFT <- bind_rows(UFT_metaboanalyst_log2_ii, new_rows_filled_unt) %>%
-      select(-c(Sex, Age)) %>%
-      left_join(metadata %>% select(Patient, Sex, Age) %>% distinct(), by = "Patient") %>%
-      arrange(Patient) %>%
-      select(all_of(meta_cols), all_of(met_cols_unt)) %>%
-        mutate(
-          Patient = factor(Patient),
-          Time = factor(Time, levels = c(12, 24)),
-          Clinical_PGD = factor(Clinical_PGD, levels = c("N", "Y")),
-          Sex = factor(Sex, levels = c("M", "F"))
-        )
+  #- Prep name map
+    name_map <- combined_key %>%
+      distinct(Metabolite, Rename) %>%
+      filter(Metabolite %in% names(C18_HILIC_targeted_i)) %>%
+      tibble::deframe()
+  #- Rename with asterisks
+    C18_HILIC_targeted <- C18_HILIC_targeted_i %>%
+      rename_with(~ unname(name_map[.x]), .cols = all_of(names(name_map)))
+#+ Transformations and QC
+  #- Run cleanup function on Targeted
+    targeted_QCd <- FT_QC(
+      df          = C18_HILIC_targeted,
+      id_col      = "Sample_ID",
+      common_cols = meta_cols,
+      qc_remove   = TRUE # QC used for half-min & 20% check, then removed
+    )
+  #- Run cleanup function on Untargeted
+    untargeted_QCd <- FT_QC(
+      df          = C18_HILIC_unt_proc,
+      id_col      = "Sample_ID",
+      common_cols = meta_cols,
+      qc_remove   = TRUE # QC used for half-min & 20% check, then removed
+    )
+#+ Final Assignments of feature tables and column names
+  #- Untargeted
+    UFT_metaboanalyst <- untargeted_QCd$full
+    UFT <- untargeted_QCd$filtered
+    UFT_nomiss <- UFT %>%
+      filter(Sample_ID != "H2_12" & Sample_ID != "H5_12" & Sample_ID != "H19_24")
+  #- Targeted
+    TFT <- targeted_QCd$filtered
+  #- Columns
+    untargeted_features <- names(UFT) %>%
+      purrr::keep(~ str_starts(.x, "HILIC") | str_starts(.x, "C18"))

@@ -62,6 +62,7 @@ make_PCA <- function(data, plot_title = "",
       scores_df_na <- scores_df[na_mask, , drop = FALSE]
       
       #_Create PCA plot
+      axis_prefix <- ifelse(method == "PCA", "PC", "LV")
       pca_plot <- ggplot2::ggplot() +
         # Plot complete cases with colors and ellipses
         {if(nrow(scores_df_complete) > 0) {
@@ -90,8 +91,8 @@ make_PCA <- function(data, plot_title = "",
         ggplot2::scale_fill_manual(values = ellipse_colors, name = "Clinical PGD", drop = TRUE, na.translate = FALSE) +
         ggplot2::theme_minimal(base_family = "Arial") +
         ggplot2::labs(
-          x = paste0("LV", comp_x, " (", explained[1], "%)"),
-          y = paste0("LV", comp_y, " (", explained[2], "%)")
+          x = paste0(axis_prefix, comp_x, " (", explained[1], "%)"),
+          y = paste0(axis_prefix, comp_y, " (", explained[2], "%)")
         ) +
         ggplot2::theme(
           axis.title = ggplot2::element_text(size = 25, face = "bold"),

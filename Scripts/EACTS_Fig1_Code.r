@@ -406,70 +406,7 @@
       dpi = 600
     )
 
-#* HCA with heatmaps, PLS-DA, and volcano plots
-  # Divide data into groups based on clinical PGD status and time
-  unt_24 <- combined_UFT %>%
-    filter(Time == 24) %>%
-    select(-Patient, -Time, -Sex, -Age)
-  unt_12 <- combined_UFT %>%
-    filter(Time == 12) %>%
-    select(-Patient, -Time, -Sex, -Age)
-  unt_YPGD <- combined_UFT %>%
-    filter(Clinical_PGD == "Y", Time != -12) %>%
-    select(-Patient, -Clinical_PGD, -Sex, -Age)
-  unt_NPGD <- combined_UFT %>%
-    filter(Clinical_PGD == "N", Time != -12) %>%
-    select(-Patient, -Clinical_PGD, -Sex, -Age)
-  # Metabolite values averaged between 12h and 24h
-  metcols <- names(unt_24)[1:2]
-  geomean <- function(x, na.rm = TRUE) {
-    if(na.rm) x <- x[!is.na(x)]
-    exp(mean(log(x+1))) - 1
-  }
-  unt_avg <- bind_rows(unt_12, unt_24) %>%
-    group_by(Clinical_PGD) %>%
-    summarise(across(-Sample_ID, geomean, na.rm = TRUE), .groups = "drop")
-  #+ Heatmap of metabolite clusters
-    # Function to create heatmap with hierarchical clustering
-    create_heatmap <- function(data, title) {
-      # Extract metabolite data and set row names
-      df_sub <- data
 
-      # Extract metabolite matrix only
-      met_cols <- c("Sample_ID", "Clinical_PGD")
-      data_cols <- setdiff(colnames(df_sub), met_cols)
-      met_data <- as.matrix(df_sub[, data_cols])
-      is.numeric(met_data)
-      met_scaled <- as.matrix(scale(met_data))
-      row_order <- order(df_sub$Clinical_PGD)
-      rownames(met_scaled) <- df_sub$Sample_ID
-      met_scaled <- met_scaled[, colSums(is.na(met_scaled)) == 0]
-      met_scaled <- met_scaled[row_order, ]
-      annotation <- data.frame(Clinical_PGD = df_sub$Clinical_PGD)
-      rownames(annotation) <- df_sub$Sample_ID
-      annotation <- annotation[row_order, , drop = FALSE]
-
-      # Define colors
-      ann_colors <- list(
-        Clinical_PGD = c("Y" = "#800017", "N" = "#113d6a")
-      )
-      pheatmap(
-        met_scaled,
-        cluster_rows = FALSE,      # hierarchical clustering of samples
-        cluster_cols = TRUE,      # hierarchical clustering of metabolites
-        annotation_row = annotation,
-        annotation_colors = ann_colors,
-        scale = "row",            # optional: scale metabolites to mean=0, sd=1
-        show_rownames = TRUE,
-        show_colnames = TRUE,
-        fontsize_row = 8,
-        fontsize_col = 8,
-        main = title,
-        filename = paste0("./EACTS Figs/Heatmap_", title, ".png"),
-      )
-    }
-    # Create heatmaps for each group
-    heatmap_24h <- create_heatmap(unt_24, "PGD vs Non-PGD at 24h")
   #+ PLS-DA analysis
     # Function to perform PLS-DA and plot results
     plot_pls <- function(data, title) {
