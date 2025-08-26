@@ -1,6 +1,6 @@
-#* 3: Combined Clustering analysis
-#+ 3.1: Run Exploratory PLSDA
-  #- 3.1.1: Define datasets
+#* 2: Combined Clustering analysis
+#+ 2.1: Run Exploratory PLSDA
+  #- 2.1.1: Define datasets
     UFT_12h <- UFT_nomiss %>% 
       filter(Time == 12) %>%
       select(Sample_ID, Time, Clinical_PGD, all_of(untargeted_features))
@@ -9,12 +9,12 @@
       select(Sample_ID, Time, Clinical_PGD, all_of(untargeted_features))
     UFT_12and24 <- UFT_nomiss %>%
       select(Sample_ID, Time, Clinical_PGD, all_of(untargeted_features))
-  #- 3.1.2: Define colors
+  #- 2.1.2: Define colors
     cluster_colors <- c(
       "Y" = "#94001E",
       "N" = "#03507D"
     )
-  #- 3.1.3: Set Plot Specs
+  #- 2.1.3: Set Plot Specs
     plot_specs <- tribble(
       ~data, ~comp_x, ~comp_y, ~method, ~outpath,
       UFT_12h, 1, 2, "PLSDA", "Outputs/PLSDA/PLSDA_12h_ComparePGD.png",
@@ -24,7 +24,7 @@
       UFT_24h, 1, 2, "PCA", "Outputs/PCA/PCA_24h_ComparePGD.png",
       UFT_12and24, 1, 2, "PCA", "Outputs/PCA/PCA_combinedTime_ComparePGD.png"
     )
-  #- Run all the PLSDAs and PCAs in one sweep
+  #- 2.1.4: Run all the PLSDAs and PCAs in one sweep
     walk2(
       .x = pmap(plot_specs, ~ make_PCA(..1,
         comp_x = ..2, comp_y = ..3,
@@ -33,15 +33,15 @@
       .y = plot_specs$outpath,
       ~ ggsave(.y, .x$plot, width = 5, height = 5, units = "in", dpi = 600)
     )
-#+ 3.2: Create heatmaps
-  #- 3.2.1: Prepare data for heatmap
+#!!!!!!!!!!!!
+#+ 2.2: Create heatmaps
+  #- 2.2.1: Prepare data for heatmap
     heatmap_data_12h <- UFT_12h %>%
     select(Sample_ID, Clinical_PGD, Time, any_of(untargeted_features))
     heatmap_data_24h <- UFT_24h %>%
     select(Sample_ID, Clinical_PGD, Time, any_of(untargeted_features))
     heatmap_data_combTime <- UFT_12and24 %>%
     select(Sample_ID, Clinical_PGD, Time, any_of(untargeted_features))
-  #- 3.2.2: Create heatmaps with different feature selections
 #* HCA with heatmaps, PLS-DA, and volcano plots
 # Divide data into groups based on clinical PGD status and time
 unt_24 <- UFT_nomiss %>%
@@ -137,12 +137,7 @@ heatmap_24h <- create_heatmap(unt_24, "PGD vs Non-PGD at 24h")
       top_features = FALSE,
       filename = "comb_variance"
     )
-  #- 3.2.3: Create cluster data for PCA analysis
-    UFT_with_clusters <- combined_UFT %>%
-      left_join(variance_combined_1000$cluster_df, by = "Sample_ID") %>%
-      mutate(Cluster = factor(paste0("Cluster ", Cluster), levels = c("Cluster 1", "Cluster 2"))) %>%
-      select(Patient_ID, Cluster, any_of(features_to_keep)) %>%
-      arrange(Cluster)
+
 #+ 3.4: Run PERMANOVA analysis
   #- 3.4.1: Define feature columns
     permanova_features <- rownames(variance_combined_1000$M)
