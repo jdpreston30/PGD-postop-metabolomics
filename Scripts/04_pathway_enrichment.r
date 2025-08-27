@@ -1,190 +1,75 @@
 #* 4: Pathway Enrichment Analysis
-#+ 4.1: Run t-tests for pairwise variant comparisons
-  #- 4.1.1: Set up data for comparisons
-    combined_UFT_mummichog <- combined_UFT %>%
-      rename(PGD = Clinical_PGD, Patient_ID = Patient)
-  #- 4.1.2: 12h PGD comparison
-    PGD_assign_12 <- combined_UFT_mummichog %>%
-      filter(Time != "24") %>%
-      select(Patient_ID, PGD)
-    PGD_12h_ttests <- mummichog_ttests(
-      data = combined_UFT_mummichog %>% filter(Time != "24"),
-      group_assignments = PGD_assign_12,
-      group_column = "PGD",
-      output_filename = "PGD_12h_ttests.csv",
-      group1_value = "N",
-      group2_value = "Y"
+#+ 4.2.1: Import results from mummichog (MFN)
+  #! Pathway enrichment plots run based on the three LIMMA p values
+  PGD_MFN <- read_xlsx("Outputs/Mummichog Outputs/mummichog_outputs.xlsx", sheet = "PGD") %>% mutate(Comparisons = "PGD")
+  time_MFN <- read_xlsx("Outputs/Mummichog Outputs/mummichog_outputs.xlsx", sheet = "Time") %>% mutate(Comparisons = "Time") %>%
+    mutate(
+      `P(Fisher)` = suppressWarnings(as.numeric(`P(Fisher)`)),
+      `P(EASE)`   = suppressWarnings(as.numeric(`P(EASE)`)),
+      `P(Gamma)`  = suppressWarnings(as.numeric(`P(Gamma)`)),
+      AdjP.Fisher = suppressWarnings(as.numeric(AdjP.Fisher)),
+      AdjP.EASE   = suppressWarnings(as.numeric(AdjP.EASE)),
+      AdjP.Gamma  = suppressWarnings(as.numeric(AdjP.Gamma))
     )
-  #- 4.1.3: 24h Comparison
-    PGD_assign_24 <- combined_UFT_mummichog %>%
-      filter(Time == "24") %>%
-      select(Patient_ID, PGD)
-    PGD_24h_ttests <- mummichog_ttests(
-      data = combined_UFT_mummichog %>% filter(Time == "24"),
-      group_assignments = PGD_assign_24,
-      group_column = "PGD",
-      output_filename = "PGD_24h_ttests.csv",
-      group1_value = "N",
-      group2_value = "Y"
-    )
-  #- 4.1.4: Full Comparison
-    PGD_assign_full <- combined_UFT_mummichog %>%
-      select(Patient_ID, PGD) %>%
-      unique()
-    PGD_full_ttests <- mummichog_ttests(
-      data = combined_UFT_mummichog,
-      group_assignments = PGD_assign_full,
-      group_column = "PGD",
-      output_filename = "PGD_full_ttests.csv",
-      group1_value = "N",
-      group2_value = "Y"
-    )
-#+ 4.2: Pathway Enrichment Plot Import
-  #- 4.2.1: Import results from mummichog (MFN)
-    PGD_12h_MFN <- read_xlsx("Outputs/Mummichog Outputs/mummichog_outputs.xlsx", sheet = "12h") %>% mutate(Comparisons = "12h")
-    PGD_24h_MFN <- read_xlsx("Outputs/Mummichog Outputs/mummichog_outputs.xlsx", sheet = "24h") %>% mutate(Comparisons = "24h")
-    PGD_all_MFN <- read_xlsx("Outputs/Mummichog Outputs/mummichog_outputs.xlsx", sheet = "All") %>% mutate(Comparisons = "Combined")
-  #- 4.2.2: Import results from mummichog (KEGG)
-    PGD_12h_KEGG <- read_xlsx("Outputs/Mummichog Outputs/mummichog_outputs.xlsx", sheet = "12h_KEGG") %>% mutate(Comparisons = "12h")
-    PGD_24h_KEGG <- read_xlsx("Outputs/Mummichog Outputs/mummichog_outputs.xlsx", sheet = "24h_KEGG") %>% mutate(Comparisons = "24h")
-    PGD_all_KEGG <- read_xlsx("Outputs/Mummichog Outputs/mummichog_outputs.xlsx", sheet = "All_KEGG") %>% mutate(Comparisons = "Combined")
+  interaction_MFN <- read_xlsx("Outputs/Mummichog Outputs/mummichog_outputs.xlsx", sheet = "Interaction") %>% mutate(Comparisons = "Interaction")
 #+ 4.3: Prep data for enrichment plots
-#- 4.3.1: Define abbreviations to rename amino acids
-  amino_map <- c(
-    "Valine" = "Val",
-    "Leucine" = "Leu",
-    "Isoleucine" = "Ile",
-    "Arginine" = "Arg",
-    "Proline" = "Pro",
-    "Glutamate" = "Glu",
-    "Glutathione" = "GSH",
-    "Tyrosine" = "Tyr",
-    "Cysteine" = "Cys",
-    "Valine" = "Val"
-  )
-#- 4.3.2: Bind rows then filter to important variables (KEGG)
-  KEGG_enrichment <- bind_rows(PGD_12h_KEGG, PGD_24h_KEGG, PGD_all_KEGG) %>%
+  MFN_enrichment <- bind_rows(PGD_MFN, time_MFN, interaction_MFN) %>%
     rename(p_fisher = "P(Fisher)") %>%
-      mutate(enrichment_factor = Hits.sig / Expected) %>%
-      select(Comparisons, pathway_name, p_fisher, enrichment_factor) %>%
-      mutate(
-        pathway_name = str_split(pathway_name, "\\s+") %>%
-          lapply(function(words) {
-            sapply(words, function(w) {
-              # normalize case first
-              w_clean <- str_to_title(w)
-              # rules
-              if (tolower(w) %in% c("and", "from")) {
-                return(tolower(w))
-              }
-              if (str_to_lower(w) == "epa") {
-                return("EPA")
-              }
-              if (w_clean %in% names(amino_map)) {
-                return(amino_map[[w_clean]])
-              }
-              return(w_clean)
-            }) %>%
-              paste(collapse = " ")
-          }) %>%
-          unlist()
-      ) %>%
-      filter(p_fisher < 0.05) %>%
-      mutate(
-        Comparisons = factor(Comparisons, levels = c("12h", "24h", "Combined")),
-        pathway_name = forcats::fct_reorder(pathway_name, enrichment_factor, .fun = max)
-      ) %>%
+    mutate(enrichment_factor = Hits.sig / Expected) %>%
+    select(Comparisons, pathway_name, p_fisher, enrichment_factor, Hits.sig, Expected) %>%
+    rowwise() %>%
+    mutate(
+      pathway_name = {
+        words <- str_split(pathway_name, "\\s+")[[1]]
+        new_name <- paste(sapply(words, function(w) {
+          w_clean <- str_to_title(w)
+          if (tolower(w) %in% c("and", "from")) {
+            return(tolower(w))
+          }
+          if (tolower(w) == "epa") {
+            return("EPA")
+          }
+          return(w_clean)
+        }), collapse = " ")
+        new_name
+      }
+    ) %>%
+    ungroup() %>%
+    filter(p_fisher < 0.05) %>%
+    mutate(
+      Comparisons = factor(Comparisons, levels = c("PGD", "Time", "Interaction")),
+      pathway_name = forcats::fct_reorder(pathway_name, enrichment_factor, .fun = max)
+    ) %>%
       complete(pathway_name, Comparisons) %>%
-      mutate(enrichment_factor = pmin(enrichment_factor, 7)) %>%
+      mutate(enrichment_factor = pmin(enrichment_factor, 5)) %>%
       mutate(
         pathway_name = factor(
           pathway_name,
-          levels = filter(., Comparisons == "Combined") %>%
+          levels = filter(., Comparisons == "PGD") %>%
             arrange(desc(enrichment_factor)) %>%
             pull(pathway_name) %>%
             unique()
         )
       ) %>%
-      filter(!is.na(p_fisher))
-#- 4.3.3: Bind rows then filter to important variables (MFN)
-  MFN_enrichment <- bind_rows(PGD_12h_MFN, PGD_24h_MFN, PGD_all_MFN) %>%
-    rename(p_fisher = "P(Fisher)") %>%
-    mutate(enrichment_factor = Hits.sig / Expected) %>%
-    select(Comparisons, pathway_name, p_fisher, enrichment_factor) %>%
-    mutate(
-      pathway_name = str_split(pathway_name, "\\s+") %>%
-        lapply(function(words) {
-          sapply(words, function(w) {
-            # normalize case first
-            w_clean <- str_to_title(w)
-            # rules
-            if (tolower(w) %in% c("and", "from")) {
-              return(tolower(w))
-            }
-            if (str_to_lower(w) == "epa") {
-              return("EPA")
-            }
-            if (w_clean %in% names(amino_map)) {
-              return(amino_map[[w_clean]])
-            }
-            return(w_clean)
-          }) %>%
-            paste(collapse = " ")
-        }) %>%
-        unlist()
-    ) %>%
-    filter(p_fisher < 0.05) %>%
-    mutate(
-      Comparisons = factor(Comparisons, levels = c("12h", "24h", "Combined")),
-      pathway_name = forcats::fct_reorder(pathway_name, enrichment_factor, .fun = max)
-    ) %>%
-    complete(pathway_name, Comparisons) %>%
-    mutate(enrichment_factor = pmin(enrichment_factor, 7)) %>%
-    mutate(
-      pathway_name = factor(
-        pathway_name,
-        levels = filter(., Comparisons == "Combined") %>%
-          arrange(desc(enrichment_factor)) %>%
-          pull(pathway_name) %>%
+      filter(!is.na(p_fisher)) %>%
+      {
+        df <- .
+        # order by Combined, then append the rest (so nothing becomes NA)
+        ordered <- df %>%
+          dplyr::filter(Comparisons == "PGD") %>%
+          dplyr::arrange(dplyr::desc(enrichment_factor)) %>%
+          dplyr::pull(pathway_name) %>%
+          as.character() %>%
           unique()
-      )
-    ) %>%
-    filter(!is.na(p_fisher)) %>%
-    mutate(
-      pathway_name = if_else(
-        pathway_name == "Putative Anti-Inflammatory Metabolites Formation from EPA",
-        "Anti-Inflammatory Metab. Formation from EPA",
-        pathway_name
-      ),
-      pathway_name = if_else(
-        pathway_name == "Ascorbate (Vitamin C) and Aldarate Metabolism",
-        "Ascorbate and Aldarate Metabolism",
-        pathway_name
-      ),
-      pathway_name = if_else(
-        pathway_name == "Vitamin D3 (Cholecalciferol) Metabolism",
-        "Cholecalciferol Metabolism",
-        pathway_name
-      )
-    ) %>%
-    {
-      df <- .
-      # order by Combined, then append the rest (so nothing becomes NA)
-      ordered <- df %>%
-        dplyr::filter(Comparisons == "Combined") %>%
-        dplyr::arrange(dplyr::desc(enrichment_factor)) %>%
-        dplyr::pull(pathway_name) %>%
-        as.character() %>%
-        unique()
 
-      all_names <- unique(as.character(df$pathway_name))
-      levels_all <- c(ordered, setdiff(all_names, ordered))
+        all_names <- unique(as.character(df$pathway_name))
+        levels_all <- c(ordered, setdiff(all_names, ordered))
 
-      df %>%
-        dplyr::mutate(pathway_name = factor(as.character(pathway_name),
-          levels = levels_all
-        ))
-    }
+        df %>%
+          dplyr::mutate(pathway_name = factor(as.character(pathway_name),
+            levels = levels_all
+          ))
+      }
 #+ 4.4: Plot
   #- 4.4.1: Set conflicts
     conflicts_prefer(ggplot2::margin)
@@ -217,8 +102,9 @@
     # Keep limits ascending; reverse legend order via guide
     scale_size_continuous(
       range = c(5, 20),
-      limits = c(0, 7),
-      breaks = c(7, 5, 3, 1), # Labels show in this order…
+      limits = c(0, 5),
+      breaks = c(5, 3, 1),
+      labels = c("5+", "3", "1"),
       name = "Enrichment factor",
       guide = guide_legend(reverse = TRUE) # …because we reverse the legend
     ) +
@@ -261,23 +147,24 @@
     ) +
     coord_cartesian(clip = "off")
   #- 4.4.3: Export Plot
-{
-  panel_size <- 0.3 # tweak this until happy
-  n_rows <- length(unique(MFN_enrichment$pathway_name))
-  n_cols <- length(unique(MFN_enrichment$Comparisons))
+    {
+      panel_size <- 0.3 # tweak this until happy
+      n_rows <- length(unique(MFN_enrichment$pathway_name))
+      n_cols <- length(unique(MFN_enrichment$Comparisons))
 
-  # Add space for legends, strip labels, margins
-  extra_width <- 9 # inches for legends on the right
-  extra_height <- 6 # inches for titles/margins
-  total_width <- n_cols * panel_size + extra_width
-  total_height <- n_rows * panel_size + extra_height
+      # Add space for legends, strip labels, margins
+      extra_width <- 9 # inches for legends on the right
+      extra_height <- 6 # inches for titles/margins
+      total_width <- n_cols * panel_size + extra_width
+      total_height <- n_rows * panel_size + extra_height
 
-  ggsave(
-    "MFN_enrichment_plot.png",
-    MFN_plot,
-    width = total_width,
-    height = total_height,
-    units = "in",
-    dpi = 600
-  )
-}
+      ggsave(
+        "Outputs/Enrichment/MFN_enrichment_plot.png",
+        MFN_plot,
+        width = total_width,
+        height = total_height,
+        units = "in",
+        dpi = 1200
+      )
+    }
+

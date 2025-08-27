@@ -1,13 +1,22 @@
 #* 0: Dependencies and setting seeds
   #+ 0.1: Dependencies
     #- 0.1.1: Install all packages
-      install.packages(c("dplyr", "tidyr", "readr", "stringr"))
-      # devtools::install_github("jdpreston30/TernTablesR")
     #- 0.1.2: Load libraries
-      library(dplyr)
-      library(tidyr)
-      library(readr)
-      library(stringr)
+        install.packages(c(
+          "dplyr", "tidyr", "readr", "stringr", "limma", "purrr", "here", "ggplot2", "tibble", "forcats", "scales"
+        ))
+        library(dplyr)
+        library(tidyr)
+        library(readr)
+        library(stringr)
+        library(limma)
+        library(purrr)
+        library(here)
+        library(ggplot2)
+        library(tibble)
+        library(forcats)
+        library(scales)
+      library(limma)
   #+ 0.2: Call all utility and modeling functions
     purrr::walk(
       list.files(

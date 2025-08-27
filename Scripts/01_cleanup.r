@@ -1,5 +1,5 @@
 #+ 1.1: Import Data
-#- 1.1.1: Path set
+  #- 1.1.1: Path set
     raw_path <- "C://Users//amshu//OneDrive - Emory//Preston, Joshua's files - Amshu Josh PGD//raw_data/"
     raw_path <- "/Users/jdp2019/Library/CloudStorage/OneDrive-Emory/Research/Manuscripts and Projects/Active Projects/Chan Lab/TPMO/Metabolomics - Postop PGD_Amshu/raw_data"
   #- 1.1.2: Import Metadata and Sequence and Key
@@ -55,8 +55,12 @@
     combined_key <- feature_key_isomark %>%
       rename(Metabolite = Name) %>%
       select(Rename, Metabolite, Identified_Name)
+  #- 1.2.6: Create a clean key with only the new names
+    combined_key_clean <- combined_key %>%
+      select(-Metabolite) %>%
+      rename(Metabolite = Rename)
 #+ 1.3: Preprocess Untargeted Feature Tables into Tidy format
-#  ! Targeted FTs were already processed into this format during annotation with MSMICA
+  #! Targeted FTs were already processed into this format during annotation with MSMICA
   #- 1.3.1: Set QC pattern
     qc_pattern <- "^(NIST1|NIST2|NIST_1|NIST_2|q[1-9]+)$" # adjust if needed
   #- 1.3.2: Create synthetic rows for the two missing time points
