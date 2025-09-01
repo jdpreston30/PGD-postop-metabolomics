@@ -1,6 +1,6 @@
 #' Run limma (duplicateCorrelation) for repeated-measures metabolomics
 #' and emit contrast tables, with optional MetaboAnalyst/Mummichog p-lists
-#' and optional targeted-name annotation.
+#' and optional targeted-name annotation. Also returns a final summary table.
 #'
 #' @param data            data.frame/tibble, rows = samples, numeric feature cols + metadata.
 #' @param time_var        character. Time column (e.g., "Time").
@@ -19,7 +19,8 @@
 #'                        ("Metabolite","Identified_Name"). Used only if targeted_rename = TRUE.
 #'
 #' @return list with elements:
-#'   $interaction, $time_main, $group_main (stats tables: Metabolite, t.score, p.value, FDR, logFC, Rank [+ any joined cols])
+#'   $interaction, $time_main, $group_main (stats tables: Metabolite, t.score, p.value, FDR, logFC, Rank)
+#'   $summary_final (Metabolite, optional Identified_Name, p/logFC per effect, means by group/time)
 #'   If metaboanalyst=TRUE: $mummichog (list of three tibbles), else NULL.
 #'   $coef_names (named character vector)
 run_limma_three_contrasts <- function(
@@ -50,9 +51,9 @@ run_limma_three_contrasts <- function(
 
   # expression (features x samples) and weights for NAs
   E <- t(as.matrix(df[, feat_cols, drop = FALSE]))
-  W <- ifelse(is.na(E), 0, 1) # 1 = observed, 0 = missing
+  W <- ifelse(is.na(E), 0, 1)
   E0 <- E
-  E0[is.na(E0)] <- 0 # values at weight=0 are ignored
+  E0[is.na(E0)] <- 0
 
   # design: ~ time * group
   fml <- stats::as.formula(paste("~", time_var, "*", group_var))
@@ -62,9 +63,9 @@ run_limma_three_contrasts <- function(
   # expected coefficient names
   t2 <- levels(df[[time_var]])[2]
   g2 <- levels(df[[group_var]])[2]
-  coef_time <- paste0(time_var, t2) # e.g. "Time24"
-  coef_group <- paste0(group_var, g2) # e.g. "Clinical_PGDY"
-  coef_interact <- paste0(coef_time, ":", coef_group) # e.g. "Time24:Clinical_PGDY"
+  coef_time <- paste0(time_var, t2) # e.g., "Time24"
+  coef_group <- paste0(group_var, g2) # e.g., "Clinical_PGDY"
+  coef_interact <- paste0(coef_time, ":", coef_group) # e.g., "Time24:Clinical_PGDY"
 
   miss <- setdiff(c(coef_time, coef_group, coef_interact), colnames(design))
   if (length(miss)) stop("Expected coefficients not found in design: ", paste(miss, collapse = ", "))
@@ -77,32 +78,28 @@ run_limma_three_contrasts <- function(
   # tidy topTable
   tidy_tt <- function(fit, coef_name) {
     tt <- limma::topTable(fit, coef = coef_name, number = Inf, sort.by = "none")
-    out <- tibble::tibble(
+    tibble::tibble(
       Metabolite = rownames(tt),
       t.score    = unname(tt[, "t"]),
-      p.value    = unname(tt[, "P.Value"]), # raw p: what MetaboAnalyst/Mummichog expects
+      p.value    = unname(tt[, "P.Value"]),
       FDR        = unname(tt[, "adj.P.Val"]),
       logFC      = unname(tt[, "logFC"])
     ) |>
       dplyr::mutate(Rank = dplyr::row_number()) |>
       dplyr::select(Metabolite, t.score, p.value, FDR, logFC, Rank)
-    out
   }
 
-  # optional targeted rename joiner
+  # optional targeted rename
   maybe_annotate <- function(tbl) {
     if (isTRUE(targeted_rename)) {
       if (is.null(rename_key) || !"Metabolite" %in% names(rename_key)) {
         stop("targeted_rename=TRUE but rename_key is NULL or missing 'Metabolite' column.")
       }
-      # Join ALL extra columns from rename_key (beyond 'Metabolite')
       extra_cols <- setdiff(names(rename_key), "Metabolite")
-      if (length(extra_cols) == 0) {
-        return(tbl)
+      if (length(extra_cols)) {
+        tbl <- dplyr::left_join(tbl, rename_key, by = "Metabolite")
+        tbl <- dplyr::relocate(tbl, dplyr::any_of(extra_cols), .after = Metabolite)
       }
-      tbl <- dplyr::left_join(tbl, rename_key, by = "Metabolite")
-      # move the extra columns right after Metabolite
-      tbl <- dplyr::relocate(tbl, dplyr::any_of(extra_cols), .after = Metabolite)
     }
     tbl
   }
@@ -128,10 +125,71 @@ run_limma_three_contrasts <- function(
       dplyr::select(m.z, p.value, mode, r.t)
   }
 
-  # build stats tables
+  # stats tables
   interaction_tbl <- tidy_tt(fit, coef_interact) |> maybe_annotate()
   time_tbl <- tidy_tt(fit, coef_time) |> maybe_annotate()
   group_tbl <- tidy_tt(fit, coef_group) |> maybe_annotate()
+
+  # === NEW: Final summary table ===
+  # core stats merged: group/time/interaction p & logFC
+  core_stats <- group_tbl |>
+    dplyr::select(Metabolite,
+      p.value_group = p.value,
+      logFC_group   = logFC
+    ) |>
+    dplyr::left_join(
+      time_tbl |> dplyr::select(Metabolite,
+        p.value_time = p.value,
+        logFC_time   = logFC
+      ),
+      by = "Metabolite"
+    ) |>
+    dplyr::left_join(
+      interaction_tbl |> dplyr::select(Metabolite,
+        p.value_interaction = p.value,
+        logFC_interaction   = logFC
+      ),
+      by = "Metabolite"
+    )
+
+  # means for each Metabolite by group x time (wide)
+  # columns will be Mean_<group>_<time>, e.g., Mean_N_12, Mean_Y_12, Mean_N_24, Mean_Y_24
+  means_tbl <- df |>
+    dplyr::select(dplyr::all_of(c(time_var, group_var, feat_cols))) |>
+    tidyr::pivot_longer(
+      cols = dplyr::all_of(feat_cols),
+      names_to = "Metabolite",
+      values_to = "value"
+    ) |>
+    dplyr::group_by(
+      Metabolite,
+      !!rlang::sym(group_var),
+      !!rlang::sym(time_var)
+    ) |>
+    dplyr::summarise(mean_value = mean(value, na.rm = TRUE), .groups = "drop") |>
+    dplyr::mutate(
+      mean_col = paste0(
+        "Mean_",
+        as.character(.data[[group_var]]), "_",
+        as.character(.data[[time_var]])
+      )
+    ) |>
+    tidyr::pivot_wider(names_from = mean_col, values_from = mean_value)
+
+  summary_final <- core_stats |>
+    dplyr::left_join(means_tbl, by = "Metabolite")
+
+  # add Identified_Name if available via rename_key when targeted_rename=TRUE
+  if (isTRUE(targeted_rename) && !is.null(rename_key) &&
+    all(c("Metabolite") %in% names(rename_key)) &&
+    "Identified_Name" %in% names(rename_key)) {
+    summary_final <- dplyr::left_join(
+      summary_final,
+      dplyr::select(rename_key, Metabolite, Identified_Name),
+      by = "Metabolite"
+    ) |>
+      dplyr::relocate(Identified_Name, .after = Metabolite)
+  }
 
   # metaboanalyst outputs (optional)
   mummi <- NULL
@@ -146,13 +204,10 @@ run_limma_three_contrasts <- function(
   # optional export
   if (!is.null(export_prefix)) {
     dir.create(export_dir, showWarnings = FALSE, recursive = TRUE)
-
-    # stats tables
     readr::write_csv(interaction_tbl, file.path(export_dir, paste0(export_prefix, "_interaction.csv")))
     readr::write_csv(time_tbl, file.path(export_dir, paste0(export_prefix, "_time.csv")))
     readr::write_csv(group_tbl, file.path(export_dir, paste0(export_prefix, "_group.csv")))
-
-    # MetaboAnalyst/Mummichog lists
+    readr::write_csv(summary_final, file.path(export_dir, paste0(export_prefix, "_summary.csv")))
     if (isTRUE(metaboanalyst)) {
       readr::write_csv(mummi$interaction, file.path(export_dir, paste0(export_prefix, "_mummichog_interaction.csv")))
       readr::write_csv(mummi$time_main, file.path(export_dir, paste0(export_prefix, "_mummichog_time.csv")))
@@ -162,9 +217,10 @@ run_limma_three_contrasts <- function(
 
   list(
     interaction = interaction_tbl,
-    time_main   = time_tbl,
-    group_main  = group_tbl,
-    mummichog   = mummi,
-    coef_names  = c(time = coef_time, group = coef_group, interaction = coef_interact)
+    time_main = time_tbl,
+    group_main = group_tbl,
+    summary_final = summary_final,
+    mummichog = mummi,
+    coef_names = c(time = coef_time, group = coef_group, interaction = coef_interact)
   )
 }

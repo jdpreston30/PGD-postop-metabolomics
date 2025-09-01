@@ -21,7 +21,7 @@
         sum(limma_untarg$group_main$p.value < 0.05, na.rm = TRUE)
       )
     )
-#+ 7.2: Untargeted paragraph
+#+ 7.2: Targeted paragraph
   #- 7.2.1: Count features in complete TFT
     HILIC_count_targ <- HILIC_targeted_raw %>%
       select(-Sample_ID) %>%
@@ -39,11 +39,11 @@
       group_by(KEGGID) %>%
       summarise(n_modes = n_distinct(ion_mode), .groups = "drop") %>%
       filter(n_modes == 2)
-    nrow(both_modes)
+      nrow(both_modes)
   #- 7.1.4: Number of isomers
     collapsed_all_isomers_counts <- collapsed_all_isomers %>%
       filter(n_candidates > 1) %>%
-      select(Mode, mz_time) %>%
+      select(Mode, mz, time) %>%
       unique() %>%
       nrow()
   #- 7.1.5: Volcano counts (Up)

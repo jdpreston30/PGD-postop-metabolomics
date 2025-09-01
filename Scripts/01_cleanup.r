@@ -22,10 +22,10 @@
   #- 1.2.1: Get list of targeted annotations with more than one identity
     collapsed_all_isomers <- feature_key %>%
       mutate(Mode = sub(".*_(HILIC|C18)$", "\\1", Name)) %>%
-      select(Name, KEGGID, Mode, mz_time, Formula, Identified_Name) %>%
+      select(Name, KEGGID, Mode, mz_time, Formula, Identified_Name, mz, time) %>%
       mutate(.rowid = row_number()) %>% # preserve original order
       arrange(.rowid) %>%
-      group_by(Mode, mz_time) %>%
+      group_by(Mode, mz, time) %>%
       summarise(
         Metabolite = first(Name),
         primary_KEGGID = first(KEGGID),
