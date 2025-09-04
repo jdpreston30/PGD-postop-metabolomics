@@ -1,10 +1,12 @@
 #* 0: Dependencies and setting seeds
   #+ 0.1: Dependencies
     #- 0.1.1: Install all packages
+      {if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
+      BiocManager::install(c(
+        "dplyr", "tidyr", "readr", "stringr", "purrr", "here",
+        "ggplot2", "tibble", "forcats", "scales", "limma"
+      ))}
     #- 0.1.2: Load libraries
-        install.packages(c(
-          "dplyr", "tidyr", "readr", "stringr", "limma", "purrr", "here", "ggplot2", "tibble", "forcats", "scales"
-        ))
         library(dplyr)
         library(tidyr)
         library(readr)
@@ -16,7 +18,7 @@
         library(tibble)
         library(forcats)
         library(scales)
-      library(limma)
+        library(limma)
   #+ 0.2: Call all utility and modeling functions
     purrr::walk(
       list.files(

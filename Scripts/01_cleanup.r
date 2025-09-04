@@ -1,7 +1,7 @@
 #+ 1.1: Import Data
   #- 1.1.1: Path set
     raw_path <- "C://Users//amshu//OneDrive - Emory//Preston, Joshua's files - Amshu Josh PGD//raw_data/"
-    raw_path <- "/Users/jdp2019/Library/CloudStorage/OneDrive-Emory/Research/Manuscripts and Projects/Active Projects/Chan Lab/TPMO/Metabolomics - Postop PGD_Amshu/raw_data"
+    raw_path <- "/Users/jdp2019/Library/CloudStorage/OneDrive-Emory/Research/Chan Lab - Chan Lab Projects/Transplant Multi-Omics - OHT/Post Op PGD - EACTS/Metabolomics - Postop PGD_Amshu/raw_data/"
   #- 1.1.2: Import Metadata and Sequence and Key
     metadata <- read_csv(paste0(raw_path, "metadata.csv"))
     sequence <- read_csv(paste0(raw_path, "sequence.csv")) %>%
