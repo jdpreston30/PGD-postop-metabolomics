@@ -1,0 +1,19 @@
+{
+source("R/Utilities/Helpers/load_dynamic_config.R")
+config <- load_dynamic_config(computer = "auto", config_path = "All_run/config_dynamic.yaml")
+source("R/Scripts/00a_environment_setup.r")
+source("R/Scripts/00b_setup.R")
+source("R/Scripts/00c_clinical_metadata.R")
+source("R/Scripts/00d_FTs.R")
+
+
+
+source("R/Scripts/01_cleanup.R")
+source("R/Scripts/02_PCA_PLSDA_heatmaps.R")
+source("R/Scripts/03_limma.r")
+source("R/Scripts/04_pathway_enrichment.r")
+source("R/Scripts/05_targeted_balloon_volcano.r")
+source("R/Scripts/06_targeted_subject_based.r")
+source("R/Scripts/07_results_numbers.r")
+source("R/Scripts/08_supplemental_materials.r")
+}

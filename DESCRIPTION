@@ -1,0 +1,99 @@
+Type: Project
+Title: Oxidative Stress-Dominant Metabolomic Signatures Characterize Primary Graft Dysfunction After Heart Transplantation, Transplantation
+Authors@R: c(
+    person("Joshua", "Preston",
+           email = "joshua.preston@emory.edu",
+           role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-9834-3017")),
+    person("Amshu", "Chakragiri",
+           role = "aut",
+           comment = c(ORCID = "pending"))
+)
+Description: Metabolomics analysis pipeline for preoperative primary graft dysfunction study.
+    This project contains all code and analysis scripts for reproducing the results
+    submitted to EJCTS, Rust et al. 2025.
+License: MIT + file LICENSE
+URL: https://github.com/jdpreston30/PGD-postop-metabolomics
+Depends: 
+    R (>= 4.5.1)
+Imports:
+    yaml,
+    limma,
+    here,
+    conflicted,
+    lubridate,
+    purrr,
+    dplyr,
+    readr,
+    tidyr,
+    stringr,
+    ggraph,
+    ggplot2,
+    lubridate,
+    magrittr,
+    tibble,
+    forcats,
+    readxl,
+    writexl,
+    janitor,
+    scales,
+    viridis,
+    data.table,
+    pwr,
+    raster,
+    magick,
+    grid,
+    gridExtra,
+    patchwork,
+    mixOmics,
+    TernTablesR,
+    igraph,
+    RColorBrewer,
+    xtable,
+    som,
+    RJSONIO,
+    gplots,
+    e1071,
+    caTools,
+    randomForest,
+    Cairo,
+    pls,
+    caret,
+    lattice,
+    scatterplot3d,
+    devtools,
+    gtable,
+    qqconf,
+    metap,
+    BiocManager,
+    cowplot,
+    jsonlite,
+    glue,
+    officer,
+    flextable,
+    rmarkdown,
+    knitr,
+    tinytex
+Additional_repositories: 
+    https://bioconductor.org/packages/release/bioc
+Bioconductor:
+    RBGL,
+    Rgraphviz,
+    fgsea,
+    globaltest,
+    GlobalAncova,
+    Rsamtools,
+    edgeR,
+    siggenes,
+    BiocParallel,
+    MSnbase,
+    xcms,
+    CAMERA,
+    multtest,
+    TernTablesR
+Remotes:
+    jdpreston30/TernTablesR,
+    xia-lab/MetaboAnalystR
+Config/renv/snapshot/type: explicit
+Encoding: UTF-8
+RoxygenNote: 7.3.3

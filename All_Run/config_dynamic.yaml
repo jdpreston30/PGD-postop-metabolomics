@@ -1,0 +1,125 @@
+# Analysis Configuration - Dynamic Computer Detection
+# Project settings and data paths for reproducible analysis
+
+# Computer-specific path templates
+computers:
+  laptop:
+    user_home: "/Users/jdp2019"
+    onedrive_path: "Library/CloudStorage/OneDrive-Emory"
+    metabojanitor_subpath: "MetaboJanitoR"
+    figures_path: "Outputs/Figures/Final"
+  
+  desktop:
+    user_home: "/Users/JoshsMacbook2015" 
+    onedrive_path: "Library/CloudStorage/OneDrive-EmoryUniversity"
+    metabojanitor_subpath: "MetaboJanitoR"
+    figures_path: "Outputs/Figures/Final"
+
+# Dynamic path templates (will be populated based on computer selection)
+paths:
+  # Raw data path templates - {user_home} and {onedrive_path} will be substituted
+  base_data_path: "{user_home}/{onedrive_path}/Research/MS_raw_data/LCMS/Chan_studies_MS_raw/PGD_studies/Chan_PGD_9_2025"
+  # Specific file paths (built from base)
+  TFT_annot: "{base_data_path}/{metabojanitor_subpath}/ComBat/MSMICA/global_KEGG/MSMICA_Feature_Tables/MSMICA_20p_halfmin_log2.csv"
+  TFT_annot_key: "{base_data_path}/{metabojanitor_subpath}/ComBat/MSMICA/global_KEGG/MSMICA_Feature_Tables/MSMICA_feature_key.csv"
+  TFT_annot_QC: "{user_home}/{onedrive_path}/Research/MS_raw_data/LCMS/MSMICA_QC.xlsx"
+  UFT_full: "{base_data_path}/{metabojanitor_subpath}/ComBat/Untargeted/UFT_ComBat_full_halfmin_log2_tidy.csv"
+  UFT_filtered: "{base_data_path}/{metabojanitor_subpath}/ComBat/Untargeted/UFT_ComBat_20p_halfmin_log2_tidy.csv"
+  clinical_metadata: "{user_home}/{onedrive_path}/Research/Chan Lab - Transplant Multi-Omics - OHT/OHT Clinical Data Master Sheet.xlsx"
+  
+  # Local database paths (relative - same across computers)
+  manual_QC: "Databases/manual_QC.xlsx"
+  qstd_c18: "Databases/IDX_IROA/Qstd4_IROA_C18neg_quantification_HFQE_Fusion_09252025.txt"
+  qstd_hilic: "Databases/IDX_IROA/Qstd4_IROA_HILICpos_quantification_HFQE_Fusion_09252025.txt"
+  idx_library: "Databases/IDX_IROA/IDX_lib.csv"
+  
+  # Output paths (relative to project root)
+  output: "./Outputs"
+  figures: "{figures_path}"
+  
+  # Script and utility paths
+  scripts: "R/Scripts/"
+  utils: "R/Utilities/"
+
+# Analysis settings (same across all computers)
+analysis:
+  # Project metadata
+  project_name: "Postop_PGD_9_2024"
+  description: "PGD Preop Metabolomics Analysis"
+  
+  # Study cohort and variable definitions
+  cohort:
+    # Patient cohort definition
+    patient_range: 
+      start: 1
+      end: 64
+      excluded: [49]  # H49 Not included in analysis (false start)
+    
+    # Table variable groups for publication
+    table_variables:
+      T1: # Demographics and preoperative characteristics
+        - demographics_age_tpx
+        - demographics_sex
+        - demographics_race
+        - demographics_BMI
+        - comorbidities_smoking_hx
+        - comorbidities_DM
+        - comorbidities_prior_cardiac_surg
+        - recipient_NICM_ICM_cong
+        - preop_temp_MCS
+        - preop_IABP
+        - preop_imeplla5.5
+        - preop_VA_ECMO
+        - preop_LVAD
+        - recipient_UNOS_status
+        - preop_PVR
+        - rx_preop_inotrope
+        - rx_preop_amiodarone
+        - preop_RADIAL_calc
+        - preop_labs_albumin
+        - preop_labs_alkphos
+        - preop_labs_ALT 
+        - preop_labs_AST
+        - preop_labs_bilirubin
+        - preop_labs_creatinine
+        - preop_labs_GFR
+        - preop_labs_Hgb
+        - preop_labs_Plt
+        - preop_labs_sodium
+        - preop_labs_WBC
+
+      T2: # Donor characteristics
+        - donor_age
+        - donor_sex
+        - donor_sex_mismatch
+        - donor_PHM_calc
+        - donor_LVEF
+        - donor_drug_use
+        - donor_PHS_risk
+        - donor_DBD_DCD
+        - donor_COD_simplified
+      
+      T3: # Perioperative and postoperative outcomes
+        - operative_IT_minutes
+        - operative_CPB_minutes
+        - donor_platform_generic
+        - postop_VA_ECMO
+        - postop_ICU_LOS
+        - postop_CRRT
+        - postop_stroke
+        - postop_30_day_LVEF
+        - postop_hospital_LOS
+        - ACR_2R_or_greater
+        - survival_90
+
+  # Environment preferences
+  tibble_options:
+    print_max: 100
+    print_min: 100
+    sigfig: 3
+    
+  # Data.table preferences  
+  datatable_options:
+    print_class: true
+    print_keys: true
+    aware: true
