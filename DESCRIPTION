@@ -18,9 +18,9 @@ Depends:
     R (>= 4.5.1)
 Imports:
     yaml,
-    limma,
     here,
     conflicted,
+    broom,
     lubridate,
     purrr,
     dplyr,
@@ -29,7 +29,6 @@ Imports:
     stringr,
     ggraph,
     ggplot2,
-    lubridate,
     magrittr,
     tibble,
     forcats,
@@ -45,8 +44,6 @@ Imports:
     grid,
     gridExtra,
     patchwork,
-    mixOmics,
-    TernTablesR,
     igraph,
     RColorBrewer,
     xtable,
@@ -73,10 +70,13 @@ Imports:
     flextable,
     rmarkdown,
     knitr,
-    tinytex
+    tinytex,
+    pheatmap
 Additional_repositories: 
     https://bioconductor.org/packages/release/bioc
 Bioconductor:
+    limma,
+    mixOmics,
     RBGL,
     Rgraphviz,
     fgsea,
@@ -89,8 +89,7 @@ Bioconductor:
     MSnbase,
     xcms,
     CAMERA,
-    multtest,
-    TernTablesR
+    multtest
 Remotes:
     jdpreston30/TernTablesR,
     xia-lab/MetaboAnalystR

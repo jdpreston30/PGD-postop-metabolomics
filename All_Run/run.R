@@ -5,10 +5,6 @@ source("R/Scripts/00a_environment_setup.r")
 source("R/Scripts/00b_setup.R")
 source("R/Scripts/00c_clinical_metadata.R")
 source("R/Scripts/00d_FTs.R")
-
-
-
-source("R/Scripts/01_cleanup.R")
 source("R/Scripts/02_PCA_PLSDA_heatmaps.R")
 source("R/Scripts/03_limma.r")
 source("R/Scripts/04_pathway_enrichment.r")

@@ -21,21 +21,21 @@ make_heatmap <- function(
   feature_selector <- match.arg(feature_selector)
 
   # ---- Checks ----
-  stopifnot(all(c("Sample_ID", "Clinical_PGD") %in% names(data)))
+  stopifnot(all(c("Sample_ID", "severe_PGD") %in% names(data)))
   has_time <- "Time" %in% names(data)
 
   # Keep ID/Variant/(optional)T_stage up front
   dat <- dplyr::select(
     data,
-    dplyr::any_of(c("Sample_ID", "Clinical_PGD", if (has_time) "Time")),
+    dplyr::any_of(c("Sample_ID", "severe_PGD", if (has_time) "Time")),
     dplyr::everything()
   )
 
-  # Coerce Clinical_PGD to factor in desired order
-  dat$Clinical_PGD <- factor(dat$Clinical_PGD, levels = unique(dat$Clinical_PGD))
+  # Coerce severe_PGD to factor in desired order
+  dat$severe_PGD <- factor(dat$severe_PGD, levels = unique(dat$severe_PGD))
 
-  # Build matrix: samples x features (drop ID/Clinical_PGD/Time)
-  drop_cols <- c("Sample_ID", "Clinical_PGD", "Time")
+  # Build matrix: samples x features (drop ID/severe_PGD/Time)
+  drop_cols <- c("Sample_ID", "severe_PGD", "Time")
   X <- as.matrix(dplyr::select(dat, -dplyr::all_of(drop_cols)))
   stopifnot(all(vapply(as.data.frame(X), is.numeric, TRUE)))
 
@@ -44,7 +44,7 @@ make_heatmap <- function(
   rownames(X) <- sample_ids
 
   # Group factor for ANOVA ranking
-  group_pgd <- dat$Clinical_PGD
+  group_pgd <- dat$severe_PGD
   group_time <- dat$Time
 
   # ---- Optional feature ranking/selection ----
@@ -136,7 +136,7 @@ make_heatmap <- function(
   # ---- Column annotation (aligned to columns of M) ----
   # Build annotation in REVERSE order since pheatmap displays first column at bottom
   # Start with variant annotation (will be on bottom - first column)
-  ann_col <- data.frame(Clinical_PGD = dat$Clinical_PGD, row.names = sample_ids)
+  ann_col <- data.frame(severe_PGD = dat$severe_PGD, row.names = sample_ids)
   
   # Add cluster annotation last (will be on top - last column)
   # Create a mapping from sample_ids to final cluster assignments
@@ -146,7 +146,7 @@ make_heatmap <- function(
   names(cluster_labels) <- sample_ids
   
   # Use standard factor levels - legend order controlled by color order
-  ann_col$Clinical_PGD <- dat$Clinical_PGD
+  ann_col$severe_PGD <- dat$severe_PGD
 
   # Reorder rows of ann_col to match M's columns
   ann_col <- ann_col[colnames(M), , drop = FALSE]
@@ -156,15 +156,27 @@ make_heatmap <- function(
   ann_colors <- list()
   
   # Add variant colors first (matches first column - will display at bottom)
-  ann_colors$Clinical_PGD <- c(
+  ann_colors$severe_PGD <- c(
       "Y" = "#94001E",
       "N" = "#03507D"
     )
+  # ---- Scale and cap at ±3 for color mapping ----
+  # Manually scale rows to z-scores
+  M_scaled <- t(scale(t(M), center = TRUE, scale = TRUE))
+  M_scaled[is.na(M_scaled)] <- 0
+  # Cap values at ±3 so colors saturate beyond this range
+  M_capped <- pmin(pmax(M_scaled, -3), 3)
+  
+  # Define color breaks for -3 to +3 range
+  color_breaks <- seq(-3, 3, length.out = 256)
+  heatmap_colors <- colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255)
+
   # ---- Heatmap (for screen) ----
   heatmap_plot <- pheatmap::pheatmap(
-    M,
-    scale = "row",
-    color = colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255),
+    M_capped,
+    scale = "none",  # Already scaled manually
+    breaks = color_breaks,
+    color = heatmap_colors,
     clustering_distance_rows = "euclidean",
     clustering_distance_cols = "euclidean",
     clustering_method = "complete",
@@ -174,14 +186,16 @@ make_heatmap <- function(
     show_colnames = FALSE,
     fontsize = 10,
     na_col = "#DDDDDD",
-    legend_labels = "Z-Score"
+    legend_labels = "Z-Score",
+    border_color = NA
   )
 
   # Create heatmap plot object for patchwork
   heatmap_plot <- pheatmap::pheatmap(
-    M,
-    scale = "row",
-    color = colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255),
+    M_capped,
+    scale = "none",  # Already scaled manually
+    breaks = color_breaks,
+    color = heatmap_colors,
     clustering_distance_rows = "euclidean",
     clustering_distance_cols = "euclidean",
     clustering_method = "complete",
@@ -192,7 +206,8 @@ make_heatmap <- function(
     fontsize = 8,
     na_col = "#DDDDDD",
     silent = TRUE,  # Prevents auto-display
-    legend_labels = "Z-Score"
+    legend_labels = "Z-Score",
+    border_color = NA
   )
 
   # Create heatmap plot to save
@@ -205,9 +220,10 @@ make_heatmap <- function(
     )
   print(
     pheatmap::pheatmap(
-    M,
-    scale = "row",
-    color = colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255),
+    M_capped,
+    scale = "none",  # Already scaled manually
+    breaks = color_breaks,
+    color = heatmap_colors,
     clustering_distance_rows = "euclidean",
     clustering_distance_cols = "euclidean",
     clustering_method = "complete",
@@ -217,7 +233,8 @@ make_heatmap <- function(
     show_colnames = FALSE,
     fontsize = 8,
     na_col = "#DDDDDD",
-    legend_labels = "Z-Score"
+    legend_labels = "Z-Score",
+    border_color = NA
   ))
   dev.off()
 

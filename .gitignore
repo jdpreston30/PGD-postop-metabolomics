@@ -1,3 +1,14 @@
 all_objects.rds
 **/all_objects.rds
 
+# renv (keep lockfile and settings, ignore library)
+renv/library/
+renv/local/
+renv/staging/
+renv/python/
+
+# R files
+.Rhistory
+.RData
+.Rproj.user
+

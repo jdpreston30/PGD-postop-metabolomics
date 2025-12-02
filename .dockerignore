@@ -1,0 +1,40 @@
+# Docker
+Dockerfile
+
+# renv
+renv/library/
+renv/local/
+renv/staging/
+renv/python/
+
+# R files
+.Rhistory
+.RData
+.Rproj.user
+
+# Git
+.git
+.gitignore
+
+# Project specific
+all_objects.rds
+**/all_objects.rds
+
+# Output files (generate fresh in container)
+Outputs/*.pdf
+Outputs/*.png
+Outputs/*.csv
+Outputs/**/*.pdf
+Outputs/**/*.png
+Outputs/**/*.csv
+
+# IDE files
+*.Rproj
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
+
+# Documentation (included in image, not needed in .dockerignore)
+# Keep README, markdown files

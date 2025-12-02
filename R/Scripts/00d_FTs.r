@@ -8,10 +8,10 @@ pgd_status <- clinical_metadata_i %>%
 TFT_annot <- read_csv(config$paths$TFT_annot) %>%
   preprocess_FT(apply_unique_filter = TRUE, unique_threshold = 0.8)
 #- 0d.1.1: UFT filtered and preprocess; NO uniqueness filter
-UFT_filtered <- read_csv(config$paths$UFT_filtered) %>%
+UFT_filtered_i <- read_csv(config$paths$UFT_filtered) %>%
   preprocess_FT(apply_unique_filter = FALSE)
 #- 0d.1.1: UFT filtered and preprocess; NO uniqueness filter
-UFT <- read_csv(config$paths$UFT_full) %>%
+UFT_i <- read_csv(config$paths$UFT_full) %>%
   preprocess_FT(apply_unique_filter = FALSE)
 # ! Filtering out H49 as this was a 'false start' where we collected early but then heart offer didn't go through
 # ! Fixed typo in Sample_ID for H46SS0
@@ -55,15 +55,16 @@ idx_lib <- read_csv(config$paths$idx_library)
 #+ 0d.4: Create Identified TFT_confirmed based on library
 #- 0d.4.1: Run function to match features to library and create identified TFT_confirmed
 identified <- create_identified_FT(
-  feature_table = UFT_filtered,
+  feature_table = UFT_filtered_i,
   reference_library = idx_lib,
   mz_thresh_ppm = 5,
   time_thresh_sec = 30
 )
 #- 0d.4.2: Assign and apply unique filter fxn just in case
 TFT_confirmed <- identified$TFT_confirmed
-#- 0d.4.2: Build key
+#- 0d.4.3: Build key and filter out entries without compound names
 TFT_confirmed_key <- identified$matched_features %>%
+  filter(!is.na(compound_name)) %>%  # Remove unmatched features
   select(identified_name = compound_name, isomer = library_isomer, everything()) %>%
   mutate(MMD = "")
 #+ 0d.5: Create merged library/annotated TFT
@@ -103,7 +104,67 @@ TFT_combined_base <- TFT_annot %>%
 TFT_confirmed_features_only <- TFT_confirmed %>%
   select(Patient, Sample, all_of(confirmed_features))
 #- 0d.5.8: Merge datasets and apply uniqueness filter
-#!!!!!!!!
-TFT_combined <- TFT_combined_base %>%
+TFT_combined_i <- TFT_combined_base %>%
   left_join(TFT_confirmed_features_only, by = c("Patient", "Sample")) %>%
   filter_unique_features(unique_threshold = 0.8)
+#- 0d.5.9: Create combined key for TFT_combined
+TFT_combined_key <- bind_rows(
+  TFT_confirmed_key %>% 
+    filter(!is.na(identified_name)) %>%
+    mutate(source = "library", lib_conf = "Y"),
+  TFT_annot_key %>% 
+    filter(!is.na(identified_name)) %>%
+    mutate(source = "annotation", lib_conf = "N")
+) %>%
+  left_join(TFT_merged_features %>% select(feature, source_final = source), by = "feature") %>%
+  mutate(source = coalesce(source_final, source)) %>%
+  select(-source_final) %>%
+  arrange(feature, desc(lib_conf)) %>%
+  group_by(feature) %>%
+  dplyr::slice(1) %>%  # Keep library version when overlap
+  ungroup()
+#- 0d.5.10: Create clean key for downstream use (volcano/balloon plots)
+combined_key_clean <- TFT_combined_key %>%
+  group_by(identified_name) %>%
+  mutate(
+    is_isomer = n() > 1 | isomer %in% c("Y", "yes"),
+    is_library = lib_conf == "Y",
+    Identified_Name = identified_name,
+    Identified_Name = if_else(is_isomer, paste0(Identified_Name, "*"), Identified_Name),
+    Identified_Name = if_else(is_library, paste0(Identified_Name, "\u1D62"), Identified_Name)
+  ) %>%
+  ungroup() %>%
+  select(Metabolite = feature, Identified_Name)
+#+ 0d.6: Create synthetic rows for missing timepoints
+#- 0d.6.1: Define missing samples metadata
+missing_samples <- tibble::tribble(
+  ~Patient, ~Sample, ~severe_PGD,       ~PGD_grade_tier,   ~any_PGD,
+  "H5",     "S2",    "Severe PGD",      "Severe PGD",      "Y",
+  "H14",    "S2",    "No Severe PGD",   "Mild/Mod. PGD",   "Y",
+  "H50",    "S1",    "No Severe PGD",   "Mild/Mod. PGD",   "Y"
+)
+#- 0d.6.2: Apply synthetic row creation to all three feature tables; add Time and Sample_ID columns; recode severe_PGD
+TFT_combined <- create_synthetic_rows(TFT_combined_i, missing_samples) %>%
+  mutate(
+    Sample_ID = paste0(Patient, Sample),
+    Time = if_else(Sample == "S1", 12, 24),
+    severe_PGD = if_else(severe_PGD == "Severe PGD", "Y", "N")
+  ) %>%
+  select(Patient, Sample, Sample_ID, Time, everything())
+UFT_filtered <- create_synthetic_rows(UFT_filtered_i, missing_samples) %>%
+  mutate(
+    Sample_ID = paste0(Patient, Sample),
+    Time = if_else(Sample == "S1", 12, 24),
+    severe_PGD = if_else(severe_PGD == "Severe PGD", "Y", "N")
+  ) %>%
+  select(Patient, Sample, Sample_ID, Time, everything())
+UFT <- create_synthetic_rows(UFT_i, missing_samples) %>%
+  mutate(
+    Sample_ID = paste0(Patient, Sample),
+    Time = if_else(Sample == "S1", 12, 24),
+    severe_PGD = if_else(severe_PGD == "Severe PGD", "Y", "N")
+  ) %>%
+  select(Patient, Sample, Sample_ID, Time, everything())
+#- 0d.6.3: Take the feature names and make a vector
+untargeted_features <- names(UFT) %>%
+  purrr::keep(~ str_starts(.x, "HILIC") | str_starts(.x, "C18"))

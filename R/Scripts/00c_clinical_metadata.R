@@ -35,6 +35,7 @@ clinical_metadata <- clinical_metadata_i %>%
     donor_age_col = "donor_age",
     ischemic_time_col = "operative_IT_minutes"
   ) %>%
+  calc_BiVAD() %>%
   calc_ISHLT() %>%
   calc_PHM() %>%
   mutate(severe_PGD = if_else(
