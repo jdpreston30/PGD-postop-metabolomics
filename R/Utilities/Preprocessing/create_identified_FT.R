@@ -52,7 +52,7 @@ create_identified_FT <- function(feature_table,
   # Create tibble with parsed information
   feature_info <- tibble(
     feature = feature_columns
-  ) %>%
+  ) |>
     mutate(
       # Split the feature name by underscores
       parts = str_split(feature, "_"),
@@ -62,7 +62,7 @@ create_identified_FT <- function(feature_table,
       mz = map_dbl(parts, ~as.numeric(.x[2])),
       # Extract RT (third part, convert to numeric)
       rt = map_dbl(parts, ~as.numeric(.x[3]))
-    ) %>%
+    ) |>
     # Remove the temporary parts column
     select(feature, mode, mz, rt)
   
@@ -88,7 +88,7 @@ create_identified_FT <- function(feature_table,
       next  # Skip if mode not recognized
     }
     
-    library_subset <- reference_library %>%
+    library_subset <- reference_library |>
       filter(Column == mode_mapping[current_feature$mode])
     
     if (nrow(library_subset) == 0) {
@@ -149,7 +149,7 @@ create_identified_FT <- function(feature_table,
     matched_features <- bind_rows(all_matches)
     
     # Sort by feature name and match quality
-    matched_features <- matched_features %>%
+    matched_features <- matched_features |>
       arrange(feature, rt_error_abs_sec, abs(mz_error_ppm))
     
     cat("  Total matches found:", nrow(matched_features), "\n")
@@ -165,14 +165,14 @@ create_identified_FT <- function(feature_table,
   cat("Step 3: Adding unique match indicators...\n")
   
   # Count matches per feature
-  match_counts <- matched_features %>%
-    group_by(feature) %>%
+  match_counts <- matched_features |>
+    group_by(feature) |>
     summarise(match_count = n(), .groups = "drop")
   
   # Add unique_match column
-  matched_features <- matched_features %>%
-    left_join(match_counts, by = "feature") %>%
-    mutate(unique_match = match_count == 1) %>%
+  matched_features <- matched_features |>
+    left_join(match_counts, by = "feature") |>
+    mutate(unique_match = match_count == 1) |>
     select(-match_count)
   
   unique_matches <- sum(matched_features$unique_match)
@@ -199,7 +199,7 @@ create_identified_FT <- function(feature_table,
   # Create TFT_confirmed with metadata columns + matched feature columns
   columns_to_select <- c(non_feature_columns, feature_columns_to_keep)
   
-  TFT_confirmed <- feature_table %>%
+  TFT_confirmed <- feature_table |>
     select(all_of(columns_to_select))
   
   # Print summary

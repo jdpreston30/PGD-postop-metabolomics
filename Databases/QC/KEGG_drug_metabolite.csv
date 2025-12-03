@@ -1,0 +1,1351 @@
+drug_KEGG_ID,metabolite_KEGG_ID,metabolite_name
+D08403,C00238,Potassium cation; K+; Potassium(1+); Potassium ion
+D00056,C00298,Trypsin; Trypsin crystallized
+D11546,C00317,Amylopectin
+D07510,C00374,Heparin; Enoxaparin; Bemiparin
+D08260,C00384,Neomycin
+D05363,C00480,Pullulan
+D02544,C00494,Sisomicin; Antibiotic 6640; Dehydrogentamicin Cla; Rickamicin
+D00071,C00516,Fibronectin
+D04843,C00711,Malate; Malic acid; 2-Hydroxybutanedioic acid
+D00087,C00732,Ubenimex
+D00090,C00752,Thrombin; Coagulation factor IIa
+D03818,C00773,Pepstatin
+D03798,C00796,Dicumarol; Dicoumarol
+D07840,C01023,Dihydrostreptomycin
+D03882,C01349,Docebenone; AA861
+D04594,C01358,NH4OH; Ammonium hydroxide
+D08556,C01375,Tacrolimus; FK506; FK 506
+D08555,C01453,Tacrine
+D00115,C01498,Gelatine; Gelatin
+D00116,C01501,Glucagon
+D00118,C01517,Naproxen
+D00120,C01531,Sulindac
+D08682,C01541,Warfarin
+D02321,C01553,Amsacrine; mAMSA; 4'-(9-Acridinylamino)-3'-methoxymethanesulfonanilide
+D02322,C01555,Apramycin
+D00125,C01576,Etoposide; VP-16
+D00126,C01588,Ibuprofen
+D00127,C01608,Piroxicam
+D02323,C01621,Tolrestat
+D07698,C01675,Cilastatin
+D07816,C01690,Diclofenac
+D00130,C01691,Diflunisal
+D00131,C01692,Disulfiram; Tetraethylthiuram disulfide
+D00132,C01716,Ketoprofen
+D04983,C01733,Methionine; 2-Amino-4-(methylthio)butyric acid
+D05908,C01754,Spiramycin
+D07607,C01790,Capreomycin
+D00136,C01814,Haloperidol
+D08410,C01844,Pravastatin
+D02328,C01865,Zopolrestat
+D00141,C01926,Indomethacin; Indometacin
+D00142,C01937,Methotrexate
+D00144,C01956,Pyrazinamide; Pyrazinoic acid amide
+D00145,C01965,Trimethoprim
+D00146,C02017,Corticotropin; Adrenocorticotropic hormone; ACTH
+D08526,C02078,Spectinomycin
+D05931,C02081,Streptonigrin
+D00151,C02168,Mefenamic acid
+D00153,C02197,"Testolactone; 13-Hydroxy-3-oxo-13,17-secoandrosta-1,4-dien-17-oic acid delta-lactone"
+D00155,C02267,Deoxycoformycin; Pentostatin
+D00162,C02518,4-Aminosalicylate; 4-Aminosalicylic acid
+D00167,C02924,"Dimercaprol; 2,3-Mercaptopropanol; 2,3-Dimercapto-1-propanol; British anti-lewisite"
+D00168,C02961,Cytarabine; Cytosine arabinoside; Cytosine-1-beta-D-arabinofuranoside; Ara-C
+D08162,C02996,Meclofenamate sodium; Meclofenamic acid sodium salt
+D08659,C03224,"3,5-Dibromo-L-tyrosine"
+D06202,C03349,3-Aminopropanesulfonate; 3-Amino-1-propanesulfonic acid
+D00172,C03378,Coagulation factor VIIa
+D00176,C03958,Thyrotropin-releasing hormone; TRH; Protirelin; Thyroliberin
+D00177,C04078,Methylmethionine sulfonium salt; Methylmethionine sulfonium chloride; Vitamin U
+D08097,C04491,Cyanidin 3-rutinoside chloride; Cyanidin-3-rhamnoglucoside chloride; Keracyanin chloride
+D07148,C04548,Synephrine; (+/-)-Synephrine; 1-(4-Hydroxyphenyl)-2-(methylamino)ethanol
+D02742,C04663,Acadesine; AICA riboside; 5-Amino-1-beta-D-ribofuranosylimidazole-4-carboxamide; 5-Aminoimidazole-4-carboxamide-1-beta-D-ribofuranoside
+D00182,C05028,Norethindrone; 19-Norethisterone; 19-Nor-17alpha-ethynyl-17beta-hydroxy-4-androsten-3-one
+D00183,C05079,Nalidixic acid
+D00184,C05086,Cyclosporin A; Ciclosporin; Cyclosporine
+D02334,C05339,Phosphinate; Phosphinic acid; Hypophosphorous acid; Hyopophosphite
+D00186,C05349,Ciprofloxacin
+D02335,C05377,"Menadione; Vitamin K3; 2-Methyl-1,4-naphthoquinone"
+D11427,C05721,Leucomethylene blue; Reduced methylene blue
+D03874,C06496,"Compound IV; 5-(7-(4-(4,5-Dihydro-2-oxazolyl)phenoxy)heptyl)-3-methylisoxazole; Disoxaril"
+D07286,C06534,Heroin; Diamorphine; Diacetylmorphine
+D00197,C06539,Reserpine
+D00198,C06540,Rescinnamine
+D08194,C06541,Deserpidine
+D00202,C06572,Nystatin
+D00203,C06573,Amphotericin B
+D00204,C06574,Ampicillin; Anhydrous ampicillin
+D04515,C06665,Imipenem; Imipenem anhydrous
+D00208,C06681,Mitomycin; Mitomycin C
+D07659,C06683,Ceftriaxone
+D03625,C06685,Cycloheximide
+D00209,C06686,Griseofulvin
+D00210,C06687,Norfloxacin
+D08228,C06693,Monensin; Monensin A
+D04281,C06694,Fusidic acid
+D00214,C06770,Actinomycin D; Dactinomycin
+D02338,C06803,Acebutolol
+D00217,C06804,Acetaminophen; Paracetamol
+D00218,C06805,Acetazolamide
+D00219,C06806,Acetohexamide
+D00220,C06808,Acetohydroxamic acid
+D00222,C06810,Aciclovir; Acyclovir
+D00223,C06812,Lincomycin
+D00225,C06817,Alprazolam
+D07441,C06818,Amantadine
+D02543,C06820,Amikacin
+D07447,C06821,Amiloride
+D02910,C06823,Amiodarone
+D07448,C06824,Amitriptyline
+D07450,C06825,Amlodipine
+D07452,C06827,Amoxicillin; Amoxicillin anhydrous
+D00232,C06830,Anisotropine methylbromide; Methyloctatropine bromide
+D00233,C06831,Dithranol; Anthralin
+D00234,C06832,Astemizole
+D07474,C06834,Atorvastatin
+D00236,C06835,Atovaquone; Acuvel; Wellvone; Mepron
+D00237,C06836,Auranofin
+D07486,C06838,Azithromycin
+D02339,C06839,Azlocillin
+D00240,C06840,Aztreonam; Monobactam
+D07495,C06842,Beclomethasone
+D07499,C06843,Benazepril
+D07511,C06846,Benztropine; Benzatropine
+D07520,C06847,Bepridil
+D00244,C06848,Betamethasone
+D07526,C06849,Betaxolol
+D02342,C06852,Bisoprolol
+D07534,C06853,Bitolterol
+D03165,C06856,Bromocriptine
+D07543,C06857,Brompheniramine
+D07591,C06860,Bupropion
+D07593,C06861,Buspirone
+D00248,C06862,Busulfan
+D03197,C06863,Butorphanol
+D00251,C06867,Captopril
+D07614,C06869,Carbenicillin
+D07617,C06871,Carbinoxamine
+D02343,C06872,Carboprost; (15S)-15-Methylprostaglandin F2alpha
+D00254,C06873,Carmustine; Bischloroethyl nitrosourea; BCNU
+D07624,C06874,Carteolol
+D00255,C06875,Carvedilol
+D00256,C06877,Cefaclor
+D00257,C06878,Cefadroxil
+D02344,C06879,Cefamandole
+D02299,C06880,Cefazolin
+D00258,C06881,Cefixime
+D07644,C06882,Cefonicid
+D07645,C06883,Cefoperazone
+D00259,C06884,Ceforanide
+D07647,C06885,Cefotaxime
+D00260,C06886,Cefotetan
+D02345,C06887,Cefoxitin
+D07651,C06888,Cefprozil; Cefprozil anhydrous
+D07654,C06889,Ceftazidime
+D07658,C06890,Ceftizoxime
+D00262,C06894,Cefuroxime
+D00263,C06895,Cephalexin; Cefalexin
+D07636,C06896,Cephapirin
+D00264,C06897,Cephradine; Cefradine
+D00266,C06900,Chlorambucil
+D07668,C06902,Chlorhexidine
+D07398,C06905,Chlorpheniramine; Chlorphenamine
+D00270,C06906,Chlorpromazine
+D00274,C06910,Cisapride
+D00275,C06911,Cisplatin; cis-Diamminedichloroplatinum(II); [PtCl2(NH3)2]; CDDP
+D00276,C06912,Clarithromycin; 6-O-Methylerythromycin; 6-O-Methylerythromycin A
+D03535,C06913,Clemastine
+D00277,C06914,Clindamycin
+D00278,C06915,Clofazimine
+D00279,C06916,Clofibrate
+D07726,C06917,Clomiphene
+D07727,C06918,Clomipramine
+D00282,C06922,Clotrimazole
+D07733,C06923,Cloxacillin
+D00283,C06924,Clozapine
+D07753,C06928,Cromolyn; Cromoglicic acid
+D03621,C06930,Cyclizine
+D07758,C06931,Cyclobenzaprine
+D07759,C06932,Cyclopentolate
+D00287,C06933,Cyclophosphamide; Cyclophosphamide hydrate
+D07765,C06935,Cyproheptadine
+D00288,C06936,Dacarbazine
+D00289,C06938,Danazol
+D02347,C06939,Dantrolene
+D03670,C06940,Deferoxamine
+D07782,C06941,Delavirdine
+D07791,C06943,Desipramine
+D00291,C06944,Desmopressin
+D07803,C06946,Dexchlorpheniramine
+D03742,C06947,Dextromethorphan
+D00293,C06948,Diazepam
+D00294,C06949,Diazoxide
+D02348,C06950,Dicloxacillin
+D07820,C06951,Dicyclomine; Dicycloverin
+D00295,C06952,Cimetidine
+D00296,C06953,Didanosine
+D07444,C06954,Diethylpropion; Amfepramone
+D00297,C06955,Digitoxin
+D00298,C06956,Digoxin
+D00299,C06957,Dihydrotachysterol
+D07845,C06958,Diltiazem
+D00300,C06960,Diphenhydramine
+D03858,C06961,Diphenidol
+D02349,C06963,Dipivefrin; Dipivefrine
+D00303,C06965,Disopyramide
+D03879,C06967,Dobutamine
+D07871,C06969,Dorzolamide
+D07874,C06970,Doxazosin
+D07875,C06971,Doxepin
+D07876,C06973,Doxycycline
+D07892,C06977,Enalapril
+D07894,C06978,Encainide
+D00310,C06979,Enoxacin
+D07916,C06980,Esmolol
+D00311,C06981,Estazolam
+D07925,C06984,Ethambutol
+D00315,C06991,Etodolac
+D07945,C06996,Fenfluramine
+D02350,C06997,Fenoprofen
+D07958,C06999,"Fexofenadine; 4-(1-Hydroxy-4-(4-(hydroxydiphenylmethyl)-1-piperidinyl)butyl)-alpha,alpha-dimethylbenzeneacetic acid"
+D07962,C07001,Flecainide
+D00322,C07002,Fluconazole
+D07967,C07004,Fludrocortisone
+D00325,C07007,Fluocinonide
+D07977,C07010,Fluphenazine
+D00330,C07013,Flurbiprofen
+D07983,C07014,Fluvastatin
+D07992,C07016,Fosinopril
+D00331,C07017,Furosemide
+D00332,C07018,Gabapentin
+D00333,C07019,Ganciclovir
+D00334,C07020,Gemfibrozil
+D00336,C07022,Glyburide; Glibenclamide
+D04370,C07023,Granisetron
+D04375,C07034,Guanabenz
+D08029,C07035,Guanadrel
+D08030,C07036,Guanethidine
+D08031,C07037,Guanfacine
+D08044,C07040,Hydralazine
+D00340,C07041,Hydrochlorothiazide
+D08047,C07042,Hydromorphone
+D08050,C07043,Hydroxychloroquine
+D08054,C07045,Hydroxyzine
+D08070,C07049,Imipramine
+D04625,C07053,Isoetharine
+D08090,C07056,Isoproterenol; Isoprenaline
+D00348,C07058,13-cis-Retinoic acid
+D08104,C07062,Ketorolac
+D08106,C07063,Labetalol
+D00352,C07064,Lactulose
+D00353,C07065,"Lamivudine; 3TC; 2',3'-Dideoxy-3'-thiacytidine"
+D08114,C07070,Levamisole
+D08146,C07072,Losartan
+D00359,C07074,Lovastatin
+D02318,C07078,Lomefloxacin
+D00363,C07079,Lomustine; 1-(2-Chloroethyl)-3-cyclohexyl-1-nitrosourea
+D08144,C07080,Loperamide
+D02340,C07104,Loxapine
+D00366,C07105,Lys-vasopressin; Lypressin; 8-L-Lysine vasopressin; LVP
+D02351,C07106,Mafenide
+D02566,C07107,Maprotiline
+D07671,C07115,Nitrogen mustard; Mechlorethamine; Chlormethine
+D08163,C07116,Meclizine; Meclozine
+D02341,C07117,Meclofenamate; Meclofenamic acid
+D08166,C07119,"Medroxyprogesterone; 6alpha-Methyl-17alpha-hydroxyprogesterone; 17-Hydroxy-6alpha-methylpregn-4-ene-3,20-dione"
+D08167,C07120,"Megestrol; 17-Hydroxy-6-methylpregna-4,6-diene-3,20-dione"
+D00369,C07122,Melphalan
+D08560,C07124,Tamsulosin
+D00370,C07125,Temazepam
+D08175,C07126,Menadiol
+D08569,C07127,Terazosin; Terazosine
+D08343,C07128,Meperidine; Pethidine
+D08570,C07129,Terbutaline
+D00372,C07131,Thiabendazole
+D02354,C07132,Thiethylperazine; Ethylthioperazine
+D08593,C07139,Ticarcillin
+D08594,C07140,Ticlopidine
+D08600,C07141,Timolol
+D06172,C07142,Tocainide
+D02671,C07143,Mesoridazine
+D08300,C07144,Metaproterenol; Orciprenaline
+D08192,C07146,Metaraminol
+D08614,C07147,"Tolazoline; 4,5-Dihydro-2-(phenylmethyl)-1H-imidazole"
+D00380,C07148,Tolbutamide
+D02355,C07149,Tolmetin
+D04966,C07151,Metformin
+D08623,C07153,Tramadol
+D08625,C07155,Tranylcypromine
+D08626,C07156,Trazodone
+D08187,C07164,Methamphetamine
+D08634,C07165,Triclofos
+D08636,C07168,Trifluoperazine
+D08638,C07171,Trihexyphenidyl
+D07125,C07172,Trimeprazine; Methylpromazine; Alimemazine
+D04979,C07175,Methdilazine
+D08643,C07178,Trimethobenzamide
+D08645,C07180,Tripelennamine
+D00396,C07182,"Tromethamine; 2-Amino-2-(hydroxymethyl)-1,3-propanediol; Trometamol"
+D00398,C07184,Valacyclovir; Valacyclovir hydrochloride; BW 256U87
+D08670,C07187,Venlafaxine
+D02356,C07188,Verapamil
+D00401,C07190,Thiamazole; Methimazole
+D00403,C07192,Methotrimeprazine; Levomepromazine
+D08205,C07194,Methyldopa anhydrous; Methyldopa
+D00406,C07195,Vidarabine; 9-beta-D-Arabino furanosyl adenine monohydrate
+D04999,C07196,Methylphenidate
+D00408,C07198,Methyltestosterone
+D02357,C07199,Methysergide
+D02358,C07202,Metoprolol
+D00409,C07203,Metronidazole
+D00410,C07205,Metyrapone
+D00411,C07206,Zafirlukast
+D00412,C07207,"Zalcitabine; 2',3'-Dideoxycytidine"
+D00413,C07210,Zidovudine; Azidothymidine; 3'-Azido-3'-deoxythymidine; AZT
+D00415,C07218,Zolmitriptan; 311C90
+D08690,C07219,Zolpidem
+D08215,C07220,Mexiletine
+D05021,C07221,Mezlin; Mezlocillin
+D08217,C07222,Mibefradil
+D00417,C07224,Milrinone
+D05045,C07225,Minocycline
+D08465,C07228,Raloxifene; LY 139481
+D08226,C07230,Molindone
+D08109,C07231,Moxalactam; Latamoxef
+D00424,C07235,Rifabutin
+D08483,C07236,Rimantadine
+D02359,C07239,Ritodrine
+D00427,C07240,Ritonavir
+D05792,C07241,Salmeterol
+D03731,C07245,Selegiline
+D02360,C07246,Sertraline
+D08513,C07247,Sibutramine
+D08242,C07250,Nafcillin
+D08246,C07251,Nalbuphine
+D08249,C07252,Naloxone
+D05113,C07253,Naltrexone
+D08250,C07254,Nandrolone; 17beta-Hydroxyestr-4-en-3-one; 17beta-Hydroxy-4-estren-3-one
+D05129,C07255,Nedocromil
+D08257,C07256,Nefazodone
+D08259,C07257,Nelfinavir
+D08261,C07258,Neostigmine
+D08514,C07259,Sildenafil
+D00435,C07263,Nevirapine
+D08270,C07264,Nicardipine
+D00437,C07266,Nifedipine
+D00438,C07267,Nimodipine
+D00439,C07268,Nitrofurantoin
+D00440,C07270,Nizatidine
+D08532,C07273,"Succinimide; 2,5-Pyrrolidinedione; Butanimide; 2,5-Diketopyrrolidine"
+D08288,C07274,Nortriptyline
+D00442,C07306,"Octreotide; D-Phenylalanyl-L-cysteinyl-L-phenylalanyl-D-tryptophyl-L-lysyl-L- threonyl-N-((1R,2R)-2-hydroxy-1-(hydroxymethyl)propyl)-L- cysteinamide cyclic (2->7)-disulfide"
+D08525,C07309,Sotalol
+D00443,C07310,Spironolactone
+D00444,C07311,Stanozolol; Androstanazole
+D00445,C07312,"Stavudine; d4T; 2',3'-Didehydro-3'-deoxythimidine; Sanilvudine"
+D05932,C07313,Streptozocin; Zanosar
+D00447,C07315,Sulfamethoxazole
+D00448,C07316,Sulfasalazine; Salicylazosulfapyridine; Salazosulfapyridine
+D00449,C07317,Sulfinpyrazone; Sulfoxyphenylpyrazolidine
+D00450,C07318,Sulfisoxazole
+D00451,C07319,Sumatriptan
+D00452,C07320,Suprofen
+D00453,C07321,Ofloxacin
+D00454,C07322,Olanzapine
+D08295,C07323,Olsalazine
+D00455,C07324,Omeprazole
+D00456,C07325,Ondansetron
+D08307,C07334,Oxacillin
+D00457,C07336,Quazepam
+D08179,C07339,Quinacrine; Mepacrine
+D00459,C07340,Quinapril hydrochloride
+D00460,C07341,Oxamniquine
+D00461,C07342,Quinethazone
+D00462,C07346,Oxandrolone
+D00463,C07356,Oxaprozin
+D00464,C07359,Oxazepam
+D00465,C07360,Oxybutynin
+D00466,C07361,Piperacillin sodium; Pipracil
+D00467,C07362,Pipobroman
+D08322,C07363,Oxymetazoline; Afrin
+D00470,C07366,Prazepam
+D00471,C07367,Praziquantel
+D08411,C07368,Prazosin
+D00472,C07369,"Prednisolone; 11beta,17,21-trihydroxypregna-1,4-diene-3,20-dione"
+D00474,C07371,"Primidone; 5-Phenyl-5-ethyl-Hexahydropyrimidine-4,6-dione"
+D00475,C07372,Probenecid
+D00476,C07373,Probucol
+D08422,C07375,Procaine
+D00478,C07376,Procarbazine hydrochloride
+D08425,C07378,Procyclidine
+D08430,C07379,Promazine
+D08435,C07381,Propafenone
+D08448,C07383,Proparacaine; Proxymetacaine
+D00486,C07389,Pyrantel pamoate
+D00488,C07391,Pyrimethamine
+D00490,C07393,Oxymetholone
+D07281,C07395,Pamidronate; Pamidronic acid
+D08456,C07397,"Quetiapine; 2-[2-(4-Dibenzo[b,f][1,4]thiazepin-11-yl-1-piperazinyl)ethoxy]ethanol"
+D03752,C07398,Quinapril
+D08421,C07401,Procainamide
+D08423,C07402,Procarbazine
+D00493,C07403,Prochlorperazine
+D00494,C07404,Promethazine; 10-(2-Dimethylaminopropyl)phenothiazine
+D02361,C07405,Propiomazine
+D07809,C07406,Propoxyphene
+D08443,C07407,Propranolol
+D08447,C07408,Protriptyline
+D08451,C07409,Pyrantel
+D00495,C07411,Paramethadione
+D07464,C07413,Paramethasone
+D08453,C07414,Pargyline
+D02362,C07415,Paroxetine
+D08074,C07416,Penbutolol
+D05407,C07417,Penciclovir
+D00496,C07418,Penicillamine
+D08333,C07420,Pentamidine
+D00498,C07421,Pentazocine
+D00499,C07422,"Pentobarbital; 5-Ethyl-5-(1-methylbutyl)-2,4,6(1H,3H,5H)-pyrimidinetrione"
+D00500,C07423,Pentobarbital sodium
+D00501,C07424,Pentoxifylline
+D08339,C07425,Pergolide
+D00503,C07427,Perphenazine; 4-(3-(2-Chlorophenothiazin-10-YL)propyl)-1-piperazineethanol
+D00504,C07428,Phenacemide
+D08346,C07429,"Phenazopyridine; 3-(Phenylazo)-2,6-pyridinediamine"
+D08349,C07430,Phenelzine
+D00505,C07431,Phenelzine sulfate
+D00506,C07434,Phenobarbital
+D08358,C07435,Phenoxybenzamine
+D00507,C07436,Phenoxybenzamine hydrochloride
+D00508,C07437,Phensuximide
+D05458,C07438,"Phentermine; alpha,alpha-Dimethylphenethylamine"
+D00510,C07440,Phenylbutazone
+D08365,C07441,Phenylephrine
+D00512,C07443,Phenytoin
+D00513,C07445,Pindolol
+D05004,C07449,Metiamide
+D00514,C07450,Dexmedetomidine
+D05087,C07451,Moxonidine
+D08611,C07452,Tizanidine
+D00515,C07455,Nitroglycerin; Glyceryl trinitrate
+D00516,C07456,Isosorbide dinitrate
+D00517,C07457,Amyl nitrite; Isoamyl nitrite
+D08543,C07458,Sulfanilamide; Sulfamine; Prontosil album
+D00518,C07459,Dichlorphenamide; Diclofenamide
+D00519,C07461,Chlorothiazide
+D00521,C07463,Terfenadine
+D02363,C07464,Ketanserin
+D09038,C07465,Remikiren; Ro 42-5892
+D03738,C07466,Enalkiren; A 64662
+D04040,C07467,Eprosartan
+D00522,C07468,Candesartan
+D00523,C07469,Irbesartan
+D08229,C07482,Montelukast
+D00530,C07484,Zaleplon
+D08283,C07486,"Nordazepam; Desmethyldiazepam; 7-Chloro-1,3-dihydro-5-phenyl-2H-1,4-benzodiazepin-2-one"
+D00531,C07487,Nitrazepam
+D00532,C07489,Glutethimide; 2-Ethyl-2-phenylglutarimide
+D07613,C07491,Carbaryl; Carbaril
+D00534,C07497,Malathion
+D00535,C07500,Vigabatrin
+D00537,C07502,Topiramate
+D08588,C07503,Tiagabine
+D00538,C07504,Zonisamide
+D00539,C07505,Ethosuximide
+D08389,C07508,Pirenzepine
+D08201,C07513,Methoxamine
+D07445,C07514,Amphetamine
+D00542,C07515,Halothane
+D00543,C07516,Enflurane
+D00544,C07517,Methoxyflurane
+D00545,C07518,Isoflurane
+D00546,C07519,Desflurane
+D00547,C07520,Sevoflurane
+D00548,C07522,"Etomidate; 1-(1-Phenylethyl)-imidazole-5-carboxylic acid, ethyl ester"
+D00549,C07523,"Propofol; 2,6-Diisopropylphenol"
+D00550,C07524,Midazolam
+D08098,C07525,Ketamine
+D00551,C07526,Tetracaine; Amethocaine
+D00552,C07527,Benzocaine; Ethyl aminobenzoate
+D08181,C07528,Mepivacaine
+D07552,C07529,Bupivacaine; Marcaine
+D04095,C07530,Etidocaine
+D00553,C07531,Prilocaine
+D08490,C07532,Ropivacaine
+D00554,C07534,Ethynyl estradiol; 17alpha-Ethinyl estradiol; Ethinyl estradiol; Ethinylestradiol
+D00555,C07536,Amobarbital
+D07929,C07537,Ethylmorphine
+D07514,C07538,Benzphetamine; Benzfetamine
+D00556,C07539,Aminopyrine; 4-Dimethylaminoantipyrine
+D07905,C07543,Ergonovine; Ergometrine
+D00557,C07560,Methaqualone
+D08489,C07564,Ropinirole
+D00560,C07566,Pimozide
+D00561,C07567,Sertindole
+D08687,C07568,Ziprasidone
+D00562,C07569,Propylthiouracil
+D00563,C07570,Mirtazapine
+D07984,C07571,Fluvoxamine
+D08542,C07573,Prontosil; Sulfamidochrysoidine; Prontosil rubrum
+D11172,C07577,"3,4-Methylenedioxymethamphetamine; N-Methyl-3,4-methylenedioxyamphetamine; MDMA"
+D08354,C07584,"Phenindione; 2-Phenyl-1,3-indandione"
+D00565,C07586,Fenofibrate
+D00566,C07587,Sodium salicylate
+D00567,C07589,Celecoxib
+D00568,C07590,Rofecoxib
+D00569,C07591,Phenacetin; Acetophenetidin
+D08452,C07594,Pyrethrin I
+D00572,C07598,"Succimer; meso-2,3-Dimercaptosuccinic acid"
+D02365,C07599,Alloxanthine; Oxipurinol; Oxypurinol
+D12433,C07606,Hypericin
+D08027,C07607,Gonadotropin-releasing hormone I; Gonadorelin; Gonadoliberin I; GnRH-I
+D08515,C07610,Silymarin; Silibinin; Silybin
+D08113,C07612,Leuprolide; Leuprorelin
+D08241,C07613,Nafarelin
+D07616,C07615,Carbimazole
+D00574,C07617,Aminoglutethimide
+D00575,C07618,Mestranol
+D00576,C07619,Quinestrol
+D00577,C07620,Diethylstilbestrol; DES
+D00578,C07622,Voriconazole; Vfend
+D07057,C07624,Abacavir
+D02366,C07625,Chloroquine
+D02922,C07626,Amodiaquine
+D08420,C07627,Primaquine
+D02367,C07629,Desogestrel
+D00580,C07630,Sulfadoxine
+D08428,C07631,Proguanil; Chloroguanide; N-(4-Chlorophenyl)-N'-(isopropyl)-imidodicarbonimidic diamide
+D04895,C07633,Mefloquine
+D08033,C07634,Halofantrine
+D00581,C07636,Iodoquinol
+D02480,C07637,Diloxanide furoate
+D00582,C07638,Sodium stibogluconate; Antimony sodium gluconate
+D05822,C07640,Semustine; Methyl-CCNU; 1-(2-Chloroethyl)-3-(4-methylcyclohexyl)-1-nitrosourea
+D00583,C07641,Thiotepa
+D02368,C07650,Gemcitabine
+D00585,C07652,Mifepristone; RU-486
+D00586,C07653,Flutamide
+D04972,C07654,Methacycline; Metacycline
+D08268,C07657,Netilmicin
+D00587,C07658,Sulfadiazine
+D02440,C07659,Sulfathalidine; Phthalylsulfathiazole; 2-[[[4-[(2-Thiazolylamino)sulfonyl]phenyl]amino]carbonyl]benzoic acid
+D08120,C07660,Levofloxacin; Ofloxacin S-(-)-form
+D08011,C07661,Gatifloxacin; AM 1155
+D00590,C07662,"Sparfloxacin; cis-5-Amino-1-cyclopropyl-7-(3,5-dimethyl-1-piperazinyl)-6,8-difluoro-1,4-dihydro-4-oxo-3-quinolinecarboxylic acid"
+D08237,C07663,Moxifloxacin
+D08654,C07664,Trovafloxacin
+D00591,C07665,Ethionamide
+D00592,C07666,"Dapsone; 4,4'-Sulfonylbisbenzenamine; Diaphenylsulfone"
+D07461,C07668,Apraclonidine
+D00593,C07669,Glimepiride
+D00594,C07670,Repaglinide
+D02369,C07671,Histrelin
+D08351,C07673,Phenformin; DBI
+D00595,C07674,Buformin; 1-Butylbiguanide
+D08378,C07675,Pioglitazone
+D00597,C07677,Acebutolol hydrochloride
+D07946,C07693,Fenoldopam
+D00614,C07695,Sodium nitroprusside dihydrate
+D00618,C07699,Nisoldipine
+D00620,C07701,Benazepril hydrochloride
+D08225,C07704,Moexipril
+D03753,C07706,Perindopril
+D00624,C07707,Perindopril erbumine
+D00625,C07708,Miglitol
+D00626,C07709,Candesartan cilexetil
+D00627,C07710,Telmisartan
+D00629,C07713,Nitrendipine
+D00630,C07714,Isosorbide mononitrate
+D02373,C07736,"Etidronic acid; 1-Hydroxyethylidene-1,1-diphosphonic acid; Ethane-1-hydroxy-1,1-bisphosphonate"
+D00637,C07740,Disopyramide phosphate
+D05077,C07743,Moricizine
+D00646,C07750,Tolterodine
+D00647,C07751,Dofetilide
+D07119,C07752,Alendronic acid; Alendronate; (4-Amino-1-hydroxybutylidene)bisphosphonic acid
+D08060,C07753,Ibutilide
+D00650,C07758,Bendroflumethiazide
+D00651,C07759,Benzthiazide
+D00652,C07760,Brinzolamide
+D07635,C07761,Cephalothin; Cefalotin
+D00654,C07763,Hydroflumethiazide
+D00655,C07764,Methazolamide
+D00656,C07765,Methyclothiazide
+D00657,C07766,Polythiazide
+D00658,C07767,Trichlormethiazide
+D07483,C07768,Azelastine
+D08533,C07770,Sulbactam
+D00660,C07771,Tazobactam
+D07482,C07774,Azatadine
+D07547,C07777,Buclizine
+D07662,C07778,Cetirizine
+D00665,C07780,Chlorpheniramine maleate
+D00668,C07783,Dexchlorpheniramine maleate; d-Chlorpheniramine maleate
+D00669,C07784,Diphenhydramine hydrochloride
+D07890,C07785,Emedastine
+D08293,C07789,Olopatadine
+D08353,C07790,Phenindamine
+D08255,C07792,Naratriptan
+D07837,C07798,Dihydroergotamine
+D07990,C07805,Formoterol
+D08387,C07807,Pirbuterol
+D07961,C07809,Flavoxate
+D00689,C07813,Beclomethasone dipropionate; Beclometasone dipropionate
+D07981,C07815,Fluticasone
+D08227,C07816,Mometasone
+D00690,C07817,Mometasone furoate
+D00691,C07819,Dyphylline; Diprophylline
+D00697,C07825,Flumazenil
+D00698,C07826,Aprobarbital
+D03180,C07827,Butabarbital
+D00700,C07829,Mephobarbital
+D00703,C07832,Ethinamate
+D00704,C07833,Ethchlorvynol
+D00705,C07834,Paraldehyde
+D00707,C07837,Fomepizole; 4-Methylpyrazole
+D00708,C07839,Ethotoin
+D07993,C07840,Fosphenytoin
+D00709,C07841,Levetiracetam
+D00711,C07843,Ketamine hydrochloride
+D04985,C07844,Methohexital
+D06106,C07846,Thiamylal; 5-Allyl-5-(1-methylbutyl)-2-thiobarbituric acid
+D08325,C07851,Oxyphencyclimine
+D08441,C07852,Propiverine
+D08463,C07864,Rabeprazole
+D00724,C07865,Rabeprazole sodium
+D07867,C07866,Dolasetron
+D00726,C07868,Metoclopramide
+D00728,C07870,Bismuth subsalicylate
+D03809,C07871,Difenoxin
+D07861,C07872,Diphenoxylate
+D00730,C07875,Butamben
+D00731,C07876,Magnesium hydroxide; Milk of magnesia
+D07678,C07877,Chloroprocaine
+D00733,C07879,Dibucaine
+D00734,C07880,"Ursodiol; Ursodeoxycholic acid; Ursodeoxycholate; 3alpha,7beta-Dihydroxy-5beta-cholan-24-oic acid"
+D07881,C07881,Dyclonine
+D03740,C07884,Dextroamphetamine; Dexamfetamine; d-Amphetamine
+D07540,C07886,Brimonidine
+D08116,C07887,"L-(-)-1-Butyl-2',6'-pipecoloxylidide; Levobupivacaine"
+D08180,C07889,Mephentermine
+D08220,C07890,Midodrine
+D08407,C07892,Pramoxine; Pramocaine
+D00740,C07894,Procaine hydrochloride
+D00742,C07897,Etanercept
+D00743,C07898,Naphazoline hydrochloride
+D00744,C07899,Pemoline
+D00748,C07903,Interleukin-2; Aldesleukin
+D08347,C07904,Phendimetrazine
+D00749,C07905,Leflunomide
+D00750,C07906,Levamisole hydrochloride
+D00752,C07908,Mycophenolate mofetil; RS 61443
+D00753,C07909,Sirolimus; Rapamycin
+D00754,C07910,Thalidomide
+D08368,C07911,"Phenylpropanolamine; (+/-)-Phenylpropanolamine; (R*,S*)-(+/-)-alpha-(1-Aminoethyl)benzenemethanol; (+/-)-Norephedrine"
+D08578,C07912,"Tetrahydrozoline; Tetryzoline; 2-Tetralin-1-yl-4,5-dihydro-1H-imidazole"
+D08684,C07913,Xylometazoline
+D08115,C07914,Levobunolol; (-)-Bunolol
+D02374,C07915,Metipranolol
+D00762,C07921,Metyrosine; Metirosine
+D00768,C07927,Carisoprodol
+D00770,C07930,Chlorphenesin carbamate
+D00771,C07931,Chlorzoxazone
+D00773,C07934,Metaxalone
+D08305,C07935,Orphenadrine
+D00775,C07937,Riluzole
+D00777,C07939,Amantadine hydrochloride
+D00779,C07941,Biperiden
+D00781,C07943,Entacapone
+D00783,C07946,Botulinum toxin type A; Botulin A
+D00786,C07949,Tolcapone
+D00789,C07952,Chlorpromazine hydrochloride; Chloropromazine monohydrochloride
+D00790,C07953,Chlorprothixene
+D00792,C07955,Fluphenazine enanthate; Prolixin enanthate
+D00793,C07956,Fluphenazine depot; Fluphenazine decanoate; Prolixin decanoate
+D00801,C07964,Lithium carbonate
+D08607,C07965,Tirofiban
+D07661,C07966,Cerivastatin
+D00802,C07967,Bithionol
+D07825,C07968,"Diethylcarbamazine; N,N-Diethyl-4-methyl-1-piperazinecarboxamide"
+D00805,C07971,Metrifonate; Trichlorfon
+D00807,C07973,Piperazine; Diethylenediamine
+D00815,C07982,Imipramine hydrochloride
+D00828,C07996,Dehydroemetine
+D07883,C07997,"Eflornithine; DL-Ornithine, 2-(difluoromethyl)-"
+D00830,C07999,Furazolidone
+D00832,C08001,Melarsoprol
+D00833,C08002,Nifurtimox
+D07122,C08005,Alfentanil
+D07132,C08007,Buprenorphine
+D00838,C08010,Dezocine
+D08123,C08014,Levorphanol
+D05312,C08018,Oxycodone
+D08323,C08019,Oxymorphone
+D08473,C08021,Remifentanil
+D05938,C08022,Sufentanil
+D08045,C08024,Hydrocodone; Dihydrocodeinone
+D00847,C08026,Oxycodone hydrochloride
+D05111,C08027,Nalmefene
+D00849,C08029,Methacycline hydrochloride
+D00851,C08031,Erythromycin estolate; Erythromycin estorate
+D00852,C08032,Quinupristin
+D00853,C08033,Dalfopristin
+D00854,C08034,Quinupristin-dalfopristin
+D00857,C08037,Benzalkonium chloride; Parasterol
+D00858,C08038,Chlorhexidine gluconate; Hibitane gluconate
+D00859,C08039,Hexachlorophene
+D00860,C08040,Iodine aqueous; Iodine-potassium iodide complex; Potassium triiodide
+D00862,C08042,Nitrofurazone; 5-Nitro-2-furaldehyde semicarbazone
+D00863,C08043,Povidone-iodine; Polyvinylpyrrolidone-iodine complex
+D00866,C08046,Kanamycin sulfate; Kanamycin monosulfate
+D00870,C08050,Sulfamethizole
+D00872,C08052,Cinoxacin
+D00873,C08053,Lomefloxacin hydrochloride
+D00874,C08054,Moxifloxacin hydrochloride
+D00879,C08059,Rifapentine
+D07598,C08065,Butoconazole
+D00880,C08066,Butoconazole nitrate
+D07596,C08067,Butenafine
+D03936,C08068,Econazole
+D00881,C08069,Econazole nitrate
+D00882,C08070,Miconazole nitrate
+D08245,C08071,Naftifine
+D00883,C08072,Naftifine hydrochloride
+D00884,C08073,Natamycin; Pimaricin
+D08313,C08074,Oxiconazole
+D00885,C08075,Oxiconazole nitrate
+D08535,C08076,Sulconazole
+D02375,C08079,Terbinafine
+D00888,C08080,Terconazole
+D00890,C08082,Tioconazole
+D00894,C08086,Amprenavir
+D00895,C08087,Delavirdine mesylate; Delavirdine mesilate
+D00896,C08088,Efavirenz
+D00897,C08089,Indinavir sulfate
+D00898,C08090,Dienestrol; Dehydrostilbestrol
+D00899,C08091,Nelfinavir mesylate; Nelfinavir mesilate
+D08306,C08092,Oseltamivir
+D00900,C08093,Oseltamivir phosphate
+D00901,C08094,Rimantadine hydrochloride
+D00902,C08095,Zanamivir
+D00905,C08098,Cefazolin sodium; Cefazolin sodium salt
+D00906,C08099,Cephalexin monohydrate; Cephalexin
+D00907,C08100,Cephalothin sodium; Cefalotin sodium
+D00908,C08101,Cephapirin sodium; Cefapirin sodium; Sodium cefapirin
+D00909,C08102,Cefamandole nafate
+D00910,C08103,Cefmetazole
+D00911,C08104,Cefmetazole sodium
+D00912,C08105,Cefonicid sodium
+D00913,C08106,Cefoxitin sodium
+D00914,C08107,Cefuroxime axetil; Cefuroxime 1-acetoxyethyl ester
+D00915,C08108,Cefuroxime sodium
+D00916,C08109,Loracarbef monohydrate
+D00917,C08110,Cefdinir
+D02376,C08111,Cefepime
+D00918,C08112,Cefoperazone sodium
+D00919,C08113,Cefotaxime sodium
+D07650,C08114,Cefpodoxime
+D00920,C08115,Cefpodoxime proxetil
+D00922,C08117,Ceftibuten
+D00923,C08118,Ceftizoxime sodium
+D07487,C08122,Bacampicillin
+D00927,C08123,Bacampicillin hydrochloride
+D05411,C08126,Penicillin V
+D00930,C08127,"Paricalcitol; 19-Nor-1alpha,25-dihydroxyvitamin D2"
+D00932,C08129,Calcium carbonate; Precipitated calcium carbonate
+D00935,C08133,Calcium gluconate
+D00938,C08136,Tricalcium phosphate; Calcium phosphate tribasic; Synthos
+D08599,C08141,Tiludronic acid; Tiludronate
+D00943,C08142,Sodium fluoride
+D00946,C08145,Diethylstilbestrol diphosphate; Fosfestrol; Diethylstilbestrol bisphosphate
+D00947,C08146,Linezolid
+D00949,C08148,"Hydroxyprogesterone caproate; Primolut depot; 17alpha-Caproyloxypregn-4-ene-3,20-dione"
+D00950,C08149,Levonorgestrel; (-)-Norgestrel
+D00951,C08150,Medroxyprogesterone acetate; 6-alpha-Methyl-17-alpha-acetoxyprogesterone; 6-alpha-Methyl-17-alpha-hydroxyprogesterone acetate
+D00952,C08151,Megestrol acetate
+D00953,C08152,Norethindrone acetate; Norethisterone acetate
+D00954,C08153,Norgestrel; (+/-)-Norgestrel
+D00955,C08154,Nandrolone decanoate
+D00956,C08155,Nandrolone phenpropionate; Nandrolone phenylpropionate
+D00957,C08156,Testosterone cypionate
+D00958,C08157,Testosterone enanthate
+D00959,C08158,Testosterone propionate
+D00960,C08159,Anastrozole
+D00961,C08160,Bicalutamide
+D00962,C08161,Clomiphene citrate; Clomifene citrate
+D00963,C08162,Exemestane
+D00964,C08163,Letrozole
+D00965,C08164,Nilutamide
+D08620,C08166,Toremifene
+D00969,C08169,Meloxicam
+D00971,C08171,"Sodium thiosalicylate; 2-Mercapto-benzoic acid, monosodium salt"
+D00973,C08173,Cortisone acetate; Cortisyl
+D07796,C08174,Dexamethasone acetate anhydrous
+D00975,C08175,Dexamethasone sodium phosphate
+D00976,C08176,Hydrocortisone cypionate
+D00978,C08178,Hydrocortisone sodium succinate
+D00979,C08179,"Methylprednisolone acetate; 6alpha-Methylprednisolone 21-acetate; 11beta,17,21-Trihydroxy-6alpha-methylpregna-1,4-diene-3,20-dione 21-acetate; M-Predrol"
+D00980,C08180,Prednisolone acetate; Prednisolone 21-acetate; Pricortin
+D00982,C08182,Prednisolone tebutate; Prednisolone butyl acetete
+D00983,C08183,Triamcinolone acetonide
+D00984,C08184,Triamcinolone diacetate
+D00985,C08185,Triamcinolone hexacetonide
+D00986,C08186,Fludrocortisone acetate
+D00987,C08187,Cabergoline
+D00991,C08193,Aurothioglucose
+D00993,C08195,Meclofenoxate
+D00995,C08197,Neostigmine bromide; Neo proserine
+D00998,C08200,Neostigmine methylsulfate
+D00999,C08201,Acetylcholine chloride
+D01000,C08202,Bethanechol chloride
+D01009,C08211,Doxercalciferol; 1alpha-Hydroxyergocalciferol
+D11113,C08212,Levothyroxine sodium anhydrous
+D01012,C08215,Thyroid
+D06482,C08215,Thyroid
+D01014,C08217,Iopanoic acid
+D01016,C08219,Potassium iodide
+D01027,C08230,Hydroxocobalamin; Vitamin B12a; Hydroxycobalamin; Hydroxycob(lll)alamin
+D08484,C08233,Risedronic acid; Risedronate
+D03034,C08261,"Azelaic acid; Nonanedioic acid; 1,7-Heptanedicarboxylic acid"
+D13141,C08302,"N,N-Dimethyltryptamine; DMT"
+D01031,C08597,Helenien; Xantofyl palmitate
+D03411,C08818,Carrageenan
+D08498,C08909,"Ruscogenin; (1beta,3beta,25R)-Spirost-5-ene-1,3-diol"
+D07912,C08921,Aescin; Escin
+D03584,C09076,Coleonol; Colforsin; Forskolin
+D08676,C09149,Eburnamonine; Vinburnine
+D07914,C09176,Eseridine
+D08677,C09251,Vincamine
+D08685,C09256,Yohimbine
+D01034,C09314,"Trioxsalen; Trioxysalen; 4,8,5'-Trimethylpsoralen"
+D08735,C09316,Visnadin; Visnadine
+D01035,C09391,Cepharanthine
+D08014,C09446,Glaucine
+D02481,C09538,Qing Hau Sau; Artemisinin
+D01037,C09675,"Guaiazulene; 1,4-Dimethyl-7-isopropylazulene"
+D04876,C09904,beta-Thujaplicin; Hinokitiol; 4-Isopropyltropolone
+D01039,C09908,Thymol
+D01040,C09919,Bergenin
+D08096,C09947,Kawain; Kavain
+D07858,C10039,Diosmetin 7-O-rutinoside; Diosmin
+D07107,C10312,"Danthron; Chrysazin; 1,8-Dihydroxyanthraquinone"
+D04864,C10606,Maytansine
+D08048,C10696,Hydroquinidine
+D08077,C10918,Indeloxazine
+D02379,C10935,"N,N-Diethyl-m-toluamide; Diethyltoluamide; DEET"
+D07761,C10982,Cyfluthrin
+D07762,C10983,Cyhalothrin
+D07763,C10984,Cypermethrin
+D07785,C10985,Deltamethrin; Decamethrin
+D07952,C10988,Fenvalerate; Pydrin
+D08475,C10991,Resmethrin
+D02380,C10995,Amitraz; Mitac
+D07750,C11025,Coumaphos
+D02381,C11045,Aspartame
+D07752,C11096,Croconazole
+D01042,C11099,Fipronil
+D08482,C11120,Rilmenidine; Oxaminozoline
+D05464,C11151,Phenylmercury acetate
+D02698,C11153,Teniposide; VM-26
+D06238,C11154,Trimetrexate
+D02382,C11155,n-Propyl gallate; Propyl gallate
+D08618,C11158,Topotecan
+D06114,C11160,Thiram; Tetramethylthioperoxydicarbonic diamide
+D01045,C11166,SDS; Sodium lauryl sulfate; Sodium dodecyl sulfate
+D08575,C11168,Tetrabenazine
+D01047,C11169,Sulfathiazole
+D08534,C11170,Sulbenicillin
+D08224,C11195,Mitoxantrone
+D07649,C11199,Cefpirome; HR 810
+D01052,C11203,Cefozopran; SCE 2787
+D07646,C11210,Cefoselis
+D06277,C11213,Valspodar; SDZ PSC 833; 3'-Keto-bmt(1)-val(2)-cyclosporin A
+D04066,C11228,Estramustine
+D07901,C11230,Epirubicin
+D07866,C11231,Docetaxel anhydrous; Docetaxel
+D07828,C11234,Difloxacin
+D02474,C11240,Rufloxacin
+D07653,C11253,Cefsulodin
+D03021,C11262,5-Azacytidine; Azacitidine
+D01057,C11268,Biapenem
+D03454,C11275,Cetyltrimethylammonium bromide; Cetrimonium bromide; Trimethylcetylammonium bromide; Hexadecanyltrimethylammonium bromide; CTAB
+D01059,C11276,Nimustine hydrochloride; ACNU
+D02768,C11277,Adefovir; PMEA; 9-(2-Phosphonylmethoxyethyl)adenine
+D02164,C11279,Myristyltrimethylaminium bromide; Tetradecyltrimethylammonium bromide; MTAB
+D01062,C11307,Cetylpyridinium chloride
+D05778,C11314,Oligomycin D; Rutamycin
+D01063,C11334,Gentamicin sulfate; Gentamycin sulfate; Gentamicin C complex sulfate
+D06091,C11337,Tetramisole hydrochloride; (+/-)-Tetramisole hydrochloride
+D02959,C11340,Antimony potassium tartrate
+D02301,C11342,Oxolinic acid
+D08548,C11363,Sulfobromophthalein
+D05102,C11371,Nafenopin
+D01064,C11372,ICI D1694; ZD1694; Tomudex; Raltitrexed
+D01065,C11378,Ubiquinone-10; Ubidecarenone; Coenzyme Q10
+D02892,C11485,LY201116; Ameltolide
+D08401,C11612,Polymyxin B
+D01066,C11613,Polymyxin B sulfate; Polymixin B sulfate
+D05655,C11618,Puromycin dihydrochloride
+D05229,C11623,"Triton X-100; alpha-(4-(1,1,3,3-Tetramethylbutyl)phenyl)-omega-hydroxypoly(oxy-1,2-ethanediyl)"
+D05565,C11624,Tween 20
+D01067,C11625,Tween 80; Polysorbate 80
+D01068,C11626,Vinblastine sulfate
+D03248,C11685,Clorgyline
+D06265,C11686,Uracil mustard
+D05587,C11696,Practolol
+D02385,C11697,Levcromakalim; (-)-Cromakalim
+D02386,C11702,Tienilic acid; Ticrynafen
+D08549,C11708,Sultopride
+D02693,C11710,Devazepide; MK-329
+D06076,C11712,Teprotide
+D03710,C11718,L791456; Etoricoxib
+D01071,C11723,Hexobarbitone; Hexobarbital
+D02387,C11724,Cycloguanil pamoate
+D01072,C11726,Chloramphenicol palmitate
+D07675,C11727,Chloramphenicol succinate
+D01073,C11728,Clindamycin phosphate
+D01074,C11729,Hetacillin
+D06066,C11730,Temoporfin; Foscan
+D07060,C11745,Succinyl sulfathiazole
+D04196,C11748,Flucloxacillin; Floxacillin
+D08396,C11750,Pivampicillin
+D08557,C11751,Talampicillin
+D01075,C11754,Cephaloridine; Cefaloridine
+D01076,C11758,Mupirocin; Pseudomonic acid A
+D03822,C11766,Rivastigmine
+D06330,C11767,Xanomeline
+D02388,C11768,Levonordefrin; alpha-Methylnoradrenaline
+D08124,C11770,R-Salbutamol; (-)-Salbutamol; Levalbuterol
+D06646,C11773,Epanolol
+D02389,C11774,Primidolol
+D06328,C11775,Xamoterol
+D02579,C11777,Iproniazid
+D08247,C11787,Nalorphine
+D08100,C11792,Ketobemidone
+D07937,C11793,Etorphine
+D07863,C11794,Diprenorphine
+D02694,C11797,Tifluadom
+D08183,C11798,Mepyramine; Pyrilamine
+D05353,C11806,Pantoprazole
+D01078,C12009,Telithromycin; HMR3647; HMR-3647; RU66647; RU-66647
+D01079,C12012,Tigecycline; GAR 936; WAY-GAR-936
+D01080,C12013,Daptomycin
+D02391,C12020,Cethromycin; ABT-773; A-195773; Abbott-195773
+D02392,C12053,Nosiheptide
+D06111,C12054,Thiostrepton
+D06226,C12059,Triclosan
+D02393,C12064,Resorcinol monoacetate
+D06127,C12065,Tiamulin
+D08665,C12066,Valnemulin
+D01082,C12276,Calcium pantothenate
+D01083,C12277,Calcium hydroxide
+D02395,C12278,Copper gluconate
+D01085,C12283,Saccharin
+D08500,C12284,Saccharin sodium anhydrous
+D01093,C12490,Butenafine hydrochloride
+D01108,C12505,Magnesium sulfate; Magnesium sulfate heptahydrate
+D01111,C12508,Nateglinide
+D01115,C12512,Eplerenone
+D01132,C12531,Tazarotene
+D01136,C12535,Tranexamic acid
+D01139,C12538,Ammonium chloride
+D01140,C12539,Benzethonium chloride
+D01141,C12540,Sulfamonomethoxine
+D01152,C12552,Oxethazaine; Oxetacaine
+D01154,C12554,Potassium acetate
+D01157,C12557,Cefepime hydrochloride; Cefepime dihydrochloride
+D01160,C12560,Saquinavir mesylate; Saquinavir mesilate
+D01164,C12564,Aripiprazole
+D01167,C12567,Magnesium oxide
+D01168,C12568,Potassium hydroxide
+D01169,C12569,Sodium hydroxide
+D01170,C12570,Zinc oxide
+D01174,C12574,Pheniramine maleate
+D01180,C12580,Trilostane
+D01190,C12590,Pheneturide; Ethylphenacemide
+D01199,C12599,Emtricitabine
+D01200,C12600,Phenolsulfonphthalein; Phenol red
+D01203,C12603,Sodium bicarbonate; Sodium hydrogencarbonate
+D01209,C12609,Novobiocin sodium
+D01216,C12616,Sulfamethopyrazine; Sulfalene
+D01222,C12649,Citric acid monohydrate
+D01229,C12656,Paramethasone acetate
+D01234,C12661,Pantethine
+D01235,C12662,Josamycin; Leucomycin A3
+D01239,C12666,Prednisolone sodium succinate
+D01240,C12669,Deslanoside
+D01246,C12675,Benzylhydrochlorothiazide
+D01256,C12685,Cyclothiazide
+D01262,C12691,Cefacetrile sodium; Cephacetrile sodium
+D01265,C12694,Epitiostanol
+D01266,C12695,Difluprednate
+D01283,C12712,Carindacillin sodium; Carbenicillin indanyl sodium
+D01288,C12717,Dimefline hydrochloride
+D01294,C12724,Ethynodiol diacetate
+D01299,C12729,Chlormadinone acetate
+D01319,C12750,Bisibuthiamine; Sulbutiamine
+D01322,C12753,Troleandomycin; Triacetyloleandomycin
+D01324,C12755,Mequitazine
+D01334,C12766,Cyclacillin; Ciclacillin
+D01335,C12767,Dibenzthion; Sulbentine
+D01352,C12786,Dinoprost tromethamine
+D01361,C12796,Erythromycin ethylsuccinate
+D01362,C12798,Tulobuterol hydrochloride
+D01374,C12811,Allylestrenol
+D01377,C12814,Prifinium bromide
+D01379,C12816,Proscillaridin
+D01391,C12829,Bromisovalum; Bromovalerylurea
+D01393,C12839,Piperazine phosphate
+D01396,C12842,Pyricarbate; Pyridinol carbamate
+D01403,C12849,p-Phenolsulfonic acid; p-Hydroxybenzenesulfonic acid; Phenolsulfonic acid; 4-Sulfophenol
+D01407,C12853,Thiamphenicol
+D01413,C12859,Estradiol valerate
+D01416,C12862,Nedaplatin
+D01418,C12864,Tamibarotene; Am 80
+D01419,C12865,Benzyl nicotinate; Nicotinic acid benzyl ester
+D01425,C12871,Lopinavir
+D01430,C12876,Tiopronin
+D01440,C12886,Dialicor; Etafenone hydrochloride
+D01442,C12888,"Hydrocortisone succinate; 11beta,17,21-Trihydroxypregn-4-ene-3,20-dione 21-(hydrogensuccinate); Cortisol succinate"
+D01443,C12889,n-Decanohydroxamic acid; Decanohydroxamic acid
+D02420,C12891,Acetylspiramycin; Spiramycin II
+D01449,C12896,Carpipramine maleate
+D01458,C12905,Variotin; Pecilocin
+D01468,C12915,Nemonapride
+D08554,C12919,"1-alpha,24(R)-Dihydroxyvitamin D3; Tacalcitol"
+D01486,C12933,Rolitetracycline nitrate
+D01488,C12935,Calcium glycerophosphate; Calcium beta-glycerophosphate
+D01494,C12942,Paraformaldehyde
+D01498,C12946,Butoctamide hydrogen succinate; Butoctamide semisuccinate
+D01508,C12958,Phenylacetylglycine dimethylamide; Ralgin
+D01510,C12961,Dexamethazone metasulfobenzoate sodium; Dexamethasone metasulfobenzoate sodium
+D01511,C12962,Cyphenothrin
+D01516,C12967,Tocoretinate; Tretinoin tocoferil
+D01527,C12978,Epidihydrocholesterin; Epicholestanol; 5alpha-Cholestan-3alpha-ol
+D01528,C12979,Cefroxadine
+D01530,C12981,dl-alpha-Tocopherol nicotinate; Tocopheryl nicotinate
+D01552,C13008,Edaravone
+D01558,C13014,1-Naphthylacetic acid; NAA
+D01560,C13016,Carumonam sodium
+D01568,C13024,Cefpimizole sodium
+D02398,C13031,Estramustine phosphate sodium
+D01577,C13034,Bronopol
+D01580,C13037,Lynestrenol
+D01581,C13038,Flufenamic acid; FFA
+D01587,C13044,Tricaprilin; Trioctanoylglycerol
+D01591,C13048,p-Nitrophenyl-O-ethyl ethylphosphonate; Ethyl 4-nitrophenyl ethylphosphonate
+D01596,C13055,Oxytetracycline hydrochloride; OTC
+D01601,C13061,Acetylsulfamethoxazole
+D01614,C13074,Acetylkitasamycin
+D01617,C13077,Estradiol dipropionate
+D01621,C13081,Retinol acetate; Retinyl acetate; Vitamin A acetate; all-trans-Retinol acetate
+D01629,C13089,Cefetamet pivoxil hydrochloride
+D01641,C13101,Hexestrol; Exestrol
+D01642,C13102,Bismuth subnitrate; Bismuth hydroxide nitrate oxide
+D01645,C13106,Gadodiamide hydrate; Gadodiamide
+D01648,C13109,Hyoscyamine methylbromide; Atropine methobromide; Atropine methylbromide
+D01649,C13110,Propicillin potassium; Brocillin
+D01651,C13112,Ancitabin hydrochloride; Cyclocytidine
+D01666,C13127,Bropirimine
+D01677,C13138,beta-Butoxyethyl nicotinate; Nicoboxil
+D01679,C13140,Calcium oxide; Lime
+D01681,C13142,Cefovecin sodium
+D01682,C13143,Ceftiofur sodium
+D01693,C13154,"Dehydrocholic acid; 3,7,12-Triketo-5beta-cholanoic acid"
+D01695,C13156,Lentinan
+D07833,C13168,Dihydroergocristine mesylate
+D01710,C13173,Roxithromycin
+D01716,C13179,Fleroxacin
+D02401,C13183,beta-Cyclodextrin
+D01723,C13189,Calcium bromide
+D01726,C13192,Potassium sulfate
+D09201,C13194,Calcium sulfate; Gypsum
+D02403,C13197,Potassium dibasic phosphate
+D01731,C13198,Potassium bromide
+D01732,C13199,Sodium sulfate
+D01735,C13202,alpha-Tocopherol acetate; Tocopherol acetate
+D01762,C13229,Sulpyrine; Dipyrone monohydrate; Dipyrone
+D02404,C13235,Procaterol hydrochloride; Lontermin
+D01772,C13240,Ether; Anesthetic ether; Diethyl ether
+D01776,C13244,Antipyrine; Phenazone
+D01781,C13249,Sodium citrate; Trisodium citrate dihydrate
+D01786,C13254,Mebhydrolin napadisilate; Diazoline
+D07469,C13269,Aspoxicillin
+D01810,C13280,Nicorandil
+D01827,C13297,Geranylgeranylacetone; Teprenone
+D01829,C13299,Fungichromin; Pentamycin
+D01831,C13301,Buserelin acetate
+D01870,C13342,p-Hydroxypropiophenone; Paroxypropione
+D01883,C13355,Aniracetam
+D01886,C13358,Hydrocortisone butyrate propionate; Hydrocortisone buteprate; Hydrocortisone probutate
+D01901,C13373,Xenon
+D01904,C13376,Cefpiramide sodium
+D01905,C13377,Mercuric chloride; Mercury(II) chloride
+D01910,C13383,Iodoform
+D02416,C13391,Aluminum hydroxide
+D09768,C13392,Azulene
+D02409,C13403,Sodium caffeine benzoate
+D01931,C13409,Titanium dioxide; Titania
+D01932,C13410,"Transfluthrin; (2,3,5,6-Tetrafluorophenyl)methyl(1R,3S)-3-(2,2-dichloroethenyl)-2,2-dimethylcyclopropanecarboxylate"
+D09796,C13422,"Hydrocortisone caproate; [2-(11,17-Dihydroxy-10,13-dimethyl-3-oxo-1,2,6,7,8,9,10,11,12,13,14,15,16,17-tetradecahydrocyclopenta[a]phenanthren-17-yl)-2-oxo-ethyl]hexanoate"
+D06608,C13426,"I-123 BMIPP; 123I-15-(p-iodophenyl)-3-R,S-methylpentadecanoic acid; I-123-beta-methyl-p-iodophenyl-methylpentadecanoic acid"
+D01938,C13427,Pyrithione zinc; Zinc pyrithione
+D01940,C13429,Meglumine sodium amidotrizoate; Urovision
+D01949,C13440,Cefaloglycin; Cephaloglycin anhydrous
+D01950,C13441,Dimethylaminoethyl reserpilinate dihydrochloride; Paratensiol
+D01953,C13444,Estradiol benzoate; 17-beta-Estradiol 3-benzoate
+D01959,C13452,Tannic acid
+D01972,C13470,Lanatoside C
+D01980,C13478,Luliconazole
+D01988,C13487,Metofluthrin
+D01994,C13494,Mosapride citrate hydrate; AS 4370
+D02000,C13500,Kitasamycin tartrate
+D02003,C13503,Nitro blue tetrazolium
+D02005,C13505,Cefsulodin sodium
+D02020,C13522,Mitobronitol; Myebrol
+D02021,C13523,Secretin; Vitrum
+D02022,C13524,Prochlorperazine mesylate; Prochlorperazine mesilate; Novamin; Prochlorperazine methanesulfonate
+D02037,C13540,Perphenazine maleate
+D02043,C13547,Norcholestenol iodomethyl (131 I); Norcholestenol iodomethyl ((sup 131)I)
+D02049,C13553,Colistin sodium methanesulfonate; Colistimethate sodium
+D02051,C13557,Potassium nitrate
+D02056,C13563,Sodium chloride
+D02062,C13569,Chromomycin A3; Toyomycin; Aburamycin B
+D02081,C13591,Metipranolol hydrochloride
+D02106,C13619,Arsenous oxide; Arsenic trioxide
+D02109,C13639,dl-Methylephedrine hydrochloride
+D02118,C13651,Glucagon hydrochloride
+D02119,C13652,Ampicillin sodium
+D00101,C13662,Arg-vasopressin; Argipressin; 8-L-Arginine vasopressin; AVP; ADH
+D02130,C13666,Tropisetron
+D02696,C13670,Talampanel
+D02132,C13684,Clindamycin hydrochloride
+D07409,C13692,Pentylenetetrazole; Pentetrazol
+D04282,C13693,"4,5,6,7-Tetrahydroisoxazolo(5,4-c)pyridin-3-ol; THIP; Gaboxadol"
+D08275,C13698,Niflumic acid; NFA
+D07723,C13700,Clofibric acid
+D04790,C13707,RU-0211; Lubiprostone
+D05197,C13719,Nocodazole
+D04127,C13728,4-Aminopyridine; 4-AP
+D05482,C13729,Pinacidil
+D02410,C13735,Selfotel
+D08174,C13736,Memantine
+D02137,C13756,Dicloxacillin sodium; Dicloxacillin sodium monohydrate
+D08009,C13764,Gallopamil
+D02138,C13768,Colistin sulfate
+D02141,C13774,Iron dextran; Iron dextran complex
+D04741,C13780,Linopirdine
+D02143,C13789,Trichomycin; Hachimycin
+D02145,C13811,Piperazine adipate
+D09569,C13826,Retigabine; D-23129; N-(2-Amino-4-(4-fluorobenzylamino)-phenyl) carbamic acid ethyl ester
+D04192,C13830,BMS 204352; Flindokalner
+D02159,C13910,Undecylenic acid; Undecenoic acid; 10-Undecenoic acid; Undec-10-enoic acid
+D02185,C13962,Chloramphenicol sodium succinate
+D07995,C13964,Fosfomycin calcium; Calcium phosphomycin
+D02190,C13967,Carbenicillin sodium; Carbenicillin disodium
+D02191,C13968,Cefamandole sodium
+D02196,C13973,Methicillin sodium; Meticillin sodium; Sodium methicillin monohydrate
+D02197,C13974,Vincristine sulfate
+D02199,C13976,Carfecillin sodium; Carbenicillin phenyl sodium
+D02201,C13978,Talampicillin hydrochloride
+D02203,C13980,Hetacillin potassium
+D02216,C13993,Ciprofloxacin hydrochloride; Ciprofloxacin hydrochloride monohydrate
+D02223,C14001,Sulbactam sodium
+D02346,C14002,Lincomycin hydrochloride; Lincomycin hydrochloride monohydrate
+D02228,C14007,Cefotetan disodium; Cefotetan sodium
+D02231,C14010,Sodium cloxacillin monohydrate; Cloxacillin sodium
+D02419,C14015,Diphenhydramine salicylate
+D02241,C14021,Ticarcillin disodium; Aerugipen
+D02408,C14029,Trimipramine maleate
+D08380,C14034,Piperacillin; Piperacillin anhydrous
+D04874,C14042,Sodium iodide
+D02264,C14049,"Glycyrrhizinate dipotassium; Dipotassium glycyrrhizate; Dipotassium (3beta,20beta)-20-carboxy-11-oxo-30-norlean-12-en-3-yl-2-O-beta-D-gucopyranuronosyl-alpha-D-glucopyranosiduronate"
+D02268,C14055,Dihydroergotoxine mesylate; Dihydroergotoxine mesilate; Ergoloid mesylates
+D02269,C14064,Kitasamycin; Leucomycin
+D02457,C14164,Acetrizoic acid
+D07454,C14169,Stovaine; Amylocaine
+D03804,C14175,"Diethyl phthalate; Diethyl 1,2-benzenedicarboxylate"
+D08431,C14208,Promegestone
+D05072,C14244,4-(Benzyloxyl)phenol; Monobenzone; 4-(Phenylmethoxy)phenol
+D05207,C14249,Norethynodrel
+D05025,C14255,"Mibolerone; 17-beta-Hydroxy-7-alpha,17-dimethylestr-4-en-3-one"
+D08627,C14261,"Trenbolone; 17-beta-Hydroxyestra-4,9,11-trien-3-one"
+D03853,C14283,"2,2'-Dihydroxy-4-methoxybenzophenone; Dioxybenzone"
+D05309,C14285,2-Hydroxy-4-methoxybenzophenone; Oxybenzone
+D05456,C14286,"Phenolphthalein; 3,3-Bis(4-hydroxyphenyl)phthalide"
+D09849,C14295,Ritipenem acoxil hydrate; Penemac; FC/TA-891
+D03911,C14296,Droloxifene; 3-Hydroxytamoxifen
+D08200,C14308,"Methoprene; (E,E)-1-Methylethyl 11-methoxy-3,7,11-trimethyl-2,4-dodecadienoate"
+D05731,C14319,SR 141716; Rimonabant
+D07688,C14322,Chlorpyrifos; Chlorpyriphos
+D07856,C14324,Diazinon
+D03468,C14331,4-Chloro-m-cresol; 4-Chloro-3-methylphenol; Chlorocresol
+D08442,C14334,Propoxur; Aprocarb; 2-Isopropoxyphenyl N-methylcarbamate
+D07530,C14337,Bioallethrin; Allethrin; Pynamin
+D08357,C14387,Phenothrin; Sumithrin
+D05443,C14388,Permethrin
+D04041,C14392,"Equilin; 3-Hydroxyestra-1,3,5(10),7-tetraen-17-one"
+D07518,C14393,Benzylparaben; Benzyl parahydroxybenzoate; Benzyl 4-hydroxybenzoate
+D07950,C14420,Fenthion; MPP; 4-Methylmercapto-3-methylphenyl dimethyl thiophosphate
+D07829,C14427,"Diflubenzuron; N-(4-Chlorophenylcarbamoyl)-2,6-difluorobenzamide"
+D03791,C14430,"Dichlorvos; 2,2-Dichloroethenyl dimethyl phosphate; DDVP"
+D03144,C14475,"Bolasterone; 7alpha,17alpha-Dimethyltestosterone; 17beta-Hydroxy-7alpha,17-dimethylandrost-4-en-3-one; U19763"
+D04208,C14479,"Flumethasone; 6alpha,9-Difluoro-11beta,17,21-trihydroxy-16alpha-methylpregna-1,4-diene-3,20-dione"
+D08285,C14486,Norethindrone enanthate; Norethisterone enanthate; 17alpha-Ethynyl-17beta-heptanoyloxy-4-estren-3-one
+D08196,C14493,"Methandriol; Protandren; 17alpha-Methylandrost-5-ene-3beta,17beta-diol"
+D07536,C14502,"Boldenone; 17beta-Boldenone; 17beta-Hydroxyandrost-1,4-diene-3-one"
+D05929,C14513,"Tetrachlorvinphos; 2-Chloro-1-(2,4,5-trichlorophenyl)vinyl dimethyl phosphate"
+D03698,C14554,"Deoxycorticosterone acetate; 21-Acetoxypregn-4-ene-3,20-dione; Percotol"
+D04021,C14593,"Epimestrol; 3-Methoxy-17-epiestriol; 3-Methoxyestra-1,3,5(10)-triene-16alpha,17alpha-diol"
+D08573,C14607,Testosterone decanoate; 17beta-Hydroxyandrost-4-en-3-one decanoate
+D04227,C14618,"6alpha-Fluoroprednisolone; Fluprednisolone; 6alpha-Fluoro-11beta,17alpha,21-trihydroxypregna-1,4-diene-3,20-dione"
+D04221,C14629,"Fluorometholone 17-acetate; 9-Fluoro-11beta,17-dihydroxy-6alpha-methylpregna-1,4-diene-3,20-dione 17-acetate; 6alpha-Methyl-9alpha-fluoro-17-acetoxy-21-deoxyprednisolone"
+D08197,C14634,Methandriol dipropionate
+D04627,C14636,"9alpha-Fluoro-11beta,17alpha,21-trihydroxypregna-1,4-diene-3,20-dione 21-acetate; Isoflupredone acetate; U-6013"
+D04063,C14640,Estradiol 17beta-cyclopentylpropionate; Estradiol cypionate
+D04900,C14642,"Melengestrol acetate; 17-Hydroxy-6-methyl-16-methylenepregna-4,6-diene-3,20-dione acetate; 17alpha-Acetoxy-6-methyl-16-methylenepregna-4,6-diene-3,20-dione"
+D02289,C14643,"Medrysone; 11beta-Hydroxy-6alpha-methylpregn-4-ene-3,20-dione"
+D03691,C14653,Descinolone acetonide; 21-Deoxytriamcinoline acetonide
+D08574,C14667,Testosterone phenylpropionate; 17beta-Hydroxyandrost-4-en-3-one 3-phenylpropionate
+D08416,C14668,"Cortancyl; Prednisone 21-acetate; 21-Acetoxy-17alpha-hydroxypregna-1,4-diene-3,11,20-trione"
+D02413,C14693,"Butylhydroxytoluene; BHT; 2,6-Di-t-butyl-4-methylphenol; 2,6-Di-tert-butyl-p-cresol; Butylated hydroxytoluene; 2,6-Bis(1,1-dimethylethyl)-4-methylphenol"
+D03473,C14715,"4-Chloro-3,5-dimethylphenol; Chloroxylenol"
+D06362,C14752,alpha-Zearalanol; Zeranol
+D05992,C14753,beta-Zearalanol; Taleranol
+D06068,C15182,Temsirolimus; CCI 779; 42-[3-Hydroxy-2-(hydroxymethyl)-2-methylpropanoate]rapamycin
+D08900,C15183,AP 23573; 42-(Dimethylphosphinate)rapamycin; Deforolimus
+D07576,C15428,Asiaticoside; Madecassol
+D04235,C15432,"Flurogestone acetate; 9alpha-Fluoro-11-hydroxy,17alpha-acetoxyprogesterone; 9-Fluoro-11beta,17-dihydroxypregn-4-ene-3,20-dione 17-acetate"
+D07822,C15436,"Didecyldimethylammonium chloride; N-Decyl-N,N-dimethyl-1-decanaminium chloride"
+D03201,C15469,Butylated hydroxyanisole; BHA; Butylhydroxyanisole
+D08133,C15473,Lithium
+D09381,C15618,Sobetirome; GC-1
+D09360,C15636,6-Ethylchenodeoxycholic acid; 6-ECDCA; 6-Ethyl-CDCA; 6alpha-Ethyl-chenodeoxycholic acid
+D00292,C15643,Dexamethasone
+D08502,C15690,Salinomycin
+D07535,C15773,Bleomycin
+D02465,C15819,FK463; Micafungin sodium
+D02142,C15820,Teicoplanin
+D04121,C15894,Exendin-4
+D05364,C16051,Parathyroid hormone; Parathormone; PTH
+D01892,C16184,"(5Z,8Z,11Z,14Z,17Z)-Eicosapentaenoic acid ethyl ester; EPA ethyl ester; Ethyl (5Z,8Z,11Z,14Z,17Z)-eicosapentaenoate; Ethyl (5Z,8Z,11Z,14Z,17Z)-icosapentaenoate; Ethyl (5Z,8Z,11Z,14Z,17Z)-icosa-5,8,11,14,17-pentaenoate"
+D08328,C16512,Palmitoylethanolamide; Palmidrol
+D11745,C16778,Cantharidin
+D09605,C16843,Deoxynojirimycin; Moranolin
+D06199,C16875,Trabectedin; Ecteinascidin 743
+D01378,C17058,"Resibufogenin; Bufogein; (3beta,5beta,15beta)-14,15-Epoxy-3-hydroxybufa-20,22-dienolide"
+D08219,C17706,Gentamicin C2b; Sagamicin
+D07470,C17708,Fortimicin A; Astromicin
+D06457,C18185,Chorionic gonadotropin
+D06075,C18362,Tepoxalin
+D03712,C18363,Firocoxib
+D03410,C18364,Carprofen
+D07229,C18365,Carbetocin
+D00098,C18369,dl-Camphor; Camphor
+D04734,C18370,Alkyldiaminoethylglycine hydrochloride; Alkylpolyaminoethylglycine hydrochloride
+D07669,C18372,Chlorhexidine acetate
+D07368,C18373,Tetramethrin; Neo-pynamin; Phthalthrin
+D07732,C18374,Clostebol acetate
+D11105,C18375,Osaterone acetate
+D03321,C18376,Fursultiamine hydrochloride
+D03299,C18377,Thiamine disulfide
+D08177,C18378,Menadione sodium bisulfite
+D09875,C18379,Calcium propionate
+D08538,C18386,Sulfadimethoxine sodium
+D09202,C18410,Etofenprox
+D08150,C18434,Lufenuron
+D02414,C18478,Oxyquinoline sulfate
+D06316,C18569,Indoxacarb
+D08455,C18605,Pyriproxyfen
+D02077,C18606,Potassium bicarbonate
+D04987,C18610,Monoammonium glycyrrhizinate
+D05198,C18633,Nogalamycin
+D07722,C18654,Chlorfenvinphos
+D09807,C18695,Difethialone
+D07134,C18696,Flocoumafen
+D07136,C18698,Diphenadione
+D03023,C18701,Azaconazole
+D07479,C18702,Azamethiphos
+D03997,C18739,Enilconazole; Imazalil
+D08372,C18756,Phosmet
+D08373,C18757,Phoxim
+D06062,C18809,Temefos; Temephos
+D11818,C18830,Ethyl 3-(N-butylacetamido)propionate; Ethyl butylacetylaminopropionate
+D08383,C18880,Piperonyl butoxide
+D03194,C18967,Butonate
+D03610,C18972,Crufomate
+D05753,C18986,Fenchlorphos; Fenclofos; Ronnel
+D03288,C19113,Calcium carbimide
+D07366,C19120,Dixanthogen; EXD
+D03032,C19194,Azaserine
+D05539,C19203,"Poligeenan; Carrageenan, degraded"
+D05167,C19240,Nifurthiazole; 2-(2-Formylhydrazino)-4-(5-nitro-2-furyl)thiazole
+D04989,C19263,Methyl isobutyl ketone; 4-Methylpentan-2-one
+D07231,C19265,Methylthiouracil
+D04714,C19267,Levofuraltadone; 5-(Morpholinomethyl)-3-[(5-nitrofurfurylidene)amino]-2- oxazolidinone
+D05170,C19268,Niridazole
+D02514,C19272,Nifuradene; 1-[(5-Nitrofurfurylidene)amino]-2-imidazolidinone
+D02518,C19289,Panfuran S; Dihydroxymethylfuratrizine
+D05450,C19290,Phenazopyridine hydrochloride
+D01084,C19292,Talc
+D05630,C19297,Propiolactone; beta-Propiolactone
+D12658,C19307,Trypan blue
+D02818,C19317,Allyl isothiocyanate; Mustard oil
+D02960,C19328,Antimony trisulfide
+D03093,C19346,Benzoyl peroxide
+D02443,C19378,Cyclamate; Sodium cyclamate
+D07327,C19413,Doxefazepam
+D02327,C19414,Doxylamine succinate
+D04168,C19424,Ferric oxide
+D05321,C19434,8-Hydroxyquinoline; Oxyquinoline
+D07424,C19436,Iron-dextrin complex; Dextriferron
+D04615,C19437,Iron sorbitex
+D02534,C19487,Nitrovin; Difurazone
+D05536,C19492,Nylon 6; Policapram
+D08324,C19494,Oxyphenbutazone
+D05545,C19505,Polipropene 25; Polypropylene
+D08974,C19507,Polytetrafluoroethylene; Polytef
+D02295,C19509,Polyvinyl pyrrolidone; Povidone
+D05602,C19512,Prednimustine
+D05733,C19518,Ripazepam
+D04616,C19519,"Saccharated iron oxide; Ferric oxide, saccharated; Iron sucrose"
+D02436,C19530,Sulfamethazine
+D07256,C19537,Triethylene glycol diglycidyl ether; Etoglucid
+D07254,C19542,Triaziquone; Tris(aziridinyl)-para-benzoquinone
+D07253,C19557,Treosulfan
+D02528,C19558,AF-2; Furylfuramide; 2-(2-Furyl)-3-(5-nitro-2-furyl)acrylamide
+D05570,C19598,Polyurethane foam; Polyurethane foams
+D07936,C20029,Eledoisin
+D11510,C20266,AMD 070
+D10695,C20335,"1,3-Butanediol; 1,3-Butylene glycol"
+D05848,C20785,Eleutheroside A; Sitogluside; beta-Sitosterol D-glucoside
+D05339,C21516,Paliperidone; 9-Hydroxyrisperidone
+D03773,C21540,Quinaprilat
+D03077,C21541,Benazeprilat
+D03772,C21542,Fosinoprilat
+D05246,C21543,Olmesartan
+D07648,C21544,Cefotiam
+D02888,C21545,Mecillinam; Amdinocillin
+D07639,C21546,Cefditoren
+D07638,C21547,Cefcapene; CFPN
+D07655,C21548,Cefteram; CFTM; T-2525
+D07966,C21550,Fludarabine; 2F-Ara-A
+D07143,C21551,Melagatran
+D02709,C21552,Valdecoxib
+D07972,C21553,Fluocortin
+D06196,C21554,Torcitabine; L-dC; 2'-Deoxy-beta-L-cytidine; beta-L-2'-Deoxycytidine
+D02968,C21555,Aprepitant
+D09707,C21556,Dabigatran
+D09410,C21557,Laninamivir
+D10734,C21558,Temsavir; BMS-626529
+D09791,C21605,Arbaclofen; (R)-Baclofen
+D07555,C22189,Acetyldigoxin
+D07556,C22190,beta-Acetyldigoxin; Acetyldigoxin beta isomer
+D06881,C22191,Acetyldigitoxin
+D02951,C22192,Anthelmycin; Antelmycin
+D08897,C22193,Dapagliflozin
+D10459,C22194,Empagliflozin
+D05658,C22195,Pyrazofurin; Pirazofurin
+D06130,C22196,Tiazofurin; Tiazofurine
+D05820,C22197,Semduramicin
+D11513,C22548,Estetrol

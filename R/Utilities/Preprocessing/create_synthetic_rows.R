@@ -11,10 +11,10 @@ create_synthetic_rows <- function(feature_table, missing_samples) {
     missing <- missing_samples[i, ]
     
     # Calculate mean of numeric features from same severe_PGD group and Sample timepoint
-    feature_table %>%
-      filter(severe_PGD == missing$severe_PGD, Sample == missing$Sample) %>%
-      select(-Patient, -Sample) %>%
-      summarise(across(where(is.numeric), mean, na.rm = TRUE)) %>%
+    feature_table |>
+      filter(severe_PGD == missing$severe_PGD, Sample == missing$Sample) |>
+      select(-Patient, -Sample) |>
+      summarise(across(where(is.numeric), \(x) mean(x, na.rm = TRUE))) |>
       mutate(
         Patient = as.character(missing$Patient),
         Sample = as.character(missing$Sample),
@@ -22,12 +22,12 @@ create_synthetic_rows <- function(feature_table, missing_samples) {
         PGD_grade_tier = as.character(missing$PGD_grade_tier),
         any_PGD = as.character(missing$any_PGD)
       )
-  }) %>%
+  }) |>
     bind_rows()
   
   # Bind synthetic rows and sort
   # bind_rows will coerce factors to match existing levels automatically
-  feature_table %>%
-    bind_rows(synthetic_rows) %>%
+  feature_table |>
+    bind_rows(synthetic_rows) |>
     arrange(Patient, Sample)
 }

@@ -3,7 +3,7 @@ make_volcano <- function(FC_list, ttest_res, key) {
   # Accept either a data.frame/tibble with Metabolite/Time/Value
   # or a list/data.frame with rownames as Metabolite and cols "Value","Time".
   if (all(c("Metabolite", "Time", "Value") %in% names(FC_list))) {
-    FC_table <- FC_list %>%
+    FC_table <- FC_list |>
       dplyr::select(Metabolite, Time, Value)
   } else {
     # Fallback to old structure
@@ -25,7 +25,7 @@ make_volcano <- function(FC_list, ttest_res, key) {
     FC_table,
     ttest_res,
     by = c("Metabolite", "Time")
-  ) %>%
+  ) |>
     # Attach human-readable names (compatible with combined_key_clean)
     dplyr::left_join(key, by = "Metabolite")
 
@@ -37,7 +37,7 @@ make_volcano <- function(FC_list, ttest_res, key) {
   # ---- 3) Color classification ----
   thr <- log2(1.5)
 
-  volcano_data <- volcano_data %>%
+  volcano_data <- volcano_data |>
     dplyr::mutate(
       Legend = dplyr::case_when(
         p_value < 0.05 & Value >= thr ~ "Up in PGD",
@@ -47,21 +47,21 @@ make_volcano <- function(FC_list, ttest_res, key) {
     )
 
   # ---- 4) Pick top/bottom 10 among the significant for labels ----
-  top10sig <- volcano_data %>%
-    dplyr::filter(p_value < 0.05) %>%
-    dplyr::arrange(Value) %>%
+  top10sig <- volcano_data |>
+    dplyr::filter(p_value < 0.05) |>
+    dplyr::arrange(Value) |>
     dplyr::slice_head(n = 10)
 
-  bottom10sig <- volcano_data %>%
-    dplyr::filter(p_value < 0.05) %>%
-    dplyr::arrange(dplyr::desc(Value)) %>%
+  bottom10sig <- volcano_data |>
+    dplyr::filter(p_value < 0.05) |>
+    dplyr::arrange(dplyr::desc(Value)) |>
     dplyr::slice_head(n = 10)
 
-  label_set <- dplyr::bind_rows(top10sig, bottom10sig) %>%
-    dplyr::distinct(Metabolite) %>%
+  label_set <- dplyr::bind_rows(top10sig, bottom10sig) |>
+    dplyr::distinct(Metabolite) |>
     dplyr::pull(Metabolite)
 
-  volcano_data <- volcano_data %>%
+  volcano_data <- volcano_data |>
     dplyr::mutate(Label = Metabolite %in% label_set)
 
   # ---- 5) Plot ----

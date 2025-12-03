@@ -40,23 +40,4 @@ if (!is.null(config$analysis$datatable_options)) {
   .datatable.aware <- config$analysis$datatable_options$aware
 }
 #+ 0b.7: Set up package conflict preferences
-# conflicted is already loaded by 0a_environment_setup.R
-conflicts_prefer(purrr::map)
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(dplyr::summarize)
-conflicts_prefer(dplyr::select)
-conflicts_prefer(dplyr::first)
-conflicts_prefer(dplyr::mutate)
-conflicts_prefer(dplyr::arrange)
-conflicts_prefer(dplyr::summarise)
-conflicts_prefer(dplyr::count)
-conflicts_prefer(ggplot2::margin)
-conflicts_prefer(stats::chisq.test)
-conflicts_prefer(stats::fisher.test)
-conflicts_prefer(jsonlite::fromJSON)
-conflicts_prefer(readxl::read_xlsx)
-conflicts_prefer(raster::intersect)
-conflicts_prefer(igraph::compose)
-conflicts_prefer(flextable::align)
-conflicts_prefer(dplyr::rename)
 cat("✅ Configuration and environment setup complete!\n")

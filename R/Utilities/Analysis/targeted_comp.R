@@ -30,8 +30,8 @@ targeted_metabolite_comparison <- function(data, grouping_var, test_type = "t_te
   # Perform statistical tests for each metabolite
   test_results <- map_dfr(metabolite_cols, ~{
     # Extract data for current metabolite
-    metabolite_data <- data %>%
-      filter(!is.na(.data[[grouping_var]]), !is.na(.data[[.x]])) %>%
+    metabolite_data <- data |>
+      filter(!is.na(.data[[grouping_var]]), !is.na(.data[[.x]])) |>
       select(group = all_of(grouping_var), metabolite = all_of(.x))
     
     # Convert group to factor
@@ -48,8 +48,8 @@ targeted_metabolite_comparison <- function(data, grouping_var, test_type = "t_te
           test_result <- t.test(metabolite ~ group, data = metabolite_data)
           
           # Calculate group means
-          group_means <- metabolite_data %>%
-            group_by(group) %>%
+          group_means <- metabolite_data |>
+            group_by(group) |>
             summarise(mean_val = mean(metabolite, na.rm = TRUE), .groups = "drop")
           
           # Create named list of means
@@ -91,8 +91,8 @@ targeted_metabolite_comparison <- function(data, grouping_var, test_type = "t_te
         anova_summary <- summary(test_result)
         
         # Calculate group means
-        group_means <- metabolite_data %>%
-          group_by(group) %>%
+        group_means <- metabolite_data |>
+          group_by(group) |>
           summarise(mean_val = mean(metabolite, na.rm = TRUE), .groups = "drop")
         
         # Create named list of means
@@ -132,12 +132,12 @@ targeted_metabolite_comparison <- function(data, grouping_var, test_type = "t_te
   })
   
   # Add FDR correction and significance flags
-  final_results <- test_results %>%
+  final_results <- test_results |>
     mutate(
       p_value_fdr = p.adjust(p_value, method = "fdr"),
       significant = p_value < 0.05 & !is.na(p_value),
       significant_fdr = p_value_fdr < 0.05 & !is.na(p_value_fdr)
-    ) %>%
+    ) |>
     arrange(p_value_fdr)
   
   # Report results

@@ -35,8 +35,8 @@ PGD_MFN <- read_csv(
              full.names = TRUE, 
              recursive = TRUE)[1],
   show_col_types = FALSE
-) %>%
-  select(pathway_name = 1, `Pathway total`, Hits.total, Hits.sig, Expected, `P(Fisher)`) %>%
+) |>
+  select(pathway_name = 1, `Pathway total`, Hits.total, Hits.sig, Expected, `P(Fisher)`) |>
   mutate(Comparisons = "PGD")
 #- 4.2.2: Extract Time pathways from CSV
 time_MFN <- read_csv(
@@ -45,8 +45,8 @@ time_MFN <- read_csv(
              full.names = TRUE, 
              recursive = TRUE)[1],
   show_col_types = FALSE
-) %>%
-  select(pathway_name = 1, `Pathway total`, Hits.total, Hits.sig, Expected, `P(Fisher)`) %>%
+) |>
+  select(pathway_name = 1, `Pathway total`, Hits.total, Hits.sig, Expected, `P(Fisher)`) |>
   mutate(Comparisons = "Time")
 #- 4.2.3: Extract Interaction pathways from CSV
 interaction_MFN <- read_csv(
@@ -55,15 +55,15 @@ interaction_MFN <- read_csv(
              full.names = TRUE, 
              recursive = TRUE)[1],
   show_col_types = FALSE
-) %>%
-  select(pathway_name = 1, `Pathway total`, Hits.total, Hits.sig, Expected, `P(Fisher)`) %>%
+) |>
+  select(pathway_name = 1, `Pathway total`, Hits.total, Hits.sig, Expected, `P(Fisher)`) |>
   mutate(Comparisons = "Interaction")
 #+ 4.3: Prep data for enrichment plots
-MFN_enrichment <- bind_rows(PGD_MFN, time_MFN, interaction_MFN) %>%
-  rename(p_fisher = "P(Fisher)") %>%
-  mutate(enrichment_factor = Hits.sig / Expected) %>%
-  select(Comparisons, pathway_name, p_fisher, enrichment_factor, Hits.sig, Expected) %>%
-  rowwise() %>%
+MFN_enrichment <- bind_rows(PGD_MFN, time_MFN, interaction_MFN) |>
+  rename(p_fisher = "P(Fisher)") |>
+  mutate(enrichment_factor = Hits.sig / Expected) |>
+  select(Comparisons, pathway_name, p_fisher, enrichment_factor, Hits.sig, Expected) |>
+  rowwise() |>
   mutate(
     pathway_name = {
       words <- str_split(pathway_name, "\\s+")[[1]]
@@ -79,39 +79,39 @@ MFN_enrichment <- bind_rows(PGD_MFN, time_MFN, interaction_MFN) %>%
       }), collapse = " ")
       new_name
     }
-  ) %>%
-  ungroup() %>%
-  filter(p_fisher <= 0.05) %>%
+  ) |>
+  ungroup() |>
+  filter(p_fisher <= 0.05) |>
   mutate(
     Comparisons = factor(Comparisons, levels = c("PGD", "Time", "Interaction")),
     pathway_name = forcats::fct_reorder(pathway_name, enrichment_factor, .fun = max)
-  ) %>%
-    complete(pathway_name, Comparisons) %>%
-    mutate(enrichment_factor = pmin(enrichment_factor, 5)) %>%
+  ) |>
+    complete(pathway_name, Comparisons) |>
+    mutate(enrichment_factor = pmin(enrichment_factor, 5)) |>
     mutate(
       pathway_name = factor(
         pathway_name,
-        levels = filter(., Comparisons == "PGD") %>%
-          arrange(desc(enrichment_factor)) %>%
-          pull(pathway_name) %>%
+        levels = filter(., Comparisons == "PGD") |>
+          arrange(desc(enrichment_factor)) |>
+          pull(pathway_name) |>
           unique()
       )
-    ) %>%
-    filter(!is.na(p_fisher)) %>%
+    ) |>
+    filter(!is.na(p_fisher)) |>
     {
       df <- .
       # order by Combined, then append the rest (so nothing becomes NA)
-      ordered <- df %>%
-        dplyr::filter(Comparisons == "PGD") %>%
-        dplyr::arrange(dplyr::desc(enrichment_factor)) %>%
-        dplyr::pull(pathway_name) %>%
-        as.character() %>%
+      ordered <- df |>
+        dplyr::filter(Comparisons == "PGD") |>
+        dplyr::arrange(dplyr::desc(enrichment_factor)) |>
+        dplyr::pull(pathway_name) |>
+        as.character() |>
         unique()
 
       all_names <- unique(as.character(df$pathway_name))
       levels_all <- c(ordered, setdiff(all_names, ordered))
 
-      df %>%
+      df |>
         dplyr::mutate(pathway_name = factor(as.character(pathway_name),
           levels = levels_all
         ))

@@ -8,18 +8,18 @@ missing_samples <- tibble::tribble(
   "H50",    "S1"
 )
 #- 3.1.1: Clean up metadata into factors (Untargeted)
-UFT_filtered_LIMMA <- UFT_filtered %>%
-  anti_join(missing_samples, by = c("Patient", "Sample")) %>%
-  select(Patient, Time, severe_PGD, everything(),-c(Sample_ID, Sample, PGD_grade_tier, any_PGD)) %>%
+UFT_filtered_LIMMA <- UFT_filtered |>
+  anti_join(missing_samples, by = c("Patient", "Sample")) |>
+  select(Patient, Time, severe_PGD, everything(),-c(Sample_ID, Sample, PGD_grade_tier, any_PGD)) |>
   mutate(
     Time = factor(Time, levels = c(12, 24), labels = c("12", "24")),
     Clinical_PGD = factor(severe_PGD, levels = c("N", "Y")),
     Patient = factor(Patient)
   )
 #- 3.1.2: Clean up metadata into factors (Targeted)
-TFT_combined_LIMMA <- TFT_combined %>%
-  anti_join(missing_samples, by = c("Patient", "Sample")) %>%
-  select(Patient, Time, severe_PGD, everything(), -c(Sample_ID, Sample, PGD_grade_tier, any_PGD)) %>%
+TFT_combined_LIMMA <- TFT_combined |>
+  anti_join(missing_samples, by = c("Patient", "Sample")) |>
+  select(Patient, Time, severe_PGD, everything(), -c(Sample_ID, Sample, PGD_grade_tier, any_PGD)) |>
   mutate(
     Time = factor(Time, levels = c(12, 24), labels = c("12", "24")),
     Clinical_PGD = factor(severe_PGD, levels = c("N", "Y")),

@@ -20,7 +20,7 @@ read_clinical_sheet <- function(sheet_name, patients = NULL, suppress_warnings =
 
   # Filter by patients if provided
   if (!is.null(patients)) {
-    result <- result %>% dplyr::filter(Patient %in% patients)
+    result <- result |> dplyr::filter(Patient %in% patients)
   }
 
   return(result)

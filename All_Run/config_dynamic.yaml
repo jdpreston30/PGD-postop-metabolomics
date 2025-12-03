@@ -22,15 +22,12 @@ paths:
   # Specific file paths (built from base)
   TFT_annot: "{base_data_path}/{metabojanitor_subpath}/ComBat/MSMICA/global_KEGG/MSMICA_Feature_Tables/MSMICA_20p_halfmin_log2.csv"
   TFT_annot_key: "{base_data_path}/{metabojanitor_subpath}/ComBat/MSMICA/global_KEGG/MSMICA_Feature_Tables/MSMICA_feature_key.csv"
-  TFT_annot_QC: "{user_home}/{onedrive_path}/Research/MS_raw_data/LCMS/MSMICA_QC.xlsx"
   UFT_full: "{base_data_path}/{metabojanitor_subpath}/ComBat/Untargeted/UFT_ComBat_full_halfmin_log2_tidy.csv"
   UFT_filtered: "{base_data_path}/{metabojanitor_subpath}/ComBat/Untargeted/UFT_ComBat_20p_halfmin_log2_tidy.csv"
   clinical_metadata: "{user_home}/{onedrive_path}/Research/Chan Lab - Transplant Multi-Omics - OHT/OHT Clinical Data Master Sheet.xlsx"
   
   # Local database paths (relative - same across computers)
-  manual_QC: "Databases/manual_QC.xlsx"
-  qstd_c18: "Databases/IDX_IROA/Qstd4_IROA_C18neg_quantification_HFQE_Fusion_09252025.txt"
-  qstd_hilic: "Databases/IDX_IROA/Qstd4_IROA_HILICpos_quantification_HFQE_Fusion_09252025.txt"
+  manual_QC: "Databases/QC/manual_QC.xlsx"
   idx_library: "Databases/IDX_IROA/IDX_lib.csv"
   
   # Output paths (relative to project root)

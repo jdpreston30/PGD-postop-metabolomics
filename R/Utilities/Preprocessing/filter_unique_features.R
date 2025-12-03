@@ -25,13 +25,13 @@
 #' @examples
 #' \dontrun{
 #' # Keep columns with 70% or more unique values (default)
-#' filtered_data <- feature_table %>% filter_unique_features()
+#' filtered_data <- feature_table |> filter_unique_features()
 #' 
 #' # Keep columns with 80% or more unique values
-#' filtered_data <- feature_table %>% filter_unique_features(unique_threshold = 0.8)
+#' filtered_data <- feature_table |> filter_unique_features(unique_threshold = 0.8)
 #' 
 #' # With verbose output to see what was removed
-#' filtered_data <- feature_table %>% filter_unique_features(verbose = TRUE)
+#' filtered_data <- feature_table |> filter_unique_features(verbose = TRUE)
 #' }
 #'
 #' @export

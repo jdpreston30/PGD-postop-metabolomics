@@ -116,7 +116,7 @@ calc_radial <- function(clinical_metadata,
   }
   
   # Calculate RADIAL score
-  clinical_metadata_with_radial <- clinical_metadata %>%
+  clinical_metadata_with_radial <- clinical_metadata |>
     mutate(
       preop_RADIAL_calc = ifelse(
         # Check if ANY required values are missing for this patient

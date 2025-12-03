@@ -54,7 +54,7 @@ calc_ISHLT <- function(clinical_metadata_i,
                        lvef_col = "postop_LVEF_median",
                        inotrope_col = "postop_inotrope_score") {
   clinical_metadata <- clinical_metadata_i
-  original_PGD <- clinical_metadata_i %>% select(postop_PGD_textbook_calc, postop_PGD_ISHLT)
+  original_PGD <- clinical_metadata_i |> select(postop_PGD_textbook_calc, postop_PGD_ISHLT)
 
   # Check column names exist
   missing_cols <- c()
@@ -81,7 +81,7 @@ calc_ISHLT <- function(clinical_metadata_i,
   }
 
   # Calculate ISHLT PGD Grade
-  clinical_metadata <- clinical_metadata %>%
+  clinical_metadata <- clinical_metadata |>
     mutate(
       postop_PGD_grade_ISHLT = case_when(
         # Check if all values are empty/NA (return empty string)

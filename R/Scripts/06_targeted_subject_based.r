@@ -1,14 +1,14 @@
 #* 6: Subject-specific Analysis
 #+ 6.1: Clean up interaction metabolites for graphing
-  plot_dat <- limma_targ$interaction %>%
-    arrange(p.value) %>%
-    filter(p.value < 0.05) %>%
-    select(Metabolite, Identified_Name, logFC) %>%
+  plot_dat <- limma_targ$interaction |>
+    arrange(p.value) |>
+    filter(p.value < 0.05) |>
+    select(Metabolite, Identified_Name, logFC) |>
     # drop explicit duplicates you don't want
     # C16309_C18 is detected in HILIC and stronger magnitude
-    filter(!Metabolite %in% c("C11384_HILIC", "C11383_HILIC", "C20893_C18", "C16309_C18")) %>%
+    filter(!Metabolite %in% c("C11384_HILIC", "C11383_HILIC", "C20893_C18", "C16309_C18")) |>
     # start from the given name (fallback to ID if missing)
-    mutate(label = coalesce(na_if(Identified_Name, ""), Metabolite)) %>%
+    mutate(label = coalesce(na_if(Identified_Name, ""), Metabolite)) |>
     mutate(
       label = dplyr::case_when(
         Metabolite == "C00079_HILIC" ~ "Phenylalanine",
@@ -22,16 +22,16 @@
         Metabolite == "C20324_HILIC" ~ "4-OH-TMCP acetate", # short name you chose
         TRUE ~ label
       )
-    ) %>%
+    ) |>
     # append exactly one * if metabolite ID ends with * and label lacks one, then strip all * per your preference
     mutate(
       label = if_else(stringr::str_detect(Metabolite, "\\*$") & !stringr::str_detect(label, "\\*$"),
         paste0(label, "*"), label
       ),
       label = stringr::str_replace_all(label, "\\*", "")
-    ) %>%
+    ) |>
     # FINAL ordering and factor levels (do this LAST and don’t touch `label` afterwards)
-    arrange((logFC)) %>% # top = most positive
+    arrange((logFC)) |> # top = most positive
     mutate(
       dir   = if_else(logFC >= 0, "Positive", "Negative"),
       label = factor(label, levels = label) # lock order
@@ -58,7 +58,7 @@
         axis.ticks = ggplot2::element_blank()
       )
 
-      plot_dat %>%
+      plot_dat |>
         select(Metabolite,label)
   #- 8.2.2: Save graph
     ggsave(

@@ -26,7 +26,7 @@
 #'
 #' @export
 calc_BiVAD <- function(clinical_metadata) {
-  clinical_metadata_with_bivad <- clinical_metadata %>%
+  clinical_metadata_with_bivad <- clinical_metadata |>
     mutate(
       postop_BiVAD_dependence = if_else(
         postop_MCS_RVAD == "Y" & postop_MCS_IABP == "Y",

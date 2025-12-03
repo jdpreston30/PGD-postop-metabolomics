@@ -127,8 +127,8 @@ make_heatmap <- function(
   )
 
   cluster_lists <- lapply(seq_len(n_clades), function(i) {
-    cluster_df %>%
-      dplyr::filter(Cluster == i) %>%
+    cluster_df |>
+      dplyr::filter(Cluster == i) |>
       dplyr::pull(Sample_ID)
   })
   names(cluster_lists) <- paste0("cluster", seq_len(n_clades), "_ids")

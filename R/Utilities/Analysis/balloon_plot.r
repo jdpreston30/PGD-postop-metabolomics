@@ -4,15 +4,15 @@ balloon_plot <- function(balloon_dat,
                          label_col = "Label") {
   stopifnot(all(c(name_col, value_col, label_col) %in% names(balloon_dat)))
 
-  bd <- balloon_dat %>%
-    dplyr::filter(.data[[label_col]] == TRUE) %>%
-    dplyr::select(dplyr::all_of(c(name_col, value_col))) %>%
+  bd <- balloon_dat |>
+    dplyr::filter(.data[[label_col]] == TRUE) |>
+    dplyr::select(dplyr::all_of(c(name_col, value_col))) |>
     dplyr::mutate(
       log2FC_clamp = pmax(pmin(.data[[value_col]], 2.5), -2.5),
       magn         = abs(log2FC_clamp),
       direction    = ifelse(log2FC_clamp > 0, "Up in PGD", "Down in PGD")
-    ) %>%
-    dplyr::arrange(log2FC_clamp) %>%
+    ) |>
+    dplyr::arrange(log2FC_clamp) |>
     dplyr::mutate(
       !!name_col := factor(.data[[name_col]], levels = .data[[name_col]])
     )
