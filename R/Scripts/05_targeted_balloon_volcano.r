@@ -49,74 +49,25 @@ ttest_result_24h <- lapply(seq_along(targ24_NPGD), function(i) {
 #+ 5.7: Combine results into a single table (24h)
 targ_24PGD_ttest <- do.call(rbind, ttest_result_24h)
 targ_24PGD_ttest$Time <- "24h"
-#!!!!!!!!!!!!!!!!!!!!
-# #+ 5.8: Create volcano and balloon plots for 12h
-# #- 5.8.1: Create volcano plot based on volcano function
-# volc_12 <- make_volcano(fc_targ12, targ_12PGD_ttest, combined_key_clean)
-# ggsave(
-#   "Outputs/Balloon_and_Volcano/volcano_plot_12h.png",
-#   volc_12$volcano_plot,
-#   width = 3.5,
-#   height = 3.5,
-#   units = "in",
-#   dpi = 600
-# )
-# #- 5.8.2: Clean up data
-# balloon_data_12 <- as_tibble(volc_12$volcano_data) |>
-#   dplyr::mutate(
-#     Identified_Name = ifelse(Identified_Name == "C20818",
-#       "Carbapenem biosynthesis intermediate 2",
-#       Identified_Name
-#     ),
-#     # Add asterisk to Identified_Name if Metabolite ends with "*"
-#     Identified_Name = ifelse(stringr::str_detect(Metabolite, "\\*$"),
-#       paste0(Identified_Name, "*"),
-#       Identified_Name
-#     )
-#   ) |>
-#   filter(Legend != "Not Significant")
-# #- 5.8.3: Create a balloon plot based on volcano plot results
-# balloon_12 <- balloon_plot(balloon_data_12)
-# ggsave(
-#   "Outputs/Balloon_and_Volcano/balloon_plot_12h.png",
-#   balloon_12$ball_plot,
-#   width = 5.5,
-#   height = 8,
-#   units = "in",
-#   dpi = 600
-# )
-# #+ 5.9: Create volcano and balloon plots for 24h
-# #- 5.9.1: Create volcano plot based on volcano function
-# volc_24 <- make_volcano(fc_targ24, targ_24PGD_ttest, combined_key_clean)
-# ggsave(
-#   "Outputs/Balloon_and_Volcano/volcano_plot_24h.png",
-#   volc_24$volcano_plot,
-#   width = 3.5,
-#   height = 3.5,
-#   units = "in",
-#   dpi = 600
-# )
-# #- 5.9.2: Touch up names
-# balloon_data_24 <- as_tibble(volc_24$volcano_data) |>
-#   dplyr::mutate(
-#     Identified_Name = ifelse(Identified_Name == "C20818",
-#       "Carbapenem biosynthesis intermediate 2",
-#       Identified_Name
-#     ),
-#     # Add asterisk to Identified_Name if Metabolite ends with "*"
-#     Identified_Name = ifelse(stringr::str_detect(Metabolite, "\\*$"),
-#       paste0(Identified_Name, "*"),
-#       Identified_Name
-#     )
-#   ) |>
-#   filter(Legend != "Not Significant")
-# #- 5.9.3: Create a balloon plot based on volcano plot results
-# balloon_24 <- balloon_plot(balloon_data_24)
-# ggsave(
-#   "Outputs/Balloon_and_Volcano/balloon_plot_24h.png",
-#   balloon_24$ball_plot,
-#   width = 5.5,
-#   height = 8,
-#   units = "in",
-#   dpi = 600
-# )
+#+ 5.8: Create volcano plots
+#- 5.8.1: Create volcano plot based on volcano function
+volc_12 <- make_volcano(fc_targ12, targ_12PGD_ttest)
+ggsave(
+  "Outputs/Balloon_and_Volcano/volcano_plot_12h.png",
+  volc_12$volcano_plot,
+  width = 3.5,
+  height = 3.5,
+  units = "in",
+  dpi = 600
+)
+#+ 5.9: Create volcano plots for 24h
+#- 5.9.1: Create volcano plot based on volcano function
+volc_24 <- make_volcano(fc_targ24, targ_24PGD_ttest)
+ggsave(
+  "Outputs/Balloon_and_Volcano/volcano_plot_24h.png",
+  volc_24$volcano_plot,
+  width = 3.5,
+  height = 3.5,
+  units = "in",
+  dpi = 600
+)

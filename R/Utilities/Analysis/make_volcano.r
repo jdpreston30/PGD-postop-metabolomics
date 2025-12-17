@@ -1,4 +1,4 @@
-make_volcano <- function(FC_list, ttest_res, key) {
+make_volcano <- function(FC_list, ttest_res) {
   # ---- 1) Build FC table robustly ----
   # Accept either a data.frame/tibble with Metabolite/Time/Value
   # or a list/data.frame with rownames as Metabolite and cols "Value","Time".
@@ -25,9 +25,7 @@ make_volcano <- function(FC_list, ttest_res, key) {
     FC_table,
     ttest_res,
     by = c("Metabolite", "Time")
-  ) |>
-    # Attach human-readable names (compatible with combined_key_clean)
-    dplyr::left_join(key, by = "Metabolite")
+  )
 
   # Expect a column named p_value in ttest_res
   if (!"p_value" %in% names(volcano_data)) {
