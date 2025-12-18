@@ -97,7 +97,7 @@ MFN_enrichment <- bind_rows(PGD_MFN, time_MFN, interaction_MFN) |>
           unique()
       )
     ) |>
-    filter(!is.na(p_fisher)) |>
+    filter(!is.na(p_fisher)) %>%
     {
       df <- .
       # order by Combined, then append the rest (so nothing becomes NA)

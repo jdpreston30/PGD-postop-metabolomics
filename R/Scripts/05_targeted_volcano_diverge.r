@@ -52,24 +52,8 @@ targ_24PGD_ttest$Time <- "24h"
 #+ 5.8: Create volcano plots
 #- 5.8.1: 12 Hours
 volc_12 <- make_volcano(fc_targ12, targ_12PGD_ttest)
-ggsave(
-  "Outputs/Balloon_and_Volcano/volcano_plot_12h.png",
-  volc_12$volcano_plot,
-  width = 3.5,
-  height = 3.5,
-  units = "in",
-  dpi = 600
-)
 #- 5.8.2: Create volcano plot based on volcano function
 volc_24 <- make_volcano(fc_targ24, targ_24PGD_ttest)
-ggsave(
-  "Outputs/Balloon_and_Volcano/volcano_plot_24h.png",
-  volc_24$volcano_plot,
-  width = 3.5,
-  height = 3.5,
-  units = "in",
-  dpi = 600
-)
 #+ 5.9: Prep data for diverging bars
 #- 5.9.0: Subset to QC
 TFT_QC_diverge <- TFT_QC |>
@@ -97,12 +81,7 @@ div_bars_12 <- plot_diverging_bars(diverge_12h,
   add_group_labels = TRUE,
   max_features = 50, 
   fc_threshold = 0,
-  x_max = 3.2
-)
-print_to_png(div_bars_12,
-  "12h_test.png",
-  width = 3.2,
-  height = 5  
+  x_max = 3.05
 )
 #- 5.9.1: 24 Hours
 div_bars_24 <- plot_diverging_bars(diverge_24h, 
@@ -110,10 +89,5 @@ div_bars_24 <- plot_diverging_bars(diverge_24h,
   add_group_labels = TRUE,
   max_features = 50,  
   fc_threshold = 0,
-  x_max = 3.2
-)
-print_to_png(div_bars_24,
-  "24h_test.png",
-  width = 3.2,
-  height = 5  
+  x_max = 3.05
 )

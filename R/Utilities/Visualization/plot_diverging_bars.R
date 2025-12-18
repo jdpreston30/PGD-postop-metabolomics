@@ -102,32 +102,32 @@ plot_diverging_bars <- function(results_tibble,
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(),
-        panel.border = element_rect(color = "black", fill = NA, linewidth = 0.4),
+        panel.border = element_rect(color = "black", fill = NA, linewidth = 0.545),
         
         # Axis styling - matching volcano plot exactly
-        axis.ticks = element_line(color = "black", linewidth = 0.4),
+        axis.ticks = element_line(color = "black", linewidth = 0.6),
         axis.ticks.length = unit(0.15, "cm"),
-        axis.text.x = element_text(size = 11 * text_scale, face = "bold", color = "black"),
-        axis.text.y = element_text(size = 5 * text_scale, face = "bold", color = "black", margin = margin(r = 2)),
-        axis.title = element_text(size = 12 * text_scale, face = "bold", color = "black"),
-        axis.title.x = element_text(size = 12 * text_scale, face = "bold", color = "black", margin = margin(t = 5)),
+        axis.text.x = element_text(size = 12 * text_scale, face = "bold", color = "black"),
+        axis.text.y = element_text(size = 6 * text_scale, face = "bold", color = "black", margin = margin(r = 2)),
+        axis.title = element_text(size = 15 * text_scale, face = "bold", color = "black"),
+        axis.title.x = element_text(size = 15 * text_scale, face = "bold", color = "black"),
         axis.title.y = element_blank(),
         
         # Plot title
         plot.title = element_blank(),
         
-        # Legend styling - small boxes centered at top
-        legend.position = "inside",
-        legend.position.inside = c(0.515, 1.025),
+        # Legend styling - centered at top, universal spacing
+        legend.position = "top",
         legend.direction = "horizontal",
+        legend.box = "horizontal",
         legend.justification = "center",
         legend.title = element_blank(),
-        legend.text = element_text(size = 5 * text_scale, face = "bold", color = "black", margin = margin(l = 2, r = 0)),
-        legend.key.size = unit(0.35, "cm"),       # Much smaller boxes
-        legend.key.width = unit(0.35, "cm"),     # Smaller width
-        legend.key.height = unit(0.15, "cm"),    # Smaller height
-        legend.margin = margin(b = -2),          # Less space below legend
-        legend.box.margin = margin(b = -2),
+        legend.text = element_text(size = 8 * text_scale, face = "bold", color = "black", margin = margin(l = 4, r = 4)),
+        legend.key.size = unit(0.35, "cm"),
+        legend.key.width = unit(0.35, "cm"),
+        legend.key.height = unit(0.15, "cm"),
+        legend.margin = margin(t = 0, r = 0, b = -3, l = 0),
+        legend.box.margin = margin(0, 0, 0, 0),
         
         # Panel margins - give more space on the left for y-axis labels and right for group labels
         plot.margin = margin(t = 20, r = 10, b = 20, l = 10)
@@ -141,7 +141,7 @@ plot_diverging_bars <- function(results_tibble,
     # Color and fill scales with descriptive labels
     scale_fill_manual(
       values = colors,
-      labels = c("negative" = "Lower in Severe PGD", "positive" = "Higher in Severe PGD")
+      labels = c("negative" = "Lower in sPGD", "positive" = "Higher in sPGD")
     ) +
     # Y-axis spacing control
     scale_y_discrete(expand = expansion(add = c(0.75, 0.75))) +
@@ -182,7 +182,7 @@ plot_diverging_bars <- function(results_tibble,
           annotate("segment",
             x = 0, xend = x_max,
             y = divider_y, yend = divider_y,
-            linewidth = 0.4, color = "gray30"
+            linewidth = 0.3, color = "black"
           )
       }
     }

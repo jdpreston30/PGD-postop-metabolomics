@@ -70,7 +70,7 @@ make_PCA <- function(data, plot_title = "",
             ggplot2::geom_point(
               data = scores_df_complete,
               ggplot2::aes(x = Comp1, y = Comp2, group = Class, fill = Class),
-              size = point_size, shape = 21
+              size = point_size / 2, shape = 21
             ),
             ggplot2::stat_ellipse(
               data = scores_df_complete,
@@ -84,49 +84,48 @@ make_PCA <- function(data, plot_title = "",
           ggplot2::geom_point(
             data = scores_df_na,
             ggplot2::aes(x = Comp1, y = Comp2),
-            size = point_size, shape = 1, color = "black", fill = NA
+            size = point_size / 2, shape = 1, color = "black", fill = NA
           )
         }} +
-        ggplot2::scale_color_manual(values = ellipse_colors, name = "Clinical PGD", drop = TRUE, na.translate = FALSE) +
-        ggplot2::scale_fill_manual(values = ellipse_colors, name = "Clinical PGD", drop = TRUE, na.translate = FALSE) +
+        ggplot2::scale_color_manual(values = ellipse_colors, labels = c("Y" = "Severe PGD", "N" = "No Severe PGD"), name = NULL, drop = TRUE, na.translate = FALSE) +
+        ggplot2::scale_fill_manual(values = ellipse_colors, labels = c("Y" = "Severe PGD", "N" = "No Severe PGD"), name = NULL, drop = TRUE, na.translate = FALSE) +
         ggplot2::theme_minimal(base_family = "Arial") +
         ggplot2::labs(
           x = paste0(axis_prefix, comp_x, " (", explained[1], "%)"),
           y = paste0(axis_prefix, comp_y, " (", explained[2], "%)")
         ) +
         ggplot2::theme(
-          axis.title = ggplot2::element_text(size = 25, face = "bold"),
-          axis.text = ggplot2::element_text(size = 22, face = "bold", color = "black"),
-          panel.grid.major = ggplot2::element_line(color = "gray80", linewidth = 0.8, linetype = "solid"),
+          # Match volcano plot axis styling
+          axis.title.x = ggplot2::element_text(size = 15, face = "bold", color = "black"),
+          axis.title.y = ggplot2::element_text(size = 15, face = "bold", color = "black"),
+          axis.text.x = ggplot2::element_text(size = 12, face = "bold", color = "black"),
+          axis.text.y = ggplot2::element_text(size = 12, face = "bold", color = "black"),
+          
+          # Match volcano plot border and tick styling
+          panel.border = ggplot2::element_rect(color = "black", fill = NA, linewidth = 1.2),
+          axis.ticks = ggplot2::element_line(color = "black", linewidth = 0.6),
+          axis.ticks.length = grid::unit(0.15, "cm"),
+          
+          # Keep existing grid and panel styling
+          panel.grid.major = ggplot2::element_line(color = "gray80", linewidth = 0.4, linetype = "solid"),
           panel.grid.minor = ggplot2::element_blank(),
-          panel.border = ggplot2::element_rect(color = "black", fill = NA, linewidth = 3.2),
           panel.background = ggplot2::element_blank(),
           aspect.ratio = 1,
           plot.margin = grid::unit(c(2, 8, 8, 8), "pt"),
+          
+          # Legend styling - match volcano and diverging bars
           legend.position = "top",
+          legend.justification = "center",
           legend.direction = "horizontal",
           legend.box = "horizontal",
           legend.box.margin = ggplot2::margin(0, 0, 0, 0),
           legend.margin = ggplot2::margin(t = 0, r = 0, b = -3, l = 0),
-
-          # 🔽 controls symbol size
           legend.key.width = grid::unit(0.35, "cm"),
           legend.key.height = grid::unit(0.35, "cm"),
           legend.key.size = grid::unit(0.35, "cm"),
-
-          # 🔽 distance between symbol and text
-          legend.spacing.x = grid::unit(0, "cm"),
-
-          # 🔽 fine-tunes text alignment (0 = left, 1 = right; <0 moves text closer to key)
-          legend.text.align = -10,
-          legend.text = element_text(size = 12),
-          legend.title = ggplot2::element_text(size = 14),
-          axis.title.y = ggplot2::element_text(
-            margin = ggplot2::margin(r = 0), hjust = 0.5
-          )
-        ) + 
-        ggplot2::guides(
-          color = guide_legend(title = "Clinical PGD")
+          legend.spacing.x = grid::unit(0.1, "cm"),
+          legend.text = element_text(size = 8, face = "bold", color = "black", margin = ggplot2::margin(l = 4, r = 4)),
+          legend.title = ggplot2::element_blank()
         )
       
       #_Return useful objects for further analysis

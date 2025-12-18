@@ -38,8 +38,8 @@ make_volcano <- function(FC_list, ttest_res) {
   volcano_data <- volcano_data |>
     dplyr::mutate(
       Legend = dplyr::case_when(
-        p_value < 0.05 & Value >= thr ~ "Up in PGD",
-        p_value < 0.05 & Value <= -thr ~ "Down in PGD",
+        p_value < 0.05 & Value >= thr ~ "Up in sPGD",
+        p_value < 0.05 & Value <= -thr ~ "Down in sPGD",
         TRUE ~ "Not Significant"
       )
     )
@@ -71,15 +71,16 @@ make_volcano <- function(FC_list, ttest_res) {
     ggplot2::scale_color_manual(
       values = c(
         "Not Significant" = "gray70",
-        "Up in PGD"       = "#800017",
-        "Down in PGD"     = "#113d6a"
+        "Up in sPGD"       = "#800017",
+        "Down in sPGD"     = "#113d6a"
       ),
+      breaks = c("Down in sPGD", "Up in sPGD"),
       name = NULL
     ) +
     ggplot2::theme_light(base_family = "Arial") +
     ggplot2::labs(
-      x = expression(log[2]("Fold Change")),
-      y = expression(-log[10](p))
+      x = expression(bold(log[2]("Fold Change"))),
+      y = expression(bold(-log[10](p)))
     ) +
     ggplot2::geom_hline(yintercept = -log10(0.05), linetype = "dashed", color = "black") +
     geom_vline(xintercept = c(-thr, thr), linetype = "dashed", color = "black") +
@@ -100,20 +101,26 @@ make_volcano <- function(FC_list, ttest_res) {
       axis.text.x = ggplot2::element_text(size = 12, face = "bold", color = "black"),
       axis.text.y = ggplot2::element_text(size = 12, face = "bold", color = "black"),
 
-      legend.position = "none", # ✅ hides all legends
-
-      # # Legend
-      # legend.position = c(0.05, 0.95), # top-left inside plot
-      # legend.justification = c("left", "top"),
-      # legend.background = ggplot2::element_rect(fill = alpha("white", 0.7), color = NA),
-      # legend.key = ggplot2::element_blank(),
-      # legend.title = ggplot2::element_blank(),
-      # legend.text = ggplot2::element_text(size = 10, face = "bold", color = "black"),
+      # Legend styling - centered at top, universal spacing
+      legend.position = "top",
+      legend.justification = "center",
+      legend.direction = "horizontal",
+      legend.box = "horizontal",
+      legend.box.margin = ggplot2::margin(0, 0, 0, 0),
+      legend.margin = ggplot2::margin(t = 0, r = 0, b = -3, l = 0),
+      legend.key.width = grid::unit(0.35, "cm"),
+      legend.key.height = grid::unit(0.35, "cm"),
+      legend.key.size = grid::unit(0.35, "cm"),
+      legend.spacing.x = grid::unit(0.1, "cm"),
+      legend.text = ggplot2::element_text(size = 8, face = "bold", color = "black", margin = ggplot2::margin(l = 4, r = 4)),
+      legend.title = ggplot2::element_blank(),
+      legend.key = ggplot2::element_blank(),
 
       # General
       strip.text = ggplot2::element_text(size = 12, face = "bold", color = "black"),
       panel.border = ggplot2::element_rect(color = "black", fill = NA, linewidth = 1.2),
-      axis.ticks = ggplot2::element_blank()
+      axis.ticks = ggplot2::element_line(color = "black", linewidth = 0.6),
+      axis.ticks.length = grid::unit(0.15, "cm")
     ) +
     ggplot2::guides(color = ggplot2::guide_legend(
       override.aes = list(shape = 16, size = 3) # legend dots smaller
