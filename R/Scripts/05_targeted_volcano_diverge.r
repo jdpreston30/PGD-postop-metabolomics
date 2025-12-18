@@ -50,7 +50,7 @@ ttest_result_24h <- lapply(seq_along(targ24_NPGD), function(i) {
 targ_24PGD_ttest <- do.call(rbind, ttest_result_24h)
 targ_24PGD_ttest$Time <- "24h"
 #+ 5.8: Create volcano plots
-#- 5.8.1: Create volcano plot based on volcano function
+#- 5.8.1: 12 Hours
 volc_12 <- make_volcano(fc_targ12, targ_12PGD_ttest)
 ggsave(
   "Outputs/Balloon_and_Volcano/volcano_plot_12h.png",
@@ -60,8 +60,7 @@ ggsave(
   units = "in",
   dpi = 600
 )
-#+ 5.9: Create volcano plots for 24h
-#- 5.9.1: Create volcano plot based on volcano function
+#- 5.8.2: Create volcano plot based on volcano function
 volc_24 <- make_volcano(fc_targ24, targ_24PGD_ttest)
 ggsave(
   "Outputs/Balloon_and_Volcano/volcano_plot_24h.png",
@@ -70,4 +69,51 @@ ggsave(
   height = 3.5,
   units = "in",
   dpi = 600
+)
+#+ 5.9: Prep data for diverging bars
+#- 5.9.0: Subset to QC
+TFT_QC_diverge <- TFT_QC |>
+  filter(select_12h == "Y" | select_24h == "Y") |>
+  select(display_name, feature, main_group, subgroup, select_12h, select_24h)
+#- 5.9.1: Structure 12h data
+targ_12PGD_diverging <- targ_12PGD_ttest |>
+  select(feature = Metabolite, log2_fc = mean_difference, p_value)
+#- 5.9.2: Subset the 12h
+diverge_12h <- TFT_QC_diverge |>
+  left_join(targ_12PGD_diverging, by = "feature") |>
+  filter(select_12h == "Y") |>
+  arrange(main_group, log2_fc)
+#- 5.9.3: Structure 24h data
+targ_24PGD_diverging <- targ_24PGD_ttest |>
+  select(feature = Metabolite, log2_fc = mean_difference, p_value)
+#- 5.9.4: Subset the 24h
+diverge_24h <- TFT_QC_diverge |>
+  left_join(targ_24PGD_diverging, by = "feature") |>
+  filter(select_24h == "Y") |>
+  arrange(main_group, log2_fc)
+#- 5.9.1: 12 Hours
+div_bars_12 <- plot_diverging_bars(diverge_12h, 
+  group_ordering = TRUE, 
+  add_group_labels = TRUE,
+  max_features = 50, 
+  fc_threshold = 0,
+  x_max = 3.2
+)
+print_to_png(div_bars_12,
+  "12h_test.png",
+  width = 3.2,
+  height = 5  
+)
+#- 5.9.1: 24 Hours
+div_bars_24 <- plot_diverging_bars(diverge_24h, 
+  group_ordering = TRUE, 
+  add_group_labels = TRUE,
+  max_features = 50,  
+  fc_threshold = 0,
+  x_max = 3.2
+)
+print_to_png(div_bars_24,
+  "24h_test.png",
+  width = 3.2,
+  height = 5  
 )

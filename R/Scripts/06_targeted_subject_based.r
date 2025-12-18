@@ -1,9 +1,9 @@
 #* 6: Subject-specific Analysis
 #+ 6.1: Clean up interaction metabolites for graphing
 #- 6.1.1: Get metadata to join
+TFT_QC
 
 plot_dat <- limma_targ$interaction |>
-
   arrange(p.value) |>
   filter(p.value < 0.05) |>
   select(Metabolite, Identified_Name, logFC) |>

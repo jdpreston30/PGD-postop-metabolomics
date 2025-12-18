@@ -39,5 +39,3 @@ if (!is.null(config$analysis$datatable_options)) {
   )
   .datatable.aware <- config$analysis$datatable_options$aware
 }
-#+ 0b.7: Set up package conflict preferences
-cat("✅ Configuration and environment setup complete!\n")
