@@ -14,6 +14,8 @@
 #' @param add_group_labels Logical; if TRUE and main_group column exists, adds group brackets and labels on y-axis (default: FALSE)
 #' @param label_pos Numeric; scaling factor for label position relative to x_max (default: 1.15)
 #' @param x_max Maximum value for x-axis (default: 3.5)
+#' @param legend_labels Character; legend label style - "default" for direct comparison labels, "intx" for interaction term labels (default: "default")
+#' @param lower_expand Numeric; expansion factor for left side of x-axis (default: 0.0037)
 #'
 #' @return ggplot object
 #'
@@ -39,6 +41,8 @@ plot_diverging_bars <- function(results_tibble,
                                 label_pos = 1.15,
                                 add_group_labels = FALSE,
                                 x_max = 3.5,
+                                legend_labels = "default",
+                                lower_expand = 0.0037,
                                 title = NULL) {
   
   # Load required libraries
@@ -136,6 +140,13 @@ plot_diverging_bars <- function(results_tibble,
       )
   }
   
+  # Determine legend labels based on legend_labels argument
+  if (legend_labels == "intx") {
+    legend_label_vec <- c("negative" = "Greater ↓ in sPGD", "positive" = "Greater ↑ in sPGD")
+  } else {
+    legend_label_vec <- c("negative" = "Lower in sPGD", "positive" = "Higher in sPGD")
+  }
+  
   # Create the plot
   p <- ggplot(plot_data, aes(x = log2_fc_abs, y = display_name, fill = fc_direction)) +
     # Add bars
@@ -143,7 +154,7 @@ plot_diverging_bars <- function(results_tibble,
     # Color and fill scales with descriptive labels
     scale_fill_manual(
       values = colors,
-      labels = c("negative" = "Lower in sPGD", "positive" = "Higher in sPGD")
+      labels = legend_label_vec
     ) +
     # Y-axis spacing control
     scale_y_discrete(expand = expansion(add = c(0.75, 0.75))) +
@@ -151,7 +162,7 @@ plot_diverging_bars <- function(results_tibble,
     scale_x_continuous(
       limits = c(0, x_max),
       breaks = seq(0, floor(x_max), by = 1),
-      expand = expansion(mult = c(0.0037, 0.0037))
+      expand = expansion(mult = c(lower_expand, 0.0037))
     ) +
     # Axis labels
     labs(
@@ -210,7 +221,8 @@ plot_diverging_bars <- function(results_tibble,
         hjust = 0.5, vjust = 0.5,
         size = 2.5 * text_scale, fontface = "bold.italic",
         family = base_family, color = "black",
-        lineheight = 0.9
+        lineheight = 0.9,
+        inherit.aes = FALSE
       )
     
     # Turn off clipping to show text in margins

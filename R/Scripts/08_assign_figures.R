@@ -11,7 +11,8 @@ p3B <- volc_24$volcano_plot
 p3C <- div_bars_12
 p3D <- div_bars_24
 #+ 8.3: Figure 4
-
+p4A <- div_bars_intx
+p4B <- succinate_summary_plot
 #+ 8.5: Supplemental Figure 1
 s1A <- plsda_12h$plot
 s1B <- plsda_24h$plot

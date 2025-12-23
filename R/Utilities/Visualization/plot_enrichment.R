@@ -73,7 +73,7 @@ plot_enrichment <- function(enrichment_data) {
     ),
     strip.text.y.left = element_text(
       angle = 0, hjust = 1,
-      face = "bold", family = "Arial", size = 13 * scale_factor,
+      face = "bold", family = "Arial", size = 12 * scale_factor,
       margin = margin(r = 6 * scale_factor)
     ),
     legend.title = element_text(size = 8, face = "bold", family = "Arial"),

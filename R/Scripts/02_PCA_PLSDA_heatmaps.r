@@ -28,8 +28,6 @@ plot_specs <- tribble(
 plsda_12h <- make_PCA(UFT_12h, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA")
 plsda_24h <- make_PCA(UFT_24h, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA")
 # Repeating above two in supplementals for completeness
-s1A <- plsda_12h
-s1B <- plsda_24h
 plsda_combined <- make_PCA(UFT_12and24, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA")
 # PCAs for supplemental
 pca_12h <- make_PCA(UFT_12h, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PCA")

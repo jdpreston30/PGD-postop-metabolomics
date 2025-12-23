@@ -17,7 +17,7 @@ C = c(4.446667, 7.058333),
 #+ 9.2: Figure 2
 fig2 <- ggdraw(xlim = c(0, 8.5), ylim = c(0, 11)) +
 draw_plot(ggdraw() + draw_grob(grid::grobTree(ggplotGrob(p2A))), 
-          x = 0.1116667, y = 5.456666, width = 7, height = 4.8) +
+          x = 0.1150003, y = 5.491666, width = 7, height = 4.8) +
 #- Labels
 figure_labels(list(
 "Figure 2" = c(0.49, 10.43)
@@ -40,13 +40,26 @@ C = c(1.341667, 6.918334),
 D = c(4.84, 6.918334),
 "Figure 3" = c(0.49, 10.43)
 ))
+#+ 9.4: Figure 4
+fig4 <- ggdraw(xlim = c(0, 8.5), ylim = c(0, 11)) +
+#- 4A
+draw_plot(p4A, x = 0.405, y = 5.349667, width = 4.5, height = 5) +
+#- 4B
+draw_plot(p4B, x = 5.196666, y = 7.456667, width = 2.89, height = 2.89) +
+#- Labels
+figure_labels(list(
+A = c(0.726667, 9.98),
+B = c(5.323333, 9.98),
+"Figure 4" = c(0.49, 10.43)
+))
 #+ 9.5: Save Figures
 print_to_png(fig1, "fig1.png")
 print_to_png(fig2, "fig2.png")
 print_to_png(fig3, "fig3.png")
+print_to_png(fig4, "fig4.png")
 #+ 9.6: Compile as single PDF
 {
-  pdf("Outputs/Figures/Final/Figs1-3.pdf", width = 8.5, height = 11)
+  pdf("Outputs/Figures/Final/Figs1-4.pdf", width = 8.5, height = 11)
   # Page 1: Fig1
   img1 <- readPNG("Outputs/Figures/Final/Fig1.png")
   grid.newpage()
@@ -59,5 +72,9 @@ print_to_png(fig3, "fig3.png")
   img3 <- readPNG("Outputs/Figures/Final/Fig3.png")
   grid.newpage()
   grid.raster(img3, width = unit(8.5, "inches"), height = unit(11, "inches"))
+  # Page 4: Fig4
+  img4 <- readPNG("Outputs/Figures/Final/Fig4.png")
+  grid.newpage()
+  grid.raster(img4, width = unit(8.5, "inches"), height = unit(11, "inches"))
   dev.off()
 }

@@ -81,8 +81,9 @@ div_bars_12 <- plot_diverging_bars(diverge_12h,
   add_group_labels = TRUE,
   max_features = 50, 
   fc_threshold = 0,
-  label_pos = 0.97,
-  x_max = 3.05
+  label_pos = 1.15,
+  x_max = 3.05,
+  lower_expand = 0.0001
 )
 #- 5.9.1: 24 Hours
 div_bars_24 <- plot_diverging_bars(diverge_24h, 
@@ -90,6 +91,7 @@ div_bars_24 <- plot_diverging_bars(diverge_24h,
   add_group_labels = TRUE,
   max_features = 50,  
   fc_threshold = 0,
-  label_pos = 0.97,
-  x_max = 3.05
+  label_pos = 1.15,
+  x_max = 3.05,
+  lower_expand = 0.0001
 )

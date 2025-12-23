@@ -40,7 +40,6 @@ TFT_annot_key <- read_csv(config$paths$TFT_annot_key) |>
   )
 #- 1.2.1: Read in pared/procured key
 QC_intx <- read_xlsx(config$paths$manual_QC, sheet = "intx_curated")
-TFT_QC
 #+ 1.3: Bring in IROA IDX feature library
 idx_lib <- read_csv(config$paths$idx_library)
 #+ 1.4: Create Identified TFT_confirmed based on library
