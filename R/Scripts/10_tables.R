@@ -5,6 +5,7 @@ conflicts_prefer(purrr::compose)
 ST1 <- ternG(
   data = T1_data,
   exclude_vars = "Patient",
+  force_ordinal = "demographics_age_tpx",
   group_var = "severe_PGD",
   descriptive = TRUE,
   output_docx = "Outputs/Tables/T1.docx",
@@ -18,6 +19,7 @@ ST2 <- ternG(
   data = T2_data,
   vars = NULL,
   exclude_vars = "Patient",
+  force_ordinal = "donor_age",
   group_var = "severe_PGD",
   descriptive = TRUE,
   output_docx = "Outputs/Tables/T2.docx",
