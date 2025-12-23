@@ -4,7 +4,6 @@
 patient_range <- config$analysis$cohort$patient_range
 all_patients <- seq(patient_range$start, patient_range$end)
 excluded_patients <- patient_range$excluded
-#!!!!!!!!!!1
 included_patients <- all_patients[!all_patients %in% excluded_patients]
 analyzed_patients <- paste0("H", included_patients)
 #- 0d.0.2: Extract table variables from config

@@ -70,20 +70,22 @@ analysis:
         - preop_LVAD
         - recipient_UNOS_status
         - preop_PVR
-        - rx_preop_inotrope
         - rx_preop_amiodarone
-        - preop_RADIAL_calc
-        - preop_labs_albumin
-        - preop_labs_alkphos
-        - preop_labs_ALT 
-        - preop_labs_AST
-        - preop_labs_bilirubin
-        - preop_labs_creatinine
-        - preop_labs_GFR
+        - rx_preop_ASA
+        - rx_preop_inotrope
+        - preop_labs_WBC
         - preop_labs_Hgb
         - preop_labs_Plt
         - preop_labs_sodium
-        - preop_labs_WBC
+        - preop_labs_BUN
+        - preop_labs_creatinine
+        - preop_labs_GFR
+        - preop_labs_AST
+        - preop_labs_ALT 
+        - preop_labs_alkphos
+        - preop_labs_bilirubin
+        - preop_labs_albumin
+
 
       T2: # Donor characteristics
         - donor_age
@@ -97,20 +99,22 @@ analysis:
         - donor_COD_simplified
       
       T3: # Perioperative and postoperative outcomes
+        - donor_platform_generic
         - operative_IT_minutes
         - operative_CPB_minutes
-        - donor_platform_generic
         - postop_MCS_dependence
         - postop_VA_ECMO
         - postop_BiVAD_dependence
         - postop_MCS_Impella5.5_DEPENDENT
+        - postop_LVEF_median
+        - postop_inotrope_score
         - postop_ICU_LOS
+        - postop_hospital_LOS
         - postop_CRRT
         - postop_stroke
-        - postop_30_day_LVEF
-        - postop_hospital_LOS
         - ACR_2R_or_greater
         - survival_90
+        - postop_30_day_LVEF
 
   # Environment preferences
   tibble_options:

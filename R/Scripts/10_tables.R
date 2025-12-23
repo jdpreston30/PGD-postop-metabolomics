@@ -1,9 +1,5 @@
 #* 10: Generate Manuscript Tables
-#+ 6.0a: Examine Normality
-#! Did manual examination of this via below TernTables runs
-#! T1 has 12/16 normality fail, T2 has 2/3, and T3 has 7/10
-#! But, just going to use consider normality = TRUE to do test dynamically
-#+ 10.0b: Set Conflicts
+#+ 10.0: Set Conflicts
 conflicts_prefer(purrr::compose)
 #+ 10.1: Table 1 (Recipient Preoperative Characteristics) 
 ST1 <- ternG(
