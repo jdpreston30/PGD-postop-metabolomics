@@ -63,4 +63,3 @@ PGD_specifics <- clinical_metadata |>
   mutate(any_PGD = as.factor(if_else(
     postop_PGD_grade_ISHLT %in% c("Mild", "Moderate", "Severe"), "Y", "N", missing = "N"
   )))
-

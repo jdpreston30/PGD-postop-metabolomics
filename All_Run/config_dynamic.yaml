@@ -50,7 +50,7 @@ analysis:
     patient_range: 
       start: 1
       end: 64
-      excluded: [49]  # H49 Not included in analysis (false start)
+      excluded: [2,3,37,49]  # H49 Not included in analysis (false start)
     
     # Table variable groups for publication
     table_variables:
@@ -100,7 +100,10 @@ analysis:
         - operative_IT_minutes
         - operative_CPB_minutes
         - donor_platform_generic
+        - postop_MCS_dependence
         - postop_VA_ECMO
+        - postop_BiVAD_dependence
+        - postop_MCS_Impella5.5_DEPENDENT
         - postop_ICU_LOS
         - postop_CRRT
         - postop_stroke

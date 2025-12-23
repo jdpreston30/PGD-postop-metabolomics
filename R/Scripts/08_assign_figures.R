@@ -13,10 +13,12 @@ p3D <- div_bars_24
 #+ 8.3: Figure 4
 p4A <- div_bars_intx
 p4B <- succinate_summary_plot
-#+ 8.5: Supplemental Figure 1
-s1A <- plsda_12h$plot
-s1B <- plsda_24h$plot
-s1C <- plsda_combined$plot
-s1D <- pca_12h$plot
-s1E <- pca_24h$plot
-s1F <- pca_combined$plot
+#+ 8.5: Supplemental Figure 1 (and shorten labels)
+s1A <- relabel_pgd(plsda_12h$plot)
+s1B <- relabel_pgd(plsda_24h$plot)
+s1C <- relabel_pgd(plsda_combined$plot)
+s1D <- relabel_pgd(pca_12h$plot)
+s1E <- relabel_pgd(pca_24h$plot)
+s1F <- relabel_pgd(pca_combined$plot)
+#+ 8.6: Pull combined PLSDA for graphical abstract
+ggsave("Outputs/Figures/Raw/graphical_abstract_figure.png", s1C, width = 3, height = 3, dpi = 800, bg = "transparent")

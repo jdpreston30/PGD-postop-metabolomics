@@ -16,8 +16,7 @@ UFT_i <- read_csv(config$paths$UFT_full) |>
 # ! Fixed typo in Sample_ID for H46SS0
 #+ 1.2: Import MSMICA feature key; join with relevant QC info
 #- 1.2.1: Read in pared/procured key
-TFT_QC <- read_xlsx(config$paths$manual_QC, sheet = "curated_all")
-TFT_QC
+TFT_QC <- read_xlsx(config$paths$manual_QC, sheet = "curated_spec")
 #- 1.2.2: Read in key; join; clean column names
 TFT_annot_key <- read_csv(config$paths$TFT_annot_key) |>
   rename(
