@@ -12,6 +12,7 @@
 #' @param fc_threshold Minimum absolute fold change threshold to include features (default: 1.5)
 #' @param group_ordering Logical; if TRUE and main_group column exists, orders by group then by FC within each group (positive FC descending, then negative FC ascending) (default: FALSE)
 #' @param add_group_labels Logical; if TRUE and main_group column exists, adds group brackets and labels on y-axis (default: FALSE)
+#' @param label_pos Numeric; scaling factor for label position relative to x_max (default: 1.15)
 #' @param x_max Maximum value for x-axis (default: 3.5)
 #'
 #' @return ggplot object
@@ -35,6 +36,7 @@ plot_diverging_bars <- function(results_tibble,
                                 text_scale = 1.0,
                                 fc_threshold = 1.5,
                                 group_ordering = FALSE,
+                                label_pos = 1.15,
                                 add_group_labels = FALSE,
                                 x_max = 3.5,
                                 title = NULL) {
@@ -192,22 +194,24 @@ plot_diverging_bars <- function(results_tibble,
     
     # Calculate x position for labels (just inside the right edge of plot)
     x_max <- max(plot_data$log2_fc_abs, na.rm = TRUE)
-    label_x <- x_max * 1.15  # Position at 95% of max value
+    label_x <- x_max * label_pos  # Position at 95% of max value
     
-    # Add group labels inside plot area with line breaks for multi-word labels
-    for (i in 1:nrow(group_info)) {
-      # Add line break if label has multiple words
-      label_text <- gsub(" ", "\n", group_info$main_group[i])
-      
-      p <- p +
-        annotate("text",
-          x = label_x, y = group_info$y_mid[i],
-          label = label_text,
-          hjust = 0.5, vjust = 0.5,
-          size = 2.5 * text_scale, fontface = "bold.italic",
-          family = base_family, color = "black"
-        )
-    }
+    # Create label data frame for geom_text (handles multi-line centering properly)
+    label_data <- data.frame(
+      x = label_x,
+      y = group_info$y_mid,
+      label = gsub(" ", "\n", group_info$main_group)
+    )
+    
+    # Add group labels using geom_text for proper multi-line center justification
+    p <- p +
+      geom_text(data = label_data,
+        aes(x = x, y = y, label = label),
+        hjust = 0.5, vjust = 0.5,
+        size = 2.5 * text_scale, fontface = "bold.italic",
+        family = base_family, color = "black",
+        lineheight = 0.9
+      )
     
     # Turn off clipping to show text in margins
     p <- p + coord_cartesian(clip = "off")

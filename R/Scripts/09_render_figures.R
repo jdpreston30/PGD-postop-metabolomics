@@ -1,35 +1,63 @@
 #* 9: Render Manuscript Figures
 #+ 9.1: Figure 1
-{
 fig1 <- ggdraw(xlim = c(0, 8.5), ylim = c(0, 11)) +
-  # Panels
-  draw_plot(ggdraw() + draw_grob(p1A), x = 2.25, y = 7.303333, width = 4, height = 2.78) +
-  draw_plot(p1B, x = 1.18, y = 4.133333, width = 2.8, height = 2.8) +
-  draw_plot(p1C, x = 4.35, y = 4.133333, width = 2.8, height = 2.8) +
-  # Labels
-  figure_labels(list(
-  A = c(2.296667, 9.98),
-  B = c(1.276667, 7.058333),
-  C = c(4.446667, 7.058333),
-  "Figure 1" = c(0.49, 10.43)
+#- 1A
+draw_plot(ggdraw() + draw_grob(p1A), x = 2.25, y = 7.303333, width = 4, height = 2.78) +
+#- 1B
+draw_plot(p1B, x = 1.18, y = 4.133333, width = 3, height = 3) +
+#- 1C
+draw_plot(p1C, x = 4.35, y = 4.133333, width = 3, height = 3) +
+#- Labels
+figure_labels(list(
+A = c(2.296667, 9.98),
+B = c(1.276667, 7.058333),
+C = c(4.446667, 7.058333),
+"Figure 1" = c(0.49, 10.43)
 ))
-print_to_png(fig1+grdgd(), "fig1.png", dpi = 300)
-}
+#+ 9.2: Figure 2
+fig2 <- ggdraw(xlim = c(0, 8.5), ylim = c(0, 11)) +
+draw_plot(ggdraw() + draw_grob(grid::grobTree(ggplotGrob(p2A))), 
+          x = 0.1116667, y = 5.456666, width = 7, height = 4.8) +
+#- Labels
+figure_labels(list(
+"Figure 2" = c(0.49, 10.43)
+))
 #+ 9.3: Figure 3
-{
 fig3 <- ggdraw(xlim = c(0, 8.5), ylim = c(0, 11)) +
-  # Panels
-  draw_plot(p3A, x = 0.755, y = 6.646667, width = 3.5, height = 3.5) +
-  draw_plot(p3B, x = 4.275, y = 6.646667, width = 3.5, height = 3.5) +
-  draw_plot(p3C, x = 0.451667, y = 1.786667, width = 3.6, height = 5) +
-  draw_plot(p3D, x = 4.066667-131/600+23.5/300, y = 1.786667, width = 3.6, height = 5) +
-  # Labels
-  figure_labels(list(
-  A = c(0.815, 9.98),
-  B = c(4.335, 9.98),
-  C = c(0.815, 6.441667),
-  D = c(4.335, 6.441667),
-  "Figure 3" = c(0.49, 10.43)
+#- 3A
+draw_plot(p3A, x = 1.308333, y = 7.276667, width = 2.89, height = 2.89) +
+#- 3B
+draw_plot(p3B, x = 4.806666, y = 7.276667, width = 2.89, height = 2.89) +
+#- 3C
+draw_plot(p3C, x = 0.655, y = 2.263334, width = 3.6, height = 5) +
+#- 3D
+draw_plot(p3D, x = 4.151666, y = 2.263334, width = 3.6, height = 5) +
+#- Labels
+figure_labels(list(
+A = c(1.341667, 9.98),
+B = c(4.84, 9.98),
+C = c(1.341667, 6.918334),
+D = c(4.84, 6.918334),
+"Figure 3" = c(0.49, 10.43)
 ))
-print_to_png(fig3+grdgd(), "fig3.png", dpi = 300)
+#+ 9.5: Save Figures
+print_to_png(fig1, "fig1.png")
+print_to_png(fig2, "fig2.png")
+print_to_png(fig3, "fig3.png")
+#+ 9.6: Compile as single PDF
+{
+  pdf("Outputs/Figures/Final/Figs1-3.pdf", width = 8.5, height = 11)
+  # Page 1: Fig1
+  img1 <- readPNG("Outputs/Figures/Final/Fig1.png")
+  grid.newpage()
+  grid.raster(img1, width = unit(8.5, "inches"), height = unit(11, "inches"))
+  # Page 2: Fig2
+  img2 <- readPNG("Outputs/Figures/Final/Fig2.png")
+  grid.newpage()
+  grid.raster(img2, width = unit(8.5, "inches"), height = unit(11, "inches"))
+  # Page 3: Fig3
+  img3 <- readPNG("Outputs/Figures/Final/Fig3.png")
+  grid.newpage()
+  grid.raster(img3, width = unit(8.5, "inches"), height = unit(11, "inches"))
+  dev.off()
 }

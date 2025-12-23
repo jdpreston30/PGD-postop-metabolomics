@@ -88,6 +88,7 @@ Bioconductor:
     BiocParallel,
     MSnbase,
     xcms,
+    png,
     CAMERA,
     multtest
 Remotes:

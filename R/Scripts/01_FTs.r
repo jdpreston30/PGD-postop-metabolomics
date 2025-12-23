@@ -17,8 +17,7 @@ UFT_i <- read_csv(config$paths$UFT_full) |>
 #+ 1.2: Import MSMICA feature key; join with relevant QC info
 #- 1.2.1: Read in pared/procured key
 TFT_QC <- read_xlsx(config$paths$manual_QC, sheet = "curated_all")
-TFT_QC |>
-  filter(display_name == "LysoSM(d18:1)")
+TFT_QC
 #- 1.2.2: Read in key; join; clean column names
 TFT_annot_key <- read_csv(config$paths$TFT_annot_key) |>
   rename(
@@ -39,6 +38,9 @@ TFT_annot_key <- read_csv(config$paths$TFT_annot_key) |>
     alternative_parent = `Alternative Parent`,
     isomer = Isomer
   )
+#- 1.2.1: Read in pared/procured key
+QC_intx <- read_xlsx(config$paths$manual_QC, sheet = "intx_curated")
+TFT_QC
 #+ 1.3: Bring in IROA IDX feature library
 idx_lib <- read_csv(config$paths$idx_library)
 #+ 1.4: Create Identified TFT_confirmed based on library

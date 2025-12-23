@@ -67,7 +67,7 @@ make_volcano <- function(FC_list, ttest_res) {
     volcano_data,
     ggplot2::aes(x = Value, y = -log10(p_value), color = Legend)
   ) +
-    ggplot2::geom_point(size = 2, na.rm = TRUE) +
+    ggplot2::geom_point(size = 1.5, na.rm = TRUE) +
     ggplot2::scale_color_manual(
       values = c(
         "Not Significant" = "gray70",

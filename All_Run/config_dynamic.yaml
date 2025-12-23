@@ -27,7 +27,7 @@ paths:
   clinical_metadata: "{user_home}/{onedrive_path}/Research/Chan Lab - Transplant Multi-Omics - OHT/OHT Clinical Data Master Sheet.xlsx"
   
   # Local database paths (relative - same across computers)
-  manual_QC: "Databases/QC/manual_QC.xlsx"
+  manual_QC: "Databases/QC/manual_QC_repo.xlsx"
   idx_library: "Databases/IDX_IROA/IDX_lib.csv"
   
   # Output paths (relative to project root)
