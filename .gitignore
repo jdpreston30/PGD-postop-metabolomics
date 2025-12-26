@@ -1,6 +1,9 @@
 all_objects.rds
 **/all_objects.rds
 
+# Permutation test results (stored locally on OneDrive)
+Outputs/Permutation/*.rds
+
 # renv (keep lockfile and settings, ignore library)
 renv/library/
 renv/local/
