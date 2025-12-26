@@ -30,6 +30,12 @@ paths:
   manual_QC: "Databases/QC/manual_QC_repo.xlsx"
   idx_library: "Databases/IDX_IROA/IDX_lib.csv"
   
+  # Permutation test results (list-based RDS files - relative paths)
+  permutation:
+    plsda_12h: "Outputs/Permutation/plsda_12h.rds"
+    plsda_24h: "Outputs/Permutation/plsda_24h.rds"
+    plsda_combined: "Outputs/Permutation/plsda_combined.rds"
+  
   # Output paths (relative to project root)
   output: "./Outputs"
   figures: "{figures_path}"
