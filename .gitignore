@@ -12,3 +12,6 @@ renv/python/
 .RData
 .Rproj.user
 
+# macOS
+.DS_Store
+

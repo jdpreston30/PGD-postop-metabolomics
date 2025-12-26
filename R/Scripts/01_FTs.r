@@ -15,8 +15,9 @@ UFT_i <- read_csv(config$paths$UFT_full) |>
 # ! Filtering out H49 as this was a 'false start' where we collected early but then heart offer didn't go through
 # ! Fixed typo in Sample_ID for H46SS0
 #+ 1.2: Import MSMICA feature key; join with relevant QC info
-#- 1.2.1: Read in pared/procured key
-TFT_QC <- read_xlsx(config$paths$manual_QC, sheet = "curated_spec")
+#- 1.2.1: Read in pared/procured key (12/24 hour)
+TFT_QC <- read_xlsx(config$paths$manual_QC, sheet = "curated_spec") |>
+  mutate(display_name = str_replace_all(display_name, "ⁱ", "ᶜ"))
 #- 1.2.2: Read in key; join; clean column names
 TFT_annot_key <- read_csv(config$paths$TFT_annot_key) |>
   rename(
@@ -37,8 +38,9 @@ TFT_annot_key <- read_csv(config$paths$TFT_annot_key) |>
     alternative_parent = `Alternative Parent`,
     isomer = Isomer
   )
-#- 1.2.1: Read in pared/procured key
-QC_intx <- read_xlsx(config$paths$manual_QC, sheet = "intx_curated")
+#- 1.2.3: Read in pared/procured key (Interaction)
+QC_intx <- read_xlsx(config$paths$manual_QC, sheet = "intx_curated") |>
+  mutate(display_name = str_replace_all(display_name, "ⁱ", "ᶜ"))
 #+ 1.3: Bring in IROA IDX feature library
 idx_lib <- read_csv(config$paths$idx_library)
 #+ 1.4: Create Identified TFT_confirmed based on library

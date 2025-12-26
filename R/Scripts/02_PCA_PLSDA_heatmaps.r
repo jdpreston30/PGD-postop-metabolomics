@@ -25,10 +25,20 @@ plot_specs <- tribble(
   UFT_12and24, 1, 2, "PCA", "Outputs/PCA/PCA_combinedTime_ComparePGD.png"
 )
 #- 2.1.4: Generate all PLSDAs and PCAs
-plsda_12h <- make_PCA(UFT_12h, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA")
-plsda_24h <- make_PCA(UFT_24h, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA")
-# Repeating above two in supplementals for completeness
-plsda_combined <- make_PCA(UFT_12and24, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA")
+#- 2.1.4: Generate all PLSDAs and PCAs
+# Check for cached permutation results
+if (file.exists("Outputs/Permutation/plsda_12h.rds") && file.exists("Outputs/Permutation/plsda_24h.rds") && file.exists("Outputs/Permutation/plsda_combined.rds")) {
+  message("Loading cached PLS-DA permutation results...")
+  plsda_12h <- readRDS("Outputs/Permutation/plsda_12h.rds")
+  plsda_24h <- readRDS("Outputs/Permutation/plsda_24h.rds")
+  plsda_combined <- readRDS("Outputs/Permutation/plsda_combined.rds")
+} else {
+  message("Running PLS-DA with permutation testing (this will take time)...")
+  plsda_12h <- make_PCA(UFT_12h, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA", run_permutation = TRUE)
+  plsda_24h <- make_PCA(UFT_24h, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA", run_permutation = TRUE)
+  plsda_combined <- make_PCA(UFT_12and24, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA", run_permutation = TRUE)
+}
+saveRDS(plsda_combined, "Outputs/Permutation/plsda_combined.rds")
 # PCAs for supplemental
 pca_12h <- make_PCA(UFT_12h, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PCA")
 pca_24h <- make_PCA(UFT_24h, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PCA")

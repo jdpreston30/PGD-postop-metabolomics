@@ -43,13 +43,20 @@ D = c(4.84, 6.918334),
 #+ 9.4: Figure 4
 fig4 <- ggdraw(xlim = c(0, 8.5), ylim = c(0, 11)) +
 #- 4A
-draw_plot(p4A, x = 0.405, y = 5.349667, width = 4.5, height = 5) +
+draw_plot(p4A, x = 0.485, y = 5.349667, width = 4.5, height = 5) +
 #- 4B
-draw_plot(p4B, x = 5.196666, y = 7.456667, width = 2.89, height = 2.89) +
+draw_plot(p4B, x = 5.196666, y = 7.456667-0.61, width = 2.89, height = 3.5) +
+# centered
+# draw_plot(p4B, x = 5.196666, y = 6.132167, width = 2.89, height = 3.5) +
+#- 4C
+draw_plot(ggdraw() + draw_grob(p4C), x = 1.25, y = 0.84, width = 6, height = 4.210884) +
 #- Labels
 figure_labels(list(
 A = c(0.726667, 9.98),
 B = c(5.323333, 9.98),
+# centered
+# B = c(5.323333, 8.928),
+C = c(0.726667, 4.981667),
 "Figure 4" = c(0.49, 10.43)
 ))
 #+ 9.5: Supplementary Figure 1 

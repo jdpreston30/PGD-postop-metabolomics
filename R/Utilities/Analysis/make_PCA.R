@@ -6,10 +6,20 @@
 #' @param point_size Size of the points (default: 3 for standalone, 0.5 for multi-panel)
 #' @param comp_x Which principal component to plot on x-axis (default: 1)
 #' @param comp_y Which principal component to plot on y-axis (default: 2)
-#' @return List containing the plot, PCA object, scores, scores_df, and explained variance
+#' @param run_cv Logical; if TRUE and method="PLSDA", runs cross-validation (default: FALSE)
+#' @param run_permutation Logical; if TRUE and method="PLSDA", runs permutation testing (default: FALSE)
+#' @param n_perm Number of permutations for testing (default: 1000)
+#' @param cv_folds Number of folds for cross-validation (default: 10)
+#' @param cv_nrepeat Number of CV repeats (default: 50)
+#' @param show_pvalue Logical; if TRUE, displays p-value or error rate on plot (default: TRUE when run_cv or run_permutation is TRUE)
+#' @return List containing the plot, PCA object, scores, scores_df, explained variance, and optionally CV/permutation results
 #' @export
 make_PCA <- function(data, plot_title = "", 
-                        ellipse_colors = c("Y" = "#94001E", "N" = "#03507D"), point_size = 3, comp_x = 1, comp_y = 2, group_var, method) {
+                        ellipse_colors = c("Y" = "#94001E", "N" = "#03507D"), 
+                        point_size = 3, comp_x = 1, comp_y = 2, group_var, method,
+                        run_cv = FALSE, run_permutation = FALSE, n_perm = 1000,
+                        cv_folds = 10, cv_nrepeat = 50,
+                        show_pvalue = (run_cv || run_permutation)) {
       #_Data preparation
       df <- as.data.frame(data)
       cls_col <- if (group_var %in% names(df)) group_var else names(df)[2]
@@ -37,6 +47,8 @@ make_PCA <- function(data, plot_title = "",
       scores <- pca$x[, c(comp_x, comp_y), drop = FALSE]
       explained <- round((pca$sdev^2 / sum(pca$sdev^2))[c(comp_x, comp_y)] * 100)
       model_obj <- pca
+      cv_result <- NULL
+      perm_result <- NULL
       } else if (method == "PLSDA") {
         if (!requireNamespace("mixOmics", quietly = TRUE)) {
           stop("Please install the 'mixOmics' package to use PLS-DA")
@@ -47,6 +59,91 @@ make_PCA <- function(data, plot_title = "",
         explained <- round(plsda_obj$prop_expl_var$X[c(comp_x, comp_y)] * 100)
         
         model_obj <- plsda_obj
+        cv_result <- NULL
+        perm_result <- NULL
+        
+        # Run cross-validation if requested
+        if (run_cv) {
+          # Determine appropriate CV strategy based on sample size
+          n_samples <- nrow(X)
+          min_class_size <- min(table(Y))
+          
+          # Adjust folds based on smallest class size
+          if (min_class_size < cv_folds) {
+            cv_folds <- max(3, min_class_size)  # Use LOOCV-like approach for small samples
+            message("Adjusting CV folds to ", cv_folds, " based on smallest class size (", min_class_size, ")")
+          }
+          
+          message("Running cross-validation (", cv_folds, "-fold, ", cv_nrepeat, " repeats)...")
+          cv_result <- mixOmics::perf(plsda_obj, 
+                                     validation = "Mfold", 
+                                     folds = cv_folds, 
+                                     nrepeat = cv_nrepeat,
+                                     progressBar = FALSE)
+          
+          error_rate <- cv_result$error.rate$overall[, "max.dist"][max(comp_x, comp_y)]
+          ber <- cv_result$error.rate$BER[, "max.dist"][max(comp_x, comp_y)]
+          
+          message("Cross-validation complete. Error rate: ", round(error_rate, 3), 
+                 ", BER: ", round(ber, 3))
+          
+          # Warn if BER suggests no separation
+          if (ber >= 0.45) {
+            message("Warning: BER >= 0.45 suggests weak or no separation between groups.")
+          }
+        }
+        
+        # Run permutation testing if requested (computationally expensive)
+        if (run_permutation) {
+          message("Running permutation testing with ", n_perm, " permutations...")
+          message("Note: This is computationally intensive and may take 10-30 minutes.")
+          
+          # Use CV result if available, otherwise compute it
+          if (is.null(cv_result)) {
+            cv_result <- mixOmics::perf(plsda_obj, 
+                                       validation = "Mfold", 
+                                       folds = cv_folds, 
+                                       nrepeat = cv_nrepeat,
+                                       progressBar = FALSE)
+          }
+          
+          real_error <- cv_result$error.rate$overall[, "max.dist"][max(comp_x, comp_y)]
+          
+          # Perform permutation testing
+          perm_errors <- numeric(n_perm)
+          for (i in 1:n_perm) {
+            # Shuffle labels
+            Y_perm <- sample(Y)
+            
+            # Fit PLS-DA on permuted data
+            tryCatch({
+              plsda_perm <- mixOmics::plsda(X, Y_perm, ncomp = max(comp_x, comp_y))
+              perf_perm <- mixOmics::perf(plsda_perm,
+                                         validation = "Mfold",
+                                         folds = cv_folds,
+                                         nrepeat = 10,  # Fewer repeats for speed
+                                         progressBar = FALSE)
+              perm_errors[i] <- perf_perm$error.rate$overall[, "max.dist"][max(comp_x, comp_y)]
+            }, error = function(e) {
+              perm_errors[i] <- NA
+            })
+            
+            if (i %% 100 == 0) message("  Completed ", i, "/", n_perm, " permutations")
+          }
+          
+          # Calculate p-value
+          perm_errors <- perm_errors[!is.na(perm_errors)]
+          p_value <- sum(perm_errors <= real_error) / length(perm_errors)
+          
+          perm_result <- list(
+            real_error = real_error,
+            perm_errors = perm_errors,
+            p_value = p_value,
+            n_perm = length(perm_errors)
+          )
+          
+          message("Permutation testing complete. P-value: ", round(p_value, 4))
+        }
       }
 
       #_Prepare plot data
@@ -94,6 +191,29 @@ make_PCA <- function(data, plot_title = "",
           x = paste0(axis_prefix, comp_x, " (", explained[1], "%)"),
           y = paste0(axis_prefix, comp_y, " (", explained[2], "%)")
         ) +
+        # Add p-value or error rate annotation if CV/permutation was run and show_pvalue is TRUE
+        {if (show_pvalue && (!is.null(cv_result) || !is.null(perm_result))) {
+          # Prefer permutation p-value if available, otherwise show CV error rate
+          if (!is.null(perm_result)) {
+            p_value <- perm_result$p_value
+            p_text <- if (p_value < 0.001) {
+              "p < 0.001"
+            } else {
+              sprintf("p = %.3f", p_value)
+            }
+          } else if (!is.null(cv_result)) {
+            # Show BER (Balanced Error Rate) - more appropriate for imbalanced data
+            ber <- cv_result$error.rate$BER[, "max.dist"][max(comp_x, comp_y)]
+            p_text <- sprintf("BER = %.3f", ber)
+          }
+          
+          ggplot2::annotate("text",
+                           x = Inf, y = Inf,
+                           label = p_text,
+                           hjust = 1.1, vjust = 1.5,
+                           size = 2.5, fontface = "bold.italic",
+                           family = "Arial")
+        }} +
         ggplot2::theme(
           # Match volcano plot axis styling
           axis.title.x = ggplot2::element_text(size = 15, face = "bold", color = "black"),
@@ -135,6 +255,8 @@ make_PCA <- function(data, plot_title = "",
         scores = scores,
         scores_df = scores_df,
         explained = explained,
-        Y = Y
+        Y = Y,
+        cv = cv_result,
+        permutation = perm_result
       ))
 }
