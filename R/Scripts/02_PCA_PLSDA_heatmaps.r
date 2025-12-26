@@ -26,23 +26,56 @@ plot_specs <- tribble(
 )
 #- 2.1.4: Generate all PLSDAs and PCAs
 #- 2.1.4: Generate all PLSDAs and PCAs
-# Check for cached permutation results in OneDrive
-permutation_dir <- config$paths$permutation_results
-if (file.exists(file.path(permutation_dir, "plsda_12h.rds")) && 
-    file.exists(file.path(permutation_dir, "plsda_24h.rds")) && 
-    file.exists(file.path(permutation_dir, "plsda_combined.rds"))) {
-  message("Loading cached PLS-DA permutation results from OneDrive...")
-  plsda_12h <- readRDS(file.path(permutation_dir, "plsda_12h.rds"))
-  plsda_24h <- readRDS(file.path(permutation_dir, "plsda_24h.rds"))
-  plsda_combined <- readRDS(file.path(permutation_dir, "plsda_combined.rds"))
+# Load individual RDS components from local Outputs/Permutation folder
+message("Loading cached PLS-DA permutation results...")
+
+# Load 12h components
+if (all(file.exists(c(
+  "Outputs/Permutation/plsda_12h_plot.rds",
+  "Outputs/Permutation/plsda_12h_scores.rds",
+  "Outputs/Permutation/plsda_12h_cv.rds",
+  "Outputs/Permutation/plsda_12h_permutation.rds"
+)))) {
+  plsda_12h <- list(
+    plot = readRDS("Outputs/Permutation/plsda_12h_plot.rds"),
+    model = NULL,
+    scores = readRDS("Outputs/Permutation/plsda_12h_scores.rds"),
+    scores_df = readRDS("Outputs/Permutation/plsda_12h_scores_df.rds"),
+    explained = readRDS("Outputs/Permutation/plsda_12h_explained.rds"),
+    Y = readRDS("Outputs/Permutation/plsda_12h_Y.rds"),
+    cv = readRDS("Outputs/Permutation/plsda_12h_cv.rds"),
+    permutation = readRDS("Outputs/Permutation/plsda_12h_permutation.rds")
+  )
 } else {
-  message("Running PLS-DA with permutation testing (this will take time)...")
-  plsda_12h <- make_PCA(UFT_12h, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA", run_permutation = TRUE)
-  plsda_24h <- make_PCA(UFT_24h, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA", run_permutation = TRUE)
-  plsda_combined <- make_PCA(UFT_12and24, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA", run_permutation = TRUE)
+  stop("Missing 12h permutation results. Run permutation test first.")
 }
-saveRDS(plsda_combined, file.path(permutation_dir, "plsda_combined.rds"))
+
+# Load 24h components
+if (all(file.exists(c(
+  "Outputs/Permutation/plsda_24h_plot.rds",
+  "Outputs/Permutation/plsda_24h_scores.rds",
+  "Outputs/Permutation/plsda_24h_cv.rds",
+  "Outputs/Permutation/plsda_24h_permutation.rds"
+)))) {
+  plsda_24h <- list(
+    plot = readRDS("Outputs/Permutation/plsda_24h_plot.rds"),
+    model = NULL,
+    scores = readRDS("Outputs/Permutation/plsda_24h_scores.rds"),
+    scores_df = readRDS("Outputs/Permutation/plsda_24h_scores_df.rds"),
+    explained = readRDS("Outputs/Permutation/plsda_24h_explained.rds"),
+    Y = readRDS("Outputs/Permutation/plsda_24h_Y.rds"),
+    cv = readRDS("Outputs/Permutation/plsda_24h_cv.rds"),
+    permutation = readRDS("Outputs/Permutation/plsda_24h_permutation.rds")
+  )
+} else {
+  stop("Missing 24h permutation results. Run permutation test first.")
+}
+
+# For combined, run the permutation test (not cached)
+message("Running PLS-DA for combined 12h + 24h timepoint...")
+plsda_combined <- make_PCA(UFT_12and24, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA", run_permutation = TRUE)
 # PCAs for supplemental
 pca_12h <- make_PCA(UFT_12h, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PCA")
 pca_24h <- make_PCA(UFT_24h, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PCA")
 pca_combined <- make_PCA(UFT_12and24, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PCA")
+#++++ Manual

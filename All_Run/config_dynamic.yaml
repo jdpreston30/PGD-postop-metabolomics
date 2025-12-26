@@ -30,9 +30,6 @@ paths:
   manual_QC: "Databases/QC/manual_QC_repo.xlsx"
   idx_library: "Databases/IDX_IROA/IDX_lib.csv"
   
-  # Permutation test results (stored on OneDrive)
-  permutation_results: "{user_home}/{onedrive_path}/Research/Chan Lab - Transplant Multi-Omics - OHT/Manuscripts/Post Op PGD - EJCTS/permutation_hard_copies"
-  
   # Output paths (relative to project root)
   output: "./Outputs"
   figures: "{figures_path}"
