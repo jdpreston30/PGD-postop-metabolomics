@@ -167,7 +167,7 @@ make_PCA <- function(data, plot_title = "",
             ggplot2::geom_point(
               data = scores_df_complete,
               ggplot2::aes(x = Comp1, y = Comp2, group = Class, fill = Class),
-              size = point_size / 2, shape = 21
+              size = point_size / 2 * 0.8, shape = 21
             ),
             ggplot2::stat_ellipse(
               data = scores_df_complete,
@@ -181,11 +181,12 @@ make_PCA <- function(data, plot_title = "",
           ggplot2::geom_point(
             data = scores_df_na,
             ggplot2::aes(x = Comp1, y = Comp2),
-            size = point_size / 2, shape = 1, color = "black", fill = NA
+            size = point_size / 2 * 0.8, shape = 1, color = "black", fill = NA
           )
         }} +
         ggplot2::scale_color_manual(values = ellipse_colors, labels = c("Y" = "Severe PGD", "N" = "No Severe PGD"), name = NULL, drop = TRUE, na.translate = FALSE) +
         ggplot2::scale_fill_manual(values = ellipse_colors, labels = c("Y" = "Severe PGD", "N" = "No Severe PGD"), name = NULL, drop = TRUE, na.translate = FALSE) +
+        ggplot2::guides(fill = ggplot2::guide_legend(override.aes = list(size = point_size / 2 * 0.8))) +
         ggplot2::theme_minimal(base_family = "Arial") +
         ggplot2::labs(
           x = paste0(axis_prefix, comp_x, " (", explained[1], "%)"),

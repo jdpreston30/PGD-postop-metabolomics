@@ -77,18 +77,18 @@ plsda_row <- plot_grid(
 )
 #- 9.5.2: Add column labels on top
 col_labels <- plot_grid(
-  ggdraw() + draw_label("12h", size = 14, fontface = "bold", fontfamily = "Arial"),
-  ggdraw() + draw_label("24h", size = 14, fontface = "bold", fontfamily = "Arial"),
-  ggdraw() + draw_label("12h + 24h", size = 14, fontface = "bold", fontfamily = "Arial"),
+  ggdraw() + draw_label("12h", size = 14, fontface = "bold.italic", fontfamily = "Arial"),
+  ggdraw() + draw_label("24h", size = 14, fontface = "bold.italic", fontfamily = "Arial"),
+  ggdraw() + draw_label("12h + 24h", size = 14, fontface = "bold.italic", fontfamily = "Arial"),
   nrow = 1, ncol = 3
 )
 #- 9.5.3: Manual positioning with specified shifts
 sf1 <- ggdraw(xlim = c(0, 8.5), ylim = c(0, 11)) +
-  draw_plot(col_labels, x = 1.502167, y = 9.860, width = 7.2, height = 0.3) +
+  draw_plot(col_labels, x = 1.502167+13/600-211/600, y = 9.860, width = 7.2, height = 0.3) +
   draw_plot(pca_row, x = 0.87, y = 7.416667, width = 7.2, height = 2.5) +
-  draw_label("PCA", x = 0.62, y = 8.773333, size = 14, fontface = "bold", fontfamily = "Arial", angle = 90) +
+  draw_label("PCA", x = 0.62, y = 8.773333, size = 14, fontface = "bold.italic", fontfamily = "Arial", angle = 90) +
   draw_plot(plsda_row, x = 0.87, y = 5.033334, width = 7.2, height = 2.5) +
-  draw_label("PLS-DA", x = 0.65, y = 6.408334, size = 14, fontface = "bold", fontfamily = "Arial", angle = 90) +
+  draw_label("PLS-DA", x = 0.65, y = 6.408334, size = 14, fontface = "bold.italic", fontfamily = "Arial", angle = 90) +
   figure_labels(list(
     "Supplementary Figure 1" = c(0.49, 10.43)
   ))

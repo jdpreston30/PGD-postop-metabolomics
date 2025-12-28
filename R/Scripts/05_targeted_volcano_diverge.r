@@ -35,7 +35,7 @@ ttest_result_12h <- lapply(seq_along(targ12_NPGD), function(i) {
 #+ 5.5: Combine results into a single table (12h)
 targ_12PGD_ttest <- do.call(rbind, ttest_result_12h)
 targ_12PGD_ttest$Time <- "12h"
-#+ 5.6: 24h t test
+#+ 5.6: 24h t-test
 ttest_result_24h <- lapply(seq_along(targ24_NPGD), function(i) {
     test <- t.test(targ24_NPGD[[i]], targ24_PGD[[i]])
     as_tibble(data.frame(
@@ -81,7 +81,7 @@ div_bars_12 <- plot_diverging_bars(diverge_12h,
   add_group_labels = TRUE,
   max_features = 50, 
   fc_threshold = 0,
-  label_pos = 1.15,
+  label_pos = 1.05,
   x_max = 3.05,
   lower_expand = 0.0001
 )
@@ -91,7 +91,7 @@ div_bars_24 <- plot_diverging_bars(diverge_24h,
   add_group_labels = TRUE,
   max_features = 50,  
   fc_threshold = 0,
-  label_pos = 1.15,
+  label_pos = 1.05,
   x_max = 3.05,
   lower_expand = 0.0001
 )

@@ -29,6 +29,7 @@ Imports:
     stringr,
     ggraph,
     ggplot2,
+    ggprism,
     magrittr,
     tibble,
     forcats,
@@ -72,7 +73,11 @@ Imports:
     rmarkdown,
     knitr,
     tinytex,
-    pheatmap
+    crayon,
+    pheatmap,
+    remotes,
+    renv,
+    rlang
 Additional_repositories: 
     https://bioconductor.org/packages/release/bioc
 Bioconductor:

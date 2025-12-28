@@ -17,7 +17,7 @@ div_bars_intx <- plot_diverging_bars(intx_display_data,
   fc_threshold = 0,
   x_max = 5.05,
   lower_expand = 0.0001,
-  label_pos = 1.0,
+  label_pos = 0.9,
   legend_labels = "intx"
 )
 #+ 6.3: Prepare data for Succcinate Plot

@@ -84,7 +84,7 @@ plot_diverging_bars <- function(results_tibble,
       if (group_ordering && "main_group" %in% names(.)) {
         # Set main_group factor levels in the desired order
         mutate(., main_group = factor(main_group, 
-          levels = c("Cellular Energetics", "Redox", "Inflammation", "Vascular Signaling"))) %>%
+          levels = c("Cellular Energetics", "Redox", "Inflammation", "Vascular Signaling", "Immunometabolic Signaling"))) %>%
         # Group ordering: within each main_group, positive FCs descending (largest to smallest),
         # then negative FCs ascending (most negative to least negative)
         # Reverse at the end so reds appear on top

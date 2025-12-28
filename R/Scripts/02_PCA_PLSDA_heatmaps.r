@@ -24,7 +24,6 @@ plot_specs <- tribble(
   UFT_24h, 1, 2, "PCA", "Outputs/PCA/PCA_24h_ComparePGD.png",
   UFT_12and24, 1, 2, "PCA", "Outputs/PCA/PCA_combinedTime_ComparePGD.png"
 )
-#- 2.1.4: Generate all PLSDAs and PCAs
 #- 2.1.4: Load or generate permutation test results
 {
   # Check if all cached RDS files exist
@@ -39,11 +38,9 @@ plot_specs <- tribble(
     plsda_24h <- readRDS(config$paths$permutation$plsda_24h)
     plsda_combined <- readRDS(config$paths$permutation$plsda_combined)
   } else {
-    message("Running PLS-DA with permutation testing (this will take time)...")
     plsda_12h <- make_PCA(UFT_12h, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA", run_permutation = TRUE)
     plsda_24h <- make_PCA(UFT_24h, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA", run_permutation = TRUE)
     plsda_combined <- make_PCA(UFT_12and24, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA", run_permutation = TRUE)
-    
     # Save combined results as list (12h and 24h already saved after generation)
     if (!file.exists(config$paths$permutation$plsda_combined)) {
       saveRDS(plsda_combined, config$paths$permutation$plsda_combined)
