@@ -41,8 +41,17 @@ plot_specs <- tribble(
     plsda_12h <- make_PCA(UFT_12h, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA", run_permutation = TRUE)
     plsda_24h <- make_PCA(UFT_24h, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA", run_permutation = TRUE)
     plsda_combined <- make_PCA(UFT_12and24, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA", run_permutation = TRUE)
-    # Save combined results as list (12h and 24h already saved after generation)
+    # Save results: keep model objects (~21MB each) but remove plots (~93MB each)
+    if (!file.exists(config$paths$permutation$plsda_12h)) {
+      plsda_12h$plot <- NULL
+      saveRDS(plsda_12h, config$paths$permutation$plsda_12h)
+    }
+    if (!file.exists(config$paths$permutation$plsda_24h)) {
+      plsda_24h$plot <- NULL
+      saveRDS(plsda_24h, config$paths$permutation$plsda_24h)
+    }
     if (!file.exists(config$paths$permutation$plsda_combined)) {
+      plsda_combined$plot <- NULL
       saveRDS(plsda_combined, config$paths$permutation$plsda_combined)
     }
   }
