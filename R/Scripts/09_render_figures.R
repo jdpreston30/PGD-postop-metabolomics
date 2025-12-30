@@ -15,6 +15,7 @@ C = c(4.446667, 7.058333),
 "Figure 1" = c(0.49, 10.43)
 ))
 #+ 9.2: Figure 2
+pdf(NULL) 
 fig2 <- ggdraw(xlim = c(0, 8.5), ylim = c(0, 11)) +
 draw_plot(ggdraw() + draw_grob(grid::grobTree(ggplotGrob(p2A))), 
           x = 0.1150003, y = 5.491666, width = 7, height = 4.8) +
@@ -22,6 +23,7 @@ draw_plot(ggdraw() + draw_grob(grid::grobTree(ggplotGrob(p2A))),
 figure_labels(list(
 "Figure 2" = c(0.49, 10.43)
 ))
+dev.off()
 #+ 9.3: Figure 3
 fig3 <- ggdraw(xlim = c(0, 8.5), ylim = c(0, 11)) +
 #- 3A
@@ -43,46 +45,44 @@ D = c(4.84, 6.918334),
 #+ 9.4: Figure 4
 fig4 <- ggdraw(xlim = c(0, 8.5), ylim = c(0, 11)) +
 #- 4A
-draw_plot(p4A, x = 0.485, y = 5.349667, width = 4.5, height = 5) +
+draw_plot(p4A, x = 0.485, y = 5.324667, width = 4.5, height = 5) +
 #- 4B
-draw_plot(p4B, x = 5.196666, y = 7.456667-0.61, width = 2.89, height = 3.5) +
-# centered
-# draw_plot(p4B, x = 5.196666, y = 6.132167, width = 2.89, height = 3.5) +
+draw_plot(p4B, x = 5.196666, y = 7.73, width = 2.89, height = 2.6) +
 #- 4C
-draw_plot(ggdraw() + draw_grob(p4C), x = 1.25, y = 0.84, width = 6, height = 4.210884) +
+draw_plot(p4C, x = 5.196666, y = 5.418333, width = 2.89, height = 2.6) +
+#- 4D
+draw_plot(ggdraw() + draw_grob(p4D), x = 1.25, y = 0.8366667, width = 6, height = 4.2136) +
 #- Labels
 figure_labels(list(
 A = c(0.726667, 9.98),
 B = c(5.323333, 9.98),
-# centered
-# B = c(5.323333, 8.928),
-C = c(0.726667, 4.981667),
+C = c(5.323333, 7.66833),
+D = c(0.726667, 4.981667),
 "Figure 4" = c(0.49, 10.43)
 ))
 #+ 9.5: Supplementary Figure 1 
-#- 9.5.1: Create separate rows for independent positioning
-# PCA row (top)
+#- 9.5.1: Create PCA row (top)
 pca_row <- plot_grid(
   s1D, s1E, s1F,
   nrow = 1, ncol = 3,
   align = "hv",
   axis = "tblr"
 )
-# PLS-DA row (bottom)
+#- 9.5.2: Create PLS-DA row (bottom)
 plsda_row <- plot_grid(
   s1A, s1B, s1C,
   nrow = 1, ncol = 3,
   align = "hv",
   axis = "tblr"
 )
-#- 9.5.2: Add column labels on top
+#- 9.5.3: Add column labels on top
 col_labels <- plot_grid(
   ggdraw() + draw_label("12h", size = 14, fontface = "bold.italic", fontfamily = "Arial"),
   ggdraw() + draw_label("24h", size = 14, fontface = "bold.italic", fontfamily = "Arial"),
   ggdraw() + draw_label("12h + 24h", size = 14, fontface = "bold.italic", fontfamily = "Arial"),
   nrow = 1, ncol = 3
 )
-#- 9.5.3: Manual positioning with specified shifts
+#- 9.5.4: Manual positioning with specified shifts
 sf1 <- ggdraw(xlim = c(0, 8.5), ylim = c(0, 11)) +
   draw_plot(col_labels, x = 1.502167+13/600-211/600, y = 9.860, width = 7.2, height = 0.3) +
   draw_plot(pca_row, x = 0.87, y = 7.416667, width = 7.2, height = 2.5) +
@@ -100,7 +100,7 @@ print_to_png(fig4, "PNG/fig4.png")
 print_to_png(sf1, "PNG/sf1.png")
 #+ 9.6: Compile as single PDF
 {
-  pdf("Outputs/Figures/Final/PDF/Figs1-4.pdf", width = 8.5, height = 11)
+  pdf("Outputs/Figures/Final/PDF/Compiled_Figures.pdf", width = 8.5, height = 11)
   # Page 1: Fig1
   img1 <- readPNG("Outputs/Figures/Final/PNG/fig1.png")
   grid.newpage()
@@ -117,40 +117,40 @@ print_to_png(sf1, "PNG/sf1.png")
   img4 <- readPNG("Outputs/Figures/Final/PNG/fig4.png")
   grid.newpage()
   grid.raster(img4, width = unit(8.5, "inches"), height = unit(11, "inches"))
+  # Page 5: Supplementary Figure 1
+  img_sf1 <- readPNG("Outputs/Figures/Final/PNG/sf1.png")
+  grid.newpage()
+  grid.raster(img_sf1, width = unit(8.5, "inches"), height = unit(11, "inches"))
   dev.off()
 }
 #+ 9.7: Create individual PDFs
 {
   # Figure 1
-  pdf("Outputs/Figures/Final/PDF/fig1.pdf", width = 8.5, height = 11)
+  pdf("Outputs/Figures/Final/PDF/Figure 1.pdf", width = 8.5, height = 11)
   img1 <- readPNG("Outputs/Figures/Final/PNG/fig1.png")
   grid.newpage()
   grid.raster(img1, width = unit(8.5, "inches"), height = unit(11, "inches"))
   dev.off()
-  
   # Figure 2
-  pdf("Outputs/Figures/Final/PDF/fig2.pdf", width = 8.5, height = 11)
+  pdf("Outputs/Figures/Final/PDF/Figure 2.pdf", width = 8.5, height = 11)
   img2 <- readPNG("Outputs/Figures/Final/PNG/fig2.png")
   grid.newpage()
   grid.raster(img2, width = unit(8.5, "inches"), height = unit(11, "inches"))
   dev.off()
-  
   # Figure 3
-  pdf("Outputs/Figures/Final/PDF/fig3.pdf", width = 8.5, height = 11)
+  pdf("Outputs/Figures/Final/PDF/Figure 3.pdf", width = 8.5, height = 11)
   img3 <- readPNG("Outputs/Figures/Final/PNG/fig3.png")
   grid.newpage()
   grid.raster(img3, width = unit(8.5, "inches"), height = unit(11, "inches"))
   dev.off()
-  
   # Figure 4
-  pdf("Outputs/Figures/Final/PDF/fig4.pdf", width = 8.5, height = 11)
+  pdf("Outputs/Figures/Final/PDF/Figure 4.pdf", width = 8.5, height = 11)
   img4 <- readPNG("Outputs/Figures/Final/PNG/fig4.png")
   grid.newpage()
   grid.raster(img4, width = unit(8.5, "inches"), height = unit(11, "inches"))
   dev.off()
-  
   # Supplementary Figure 1
-  pdf("Outputs/Figures/Final/PDF/sf1.pdf", width = 8.5, height = 11)
+  pdf("Outputs/Figures/Final/PDF/Supplementary Figure 1.pdf", width = 8.5, height = 11)
   img_sf1 <- readPNG("Outputs/Figures/Final/PNG/sf1.png")
   grid.newpage()
   grid.raster(img_sf1, width = unit(8.5, "inches"), height = unit(11, "inches"))

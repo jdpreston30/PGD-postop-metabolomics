@@ -16,6 +16,8 @@
 #' @param point_size Numeric; point size (default: 3)
 #' @param error_width Numeric; error bar cap width (default: 0.1)
 #' @param error_linewidth Numeric; error bar line width (default: 0.8)
+#' @param title Character; plot title (default: "Succinate")
+#' @param legend_position Character; legend position - "BR" (bottom right), "TR" (top right), "BL" (bottom left), "TL" (top left) (default: "BR")
 #'
 #' @return ggplot object
 #'
@@ -43,11 +45,27 @@ plot_line_summary <- function(data,
                               line_size = 1.2,
                               point_size = 3,
                               error_width = 0.1,
-                              error_linewidth = 0.8) {
+                              error_linewidth = 0.8,
+                              title = "Succinate",
+                              legend_position = "BR") {
   
   # Load required libraries
   library(ggplot2)
   library(dplyr)
+  
+  # Helper function to map legend position codes to ggplot coordinates
+  .legend_pos_map <- function(pos) {
+    positions <- list(
+      "BR" = list(pos = c(0.94, 0.02), just = c("right", "bottom")),    # Bottom right
+      "TR" = list(pos = c(0.94, 0.98), just = c("right", "top")),       # Top right
+      "BL" = list(pos = c(0.06, 0.02), just = c("left", "bottom")),     # Bottom left
+      "TL" = list(pos = c(0.06, 0.98), just = c("left", "top"))         # Top left
+    )
+    if (!pos %in% names(positions)) {
+      stop(paste("legend_position must be one of: BR, TR, BL, TL. Got:", pos))
+    }
+    return(positions[[pos]])
+  }
   
   # Rename columns to standard names for plotting
   plot_data <- data %>%
@@ -69,7 +87,7 @@ plot_line_summary <- function(data,
     ) +
     scale_color_manual(
       values = c("N" = "#03507D", "Y" = "#94001E"),
-      labels = c("N" = "No sPGD", "Y" = "sPGD"),
+      labels = c("N" = "No PGD", "Y" = "PGD"),
       name = NULL,
       guide = guide_legend(
         override.aes = list(
@@ -86,7 +104,7 @@ plot_line_summary <- function(data,
     labs(
       x = x_label,
       y = expression(bold("log")[2]*bold("(Peak Area)")),
-      title = "Succinate"
+      title = title
     ) +
     theme_minimal(base_family = base_family) +
     theme(
@@ -99,17 +117,17 @@ plot_line_summary <- function(data,
       # Axis styling - matching diverging bars
       axis.ticks = element_line(color = "black", linewidth = 0.6),
       axis.ticks.length = unit(0.15, "cm"),
-      axis.text.x = element_text(size = 12 * text_scale, face = "bold", color = "black"),
-      axis.text.y = element_text(size = 12 * text_scale, face = "bold", color = "black"),
-      axis.title = element_text(size = 15 * text_scale, face = "bold", color = "black"),
-      axis.title.x = element_text(size = 15 * text_scale, face = "bold", color = "black"),
+      axis.text.x = element_text(size = 10 * text_scale, face = "bold", color = "black"),
+      axis.text.y = element_text(size = 10 * text_scale, face = "bold", color = "black"),
+      axis.title = element_text(size = 12 * text_scale, face = "bold", color = "black"),
+      axis.title.x = element_text(size = 12 * text_scale, face = "bold", color = "black"),
       
       # Plot title - centered on top
-      plot.title = element_text(size = 15 * text_scale, face = "bold", color = "black", hjust = 0.5),
+      plot.title = element_text(size = 13 * text_scale, face = "bold", color = "black", hjust = 0.5),
       
-      # Legend styling - stacked in bottom right corner inside plot
-      legend.position = c(0.94, 0.02),
-      legend.justification = c("right", "bottom"),
+      # Legend styling - position based on legend_position argument
+      legend.position = .legend_pos_map(legend_position)$pos,
+      legend.justification = .legend_pos_map(legend_position)$just,
       legend.direction = "vertical",
       legend.box = "vertical",
       legend.title = element_blank(),

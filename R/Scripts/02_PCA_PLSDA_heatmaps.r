@@ -9,12 +9,7 @@ UFT_24h <- UFT |>
   select(Sample_ID, Time, severe_PGD, all_of(untargeted_features))
 UFT_12and24 <- UFT |>
   select(Sample_ID, Time, severe_PGD, all_of(untargeted_features))
-#- 2.1.2: Define colors
-cluster_colors <- c(
-  "Y" = "#94001E",
-  "N" = "#03507D"
-)
-#- 2.1.3: Set Plot Specs
+#- 2.1.2: Set Plot Specs
 plot_specs <- tribble(
   ~data, ~comp_x, ~comp_y, ~method, ~outpath,
   UFT_12h, 1, 2, "PLSDA", "Outputs/PLSDA/PLSDA_12h_ComparePGD.png",
@@ -24,7 +19,7 @@ plot_specs <- tribble(
   UFT_24h, 1, 2, "PCA", "Outputs/PCA/PCA_24h_ComparePGD.png",
   UFT_12and24, 1, 2, "PCA", "Outputs/PCA/PCA_combinedTime_ComparePGD.png"
 )
-#- 2.1.4: Load or generate permutation test results
+#- 2.1.3: Load or generate permutation test results
 {
   # Check if all cached RDS files exist
   cached_files <- c(
@@ -56,7 +51,7 @@ plot_specs <- tribble(
     }
   }
 }
-#- 2.1.5: Generate plots only (without permutation testing)
+#- 2.1.4: Generate plots only (without permutation testing)
 plsda_12h$plot <- make_PCA(UFT_12h, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA", run_permutation = FALSE)$plot
 plsda_24h$plot <- make_PCA(UFT_24h, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA", run_permutation = FALSE)$plot
 plsda_combined$plot <- make_PCA(UFT_12and24, comp_x = 1, comp_y = 2, group_var = "severe_PGD", method = "PLSDA", run_permutation = FALSE)$plot

@@ -4,7 +4,7 @@
     "Repositories": [
       {
         "Name": "CRAN",
-        "URL": "https://cloud.r-project.org"
+        "URL": "https://cran.rstudio.com"
       }
     ]
   },
@@ -1499,7 +1499,7 @@
       "NeedsCompilation": "no",
       "Author": "Claus O. Wilke [aut, cre] (ORCID: <https://orcid.org/0000-0002-7470-9261>)",
       "Maintainer": "Claus O. Wilke <wilke@austin.utexas.edu>",
-      "Repository": "CRAN"
+      "Repository": "https://packagemanager.posit.co/cran/latest"
     },
     "cpp11": {
       "Package": "cpp11",
@@ -2736,6 +2736,53 @@
       "Maintainer": "Thomas Lin Pedersen <thomas.pedersen@posit.co>",
       "Repository": "CRAN"
     },
+    "ggprism": {
+      "Package": "ggprism",
+      "Version": "1.0.7",
+      "Source": "Repository",
+      "Title": "A 'ggplot2' Extension Inspired by 'GraphPad Prism'",
+      "Authors@R": "person(given = \"Charlotte\", family = \"Dawson\", role = c(\"aut\", \"cre\"), email = \"csdaw@outlook.com\", comment = c(ORCID = \"0000-0002-7151-5971\"))",
+      "Description": "Provides various themes, palettes, and other functions that are used to customise ggplots to look like they were made in 'GraphPad  Prism'. The 'Prism'-look is achieved with theme_prism() and  scale_fill|colour_prism(), axes can be changed with custom guides like  guide_prism_minor(), and significance indicators added with add_pvalue().",
+      "License": "GPL (>= 3.0)",
+      "URL": "https://csdaw.github.io/ggprism/, https://github.com/csdaw/ggprism",
+      "BugReports": "https://github.com/csdaw/ggprism/issues",
+      "Encoding": "UTF-8",
+      "LazyData": "true",
+      "RoxygenNote": "7.3.2",
+      "Depends": [
+        "R (>= 3.2)"
+      ],
+      "Imports": [
+        "digest",
+        "ggplot2 (>= 3.4.0)",
+        "glue",
+        "grid",
+        "gtable (>= 0.1.1)",
+        "rlang (>= 0.3.0)",
+        "scales (>= 0.5.0)",
+        "stats",
+        "tibble",
+        "utils"
+      ],
+      "Suggests": [
+        "covr",
+        "dplyr",
+        "ggbeeswarm",
+        "ggnewscale",
+        "knitr",
+        "magrittr",
+        "patchwork",
+        "rmarkdown",
+        "rstatix",
+        "tidyr",
+        "tinytest"
+      ],
+      "VignetteBuilder": "knitr",
+      "NeedsCompilation": "no",
+      "Author": "Charlotte Dawson [aut, cre] (ORCID: <https://orcid.org/0000-0002-7151-5971>)",
+      "Maintainer": "Charlotte Dawson <csdaw@outlook.com>",
+      "Repository": "CRAN"
+    },
     "ggraph": {
       "Package": "ggraph",
       "Version": "2.2.2",
@@ -3111,7 +3158,8 @@
       "NeedsCompilation": "no",
       "Author": "Baptiste Auguie [aut, cre], Anton Antonov [ctb]",
       "Maintainer": "Baptiste Auguie <baptiste.auguie@gmail.com>",
-      "Repository": "CRAN"
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "Encoding": "UTF-8"
     },
     "gtable": {
       "Package": "gtable",
@@ -5135,6 +5183,23 @@
       "NeedsCompilation": "yes",
       "Author": "Hadley Wickham [aut, cre]",
       "Maintainer": "Hadley Wickham <hadley@rstudio.com>",
+      "Repository": "CRAN"
+    },
+    "png": {
+      "Package": "png",
+      "Version": "0.1-8",
+      "Source": "Repository",
+      "Title": "Read and write PNG images",
+      "Author": "Simon Urbanek <Simon.Urbanek@r-project.org>",
+      "Maintainer": "Simon Urbanek <Simon.Urbanek@r-project.org>",
+      "Depends": [
+        "R (>= 2.9.0)"
+      ],
+      "Description": "This package provides an easy and simple way to read, write and display bitmap images stored in the PNG format. It can read and write both files and in-memory raw vectors.",
+      "License": "GPL-2 | GPL-3",
+      "SystemRequirements": "libpng",
+      "URL": "http://www.rforge.net/png/",
+      "NeedsCompilation": "yes",
       "Repository": "CRAN"
     },
     "polyclip": {

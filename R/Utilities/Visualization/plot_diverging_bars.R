@@ -7,7 +7,7 @@
 #' @param base_family Font family for plots (default: "Arial")
 #' @param max_features Maximum number of features to display (default: 20)
 #' @param order_by Column to order features by for selection (default: "p_value")
-#' @param title Plot title (default: "Log2 Fold Change (Severe vs No Severe PGD)")
+#' @param title Plot title (default: "Log2 Fold Change (PGD vs No PGD)")
 #' @param text_scale Scaling factor for all text elements (default: 1.0, use 0.8 for 80% size, etc.)
 #' @param fc_threshold Minimum absolute fold change threshold to include features (default: 1.5)
 #' @param group_ordering Logical; if TRUE and main_group column exists, orders by group then by FC within each group (positive FC descending, then negative FC ascending) (default: FALSE)
@@ -122,8 +122,8 @@ plot_diverging_bars <- function(results_tibble,
         axis.title.x = element_text(size = 15 * text_scale, face = "bold", color = "black"),
         axis.title.y = element_blank(),
         
-        # Plot title
-        plot.title = element_blank(),
+        # Plot title - positioned closer to box with reduced margin
+        plot.title = element_text(size = 12 * text_scale, face = "bold", color = "black", hjust = 0.5, margin = margin(b = 2)),
         
         # Legend styling - centered at top, universal spacing
         legend.position = "top",
@@ -145,9 +145,9 @@ plot_diverging_bars <- function(results_tibble,
   
   # Determine legend labels based on legend_labels argument
   if (legend_labels == "intx") {
-    legend_label_vec <- c("negative" = "Greater ↓ in sPGD", "positive" = "Greater ↑ in sPGD")
+    legend_label_vec <- c("negative" = "Greater ↓ in PGD", "positive" = "Greater ↑ in PGD")
   } else {
-    legend_label_vec <- c("negative" = "Lower in sPGD", "positive" = "Higher in sPGD")
+    legend_label_vec <- c("negative" = "Lower in PGD", "positive" = "Higher in PGD")
   }
   
   # Create the plot

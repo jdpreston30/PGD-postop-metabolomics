@@ -3,11 +3,6 @@
 {
   Sys.setenv(R_BIOC_VERSION_CHECK_SKIP = "TRUE")
   options(warn = -1)
-  suppressMessages(suppressWarnings({
-    library(S4Arrays, quietly = TRUE)
-    library(DelayedArray, quietly = TRUE)
-  }))
-  options(warn = 0)
 }
 #+ 0a.1: Verify renv is active
 cat("📦 Package environment managed by renv\n")

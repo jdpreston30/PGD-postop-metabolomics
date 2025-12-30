@@ -38,8 +38,8 @@ make_volcano <- function(FC_list, ttest_res) {
   volcano_data <- volcano_data |>
     dplyr::mutate(
       Legend = dplyr::case_when(
-        p_value < 0.05 & Value >= thr ~ "Up in sPGD",
-        p_value < 0.05 & Value <= -thr ~ "Down in sPGD",
+        p_value < 0.05 & Value >= thr ~ "Up in PGD",
+        p_value < 0.05 & Value <= -thr ~ "Down in PGD",
         TRUE ~ "Not Significant"
       )
     )
@@ -71,10 +71,10 @@ make_volcano <- function(FC_list, ttest_res) {
     ggplot2::scale_color_manual(
       values = c(
         "Not Significant" = "gray70",
-        "Up in sPGD"       = "#800017",
-        "Down in sPGD"     = "#113d6a"
+        "Up in PGD"       = "#800017",
+        "Down in PGD"     = "#113d6a"
       ),
-      breaks = c("Down in sPGD", "Up in sPGD"),
+      breaks = c("Down in PGD", "Up in PGD"),
       name = NULL
     ) +
     ggplot2::theme_light(base_family = "Arial") +

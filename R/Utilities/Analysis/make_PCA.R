@@ -2,7 +2,7 @@
 #'
 #' @param data Data frame with Patient_ID, Clinical_PGD, and feature columns
 #' @param plot_title Optional title for the plot (default: "")
-#' @param ellipse_colors Named vector of colors for each Clinical_PGD/group
+#' @param ellipse_colors Named vector of colors for each Clinical_PGD/group (default: uses plot_themes("pgd_status"))
 #' @param point_size Size of the points (default: 3 for standalone, 0.5 for multi-panel)
 #' @param comp_x Which principal component to plot on x-axis (default: 1)
 #' @param comp_y Which principal component to plot on y-axis (default: 2)
@@ -15,11 +15,16 @@
 #' @return List containing the plot, PCA object, scores, scores_df, explained variance, and optionally CV/permutation results
 #' @export
 make_PCA <- function(data, plot_title = "", 
-                        ellipse_colors = c("Y" = "#94001E", "N" = "#03507D"), 
-                        point_size = 3, comp_x = 1, comp_y = 2, group_var, method,
-                        run_cv = FALSE, run_permutation = FALSE, n_perm = 1000,
+                        ellipse_colors = NULL, 
+                        point_size = 3, comp_x = 1, comp_y = 2, group_var,
+                        method, run_cv = FALSE, run_permutation = FALSE, n_perm = 1000,
                         cv_folds = 10, cv_nrepeat = 50,
                         show_pvalue = (run_cv || run_permutation)) {
+  
+  # Use default colors if not provided
+  if (is.null(ellipse_colors)) {
+    ellipse_colors <- plot_themes("pgd_status")
+  }
       #_Data preparation
       df <- as.data.frame(data)
       cls_col <- if (group_var %in% names(df)) group_var else names(df)[2]
@@ -184,37 +189,26 @@ make_PCA <- function(data, plot_title = "",
             size = point_size / 2 * 0.8, shape = 1, color = "black", fill = NA
           )
         }} +
-        ggplot2::scale_color_manual(values = ellipse_colors, labels = c("Y" = "Severe PGD", "N" = "No Severe PGD"), name = NULL, drop = TRUE, na.translate = FALSE) +
-        ggplot2::scale_fill_manual(values = ellipse_colors, labels = c("Y" = "Severe PGD", "N" = "No Severe PGD"), name = NULL, drop = TRUE, na.translate = FALSE) +
+        ggplot2::scale_color_manual(
+          values = ellipse_colors,
+          labels = c("Y" = "PGD", "N" = "No PGD"),
+          name = NULL,
+          drop = TRUE,
+          na.translate = FALSE
+        ) +
+        ggplot2::scale_fill_manual(
+          values = ellipse_colors,
+          labels = c("Y" = "PGD", "N" = "No PGD"),
+          name = NULL,
+          drop = TRUE,
+          na.translate = FALSE
+        ) +
         ggplot2::guides(fill = ggplot2::guide_legend(override.aes = list(size = point_size / 2 * 0.8))) +
         ggplot2::theme_minimal(base_family = "Arial") +
         ggplot2::labs(
           x = paste0(axis_prefix, comp_x, " (", explained[1], "%)"),
           y = paste0(axis_prefix, comp_y, " (", explained[2], "%)")
         ) +
-        # Add p-value or error rate annotation if CV/permutation was run and show_pvalue is TRUE
-        {if (show_pvalue && (!is.null(cv_result) || !is.null(perm_result))) {
-          # Prefer permutation p-value if available, otherwise show CV error rate
-          if (!is.null(perm_result)) {
-            p_value <- perm_result$p_value
-            p_text <- if (p_value < 0.001) {
-              "p < 0.001"
-            } else {
-              sprintf("p = %.3f", p_value)
-            }
-          } else if (!is.null(cv_result)) {
-            # Show BER (Balanced Error Rate) - more appropriate for imbalanced data
-            ber <- cv_result$error.rate$BER[, "max.dist"][max(comp_x, comp_y)]
-            p_text <- sprintf("BER = %.3f", ber)
-          }
-          
-          ggplot2::annotate("text",
-                           x = Inf, y = Inf,
-                           label = p_text,
-                           hjust = 1.1, vjust = 1.5,
-                           size = 2.5, fontface = "bold.italic",
-                           family = "Arial")
-        }} +
         ggplot2::theme(
           # Match volcano plot axis styling
           axis.title.x = ggplot2::element_text(size = 15, face = "bold", color = "black"),
