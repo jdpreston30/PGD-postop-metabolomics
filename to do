@@ -1,9 +1,2 @@
--Troubleshoot that error when doing run.R: Error in library(package, pos = pos, lib.loc = lib.loc, character.only = TRUE,: there is no package called ‘Rgraphviz’
-
--Comment clean up for entire repo
-
--Run it all end to end
-
 -Docker
-
 -zenodo

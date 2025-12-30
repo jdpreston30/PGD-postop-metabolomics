@@ -120,7 +120,6 @@ conflicts_prefer(stats::chisq.test)     # stats vs janitor
 conflicts_prefer(stats::fisher.test)    # stats vs janitor
 conflicts_prefer(jsonlite::fromJSON)    # jsonlite vs RJSONIO
 conflicts_prefer(readxl::read_xlsx)     # readxl vs officer
-conflicts_prefer(raster::intersect)     # raster vs base, dplyr, lubridate
 conflicts_prefer(igraph::compose)       # igraph vs flextable, purrr
 conflicts_prefer(flextable::align)      # flextable vs xtable
 conflicts_prefer(base::setdiff)         # base vs various

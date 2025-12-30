@@ -47,9 +47,10 @@ TFT_level3_count <- TFT_merged_features |>
   distinct(feature, .keep_all = TRUE) |>
   nrow()
 #+ 7.3: Results Summary and Exports
-cat("\n", crayon::bgBlue(crayon::white("\n === RESULTS SUMMARY ===\n")), "\n")
-cat(  
+cat(
+  "\n", crayon::bold(crayon::underline(crayon::white("\n === RESULTS SUMMARY ===\n"))), "\n",
   crayon::blue(sprintf("• A total of %d untargeted features were detected in the analyzed samples (%d HILIC+ and %d C18-).\n", combined_count, hilic_count, c18_count)),
   crayon::yellow(sprintf("• In contrast, partial least squares discriminant analysis (PLS-DA) revealed separation between severe PGD and no severe PGD at 12 (Figure 1B) and 24 hours post-transplant (Figure 1C), though permutation testing only demonstrated statistically robust model performance at 24 hours (p=%.3f) compared to 12 hours (p=%.3f). A PLS-DA of combined timepoints did result in a statistically robust model (p=%.3f).\n", perm_24h_p, perm_12h_p, perm_combined_p)),
-  crayon::green(sprintf("• To transition from pathway-level findings to metabolite-level patterns, we analyzed a subset of identified or annotated metabolites. This encompassed %d features (%d HILIC+ and %d C18-), with %d Level 1 identifications and %d Level 3 annotations.\n", TFT_combined_count, TFT_hilic_count, TFT_c18_count, TFT_level1_count, TFT_level3_count)))
+  crayon::green(sprintf("• To transition from pathway-level findings to metabolite-level patterns, we analyzed a subset of identified or annotated metabolites. This encompassed %d features (%d HILIC+ and %d C18-), with %d Level 1 identifications and %d Level 3 annotations.\n", TFT_combined_count, TFT_hilic_count, TFT_c18_count, TFT_level1_count, TFT_level3_count))
+)
 

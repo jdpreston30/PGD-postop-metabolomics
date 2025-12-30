@@ -15,7 +15,6 @@ C = c(4.446667, 7.058333),
 "Figure 1" = c(0.49, 10.43)
 ))
 #+ 9.2: Figure 2
-pdf(NULL) 
 fig2 <- ggdraw(xlim = c(0, 8.5), ylim = c(0, 11)) +
 draw_plot(ggdraw() + draw_grob(grid::grobTree(ggplotGrob(p2A))), 
           x = 0.1150003, y = 5.491666, width = 7, height = 4.8) +
@@ -23,7 +22,6 @@ draw_plot(ggdraw() + draw_grob(grid::grobTree(ggplotGrob(p2A))),
 figure_labels(list(
 "Figure 2" = c(0.49, 10.43)
 ))
-dev.off()
 #+ 9.3: Figure 3
 fig3 <- ggdraw(xlim = c(0, 8.5), ylim = c(0, 11)) +
 #- 3A
