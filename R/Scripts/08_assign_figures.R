@@ -10,13 +10,12 @@ p3A <- volc_12$volcano_plot
 p3B <- volc_24$volcano_plot
 p3C <- div_bars_12
 p3D <- div_bars_24
-#+ 8.3: Figure 4
+#+ 8.4: Figure 4
 p4A <- div_bars_intx
 p4B <- succinate_summary_plot
 p4C <- AMP_summary_plot
 p4D <- grid::rasterGrob(as.raster(magick::image_read("Outputs/Figures/Raw/fig4D.png")))
 #+ 8.5: Supplemental Figure 1
-#- 8.5.1: Assign plots (labels already updated in make_PCA)
 s1A <- plsda_12h$plot
 s1B <- plsda_24h$plot
 s1C <- plsda_combined$plot

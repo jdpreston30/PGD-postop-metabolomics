@@ -6,10 +6,10 @@ pgd_status <- clinical_metadata_i |>
 #- 1.1.1: TFT annotated and preprocess; apply uniqueness filter
 TFT_annot <- read_csv(config$paths$TFT_annot) |>
   preprocess_FT(apply_unique_filter = TRUE, unique_threshold = 0.8)
-#- 1.1.1: UFT filtered and preprocess; NO uniqueness filter
+#- 1.1.2: UFT filtered and preprocess; NO uniqueness filter
 UFT_filtered_i <- read_csv(config$paths$UFT_filtered) |>
   preprocess_FT(apply_unique_filter = FALSE)
-#- 1.1.1: UFT filtered and preprocess; NO uniqueness filter
+#- 1.1.3: UFT filtered and preprocess; NO uniqueness filter
 UFT_i <- read_csv(config$paths$UFT_full) |>
   preprocess_FT(apply_unique_filter = FALSE)
 # ! Filtering out H49 as this was a 'false start' where we collected early but then heart offer didn't go through

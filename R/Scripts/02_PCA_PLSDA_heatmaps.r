@@ -1,4 +1,4 @@
-#*2: PCA, PLSDA, and Heatmaps
+#* 2: PCA, PLSDA, and Heatmaps
 #+ 2.1: Run Exploratory PLSDA and PCA
 #- 2.1.1: Define datasets
 UFT_12h <- UFT |> 

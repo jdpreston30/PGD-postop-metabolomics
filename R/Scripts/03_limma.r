@@ -1,4 +1,4 @@
-#*3: LIMMA
+#* 3: LIMMA
 #+ 3.1: Prepare data for LIMMA
 #- 3.1.0: Define synthetic rows to exclude from LIMMA
 missing_samples <- tibble::tribble(

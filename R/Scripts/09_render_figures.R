@@ -98,7 +98,7 @@ print_to_png(fig2, "PNG/fig2.png")
 print_to_png(fig3, "PNG/fig3.png")
 print_to_png(fig4, "PNG/fig4.png")
 print_to_png(sf1, "PNG/sf1.png")
-#+ 9.6: Compile as single PDF
+#+ 9.7: Compile as single PDF
 {
   pdf("Outputs/Figures/Final/PDF/Compiled_Figures.pdf", width = 8.5, height = 11)
   # Page 1: Fig1
@@ -123,7 +123,7 @@ print_to_png(sf1, "PNG/sf1.png")
   grid.raster(img_sf1, width = unit(8.5, "inches"), height = unit(11, "inches"))
   dev.off()
 }
-#+ 9.7: Create individual PDFs
+#+ 9.8: Create individual PDFs
 {
   # Figure 1
   pdf("Outputs/Figures/Final/PDF/Figure 1.pdf", width = 8.5, height = 11)

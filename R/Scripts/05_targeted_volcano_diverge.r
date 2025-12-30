@@ -75,7 +75,8 @@ diverge_24h <- TFT_QC_diverge |>
   left_join(targ_24PGD_diverging, by = "feature") |>
   filter(select_24h == "Y") |>
   arrange(main_group, log2_fc)
-#- 5.9.1: 12 Hours
+#+ 5.10: Plot diverging bars
+#- 5.10.1: 12 Hours
 div_bars_12 <- plot_diverging_bars(diverge_12h, 
   group_ordering = TRUE, 
   add_group_labels = TRUE,
@@ -85,7 +86,7 @@ div_bars_12 <- plot_diverging_bars(diverge_12h,
   x_max = 3.05,
   lower_expand = 0.0001
 )
-#- 5.9.1: 24 Hours
+#- 5.10.2: 24 Hours
 div_bars_24 <- plot_diverging_bars(diverge_24h, 
   group_ordering = TRUE, 
   add_group_labels = TRUE,

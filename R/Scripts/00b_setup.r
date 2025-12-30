@@ -16,9 +16,6 @@ if (dir.exists(utils_path)) {
 #+ 0b.4: Set up global paths from config
 output_path <- config$paths$output
 scripts_path <- config$paths$scripts
-#+ 0b.4: Set up global paths from config
-output_path <- config$paths$output
-scripts_path <- config$paths$scripts
 #+ 0b.5: Create output directory if it doesn't exist
 if (!dir.exists(output_path)) {
   dir.create(output_path, recursive = TRUE)

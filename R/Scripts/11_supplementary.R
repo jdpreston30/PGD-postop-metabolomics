@@ -101,21 +101,21 @@ SM2_L3 <- SM2_L3_raw |>
     Subclass,
     "Alternative Parent" = alternative_parent
   )
-#- 11.3.5: Make small metadata joiner for SM2_L1
+#- 11.2.5: Make small metadata joiner for SM2_L1
 SM2_L1_meta <- SM2_L1_raw |>
   select(feature, identified_name, mz = feature_mz, rt = library_rt, column = library_mode, adduct, isomer, other_matches_in_level = other_L1_matches) |>
   group_by(feature) |>
   slice(1) |>
   ungroup() |>
   mutate("Identification Confidence" = "Level 1")
-#- 11.3.6: Make small metadata joiner for SM2_L3
+#- 11.2.6: Make small metadata joiner for SM2_L3
 SM2_L3_meta <- SM2_L3_raw |>
   select(feature, identified_name, mz, rt, column = Mode, adduct = Adduct, isomer, other_matches_in_level = other_L3_matches) |>
   group_by(feature) |>
   slice(1) |>
   ungroup() |>
   mutate("Identification Confidence" = "Level 3")
-#- 11.3.7: Join together; keep level 1 over level 3 for duplicates
+#- 11.2.7: Join together; keep level 1 over level 3 for duplicates
 SM2_meta <- bind_rows(SM2_L1_meta, SM2_L3_meta) |>
   distinct(feature, .keep_all = TRUE)
 #- 11.2.8: Export as formatted excel sheet

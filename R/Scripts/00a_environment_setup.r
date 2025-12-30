@@ -100,9 +100,10 @@ if (length(missing_core) > 0) {
 }
 #+ 0a.3: Load conflicted and set preferences BEFORE loading other packages
 library(conflicted)
-conflicts_prefer(ggplot2::annotate)
 # Set conflict preferences to prevent warnings during package loading
 # Based on common conflicts in this project's package ecosystem
+conflicts_prefer(dplyr::slice)          # dplyr vs XVector
+conflicts_prefer(ggplot2::annotate)      # ggplot2 vs other
 conflicts_prefer(ggplot2::margin)       # ggplot2 vs randomForest
 conflicts_prefer(dplyr::filter)         # dplyr vs stats
 conflicts_prefer(dplyr::select)         # dplyr vs MASS, raster
