@@ -16,4 +16,5 @@ source("R/Scripts/08_assign_figures.R")
 source("R/Scripts/09_render_figures.R")
 source("R/Scripts/10_tables.R")
 source("R/Scripts/11_supplementary.R")
+source("R/Scripts/12_session_info.R")
 }

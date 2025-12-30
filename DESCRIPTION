@@ -90,6 +90,7 @@ Bioconductor:
     GlobalAncova,
     Rsamtools,
     edgeR,
+    openxlsx,
     siggenes,
     BiocParallel,
     MSnbase,

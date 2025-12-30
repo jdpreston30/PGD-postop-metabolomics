@@ -56,8 +56,9 @@ TFT_confirmed <- identified$TFT_confirmed
 #- 1.4.3: Build key and filter out entries without compound names
 TFT_confirmed_key <- identified$matched_features |>
   filter(!is.na(compound_name)) |>  # Remove unmatched features
-  select(identified_name = compound_name, isomer = library_isomer, everything()) |>
-  mutate(MMD = "")
+  calculate_MMD() |>  # Calculate multi-mode detection (targeted only)
+  adduct_finder() |>  # Find other adducts matched within same mode
+  select(MMD, other_adducts_matched, identified_name = compound_name, isomer = library_isomer, everything())
 #+ 1.5: Create merged library/annotated TFT
 #- 1.5.1: Subset features from annotations with source tracking
 TFT_annot_features <- TFT_annot_key |>
