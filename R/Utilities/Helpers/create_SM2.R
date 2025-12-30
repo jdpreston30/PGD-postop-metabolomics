@@ -57,5 +57,7 @@ create_SM2 <- function(data1, data2, filename, sheet1_name = "Level 1", sheet2_n
   # Save with minimal options
   saveWorkbook(wb, filename, overwrite = TRUE)
   
+  message(sprintf("Supplementary Material 2 saved to: %s", filename))
+  
   invisible(filename)
 }

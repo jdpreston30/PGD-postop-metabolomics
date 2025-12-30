@@ -40,9 +40,11 @@ TFT_feature_names <- names(TFT_combined)[!names(TFT_combined) %in% c("Patient", 
 # Count how many are Level 1 vs Level 3 by matching with TFT_merged_features
 TFT_level1_count <- TFT_merged_features |>
   filter(feature %in% TFT_feature_names, lib_conf == "Y") |>
+  distinct(feature, .keep_all = TRUE) |>
   nrow()
 TFT_level3_count <- TFT_merged_features |>
   filter(feature %in% TFT_feature_names, lib_conf == "N") |>
+  distinct(feature, .keep_all = TRUE) |>
   nrow()
 #+ 7.3: Results Summary and Exports
 cat("\n", crayon::bgBlue(crayon::white("\n === RESULTS SUMMARY ===\n")), "\n")
