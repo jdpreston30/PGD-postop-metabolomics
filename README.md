@@ -246,4 +246,4 @@ This project implements best practices for computational reproducibility:
 
 **Repository**: https://github.com/jdpreston30/PGD-postop-metabolomics  
 **Docker Hub**: https://hub.docker.com/r/jdpreston30/pgd-postop-metabolomics  
-**Zenodo Archive**: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18234461.svg)](https://doi.org/10.5281/zenodo.18234461)
+**Zenodo Archive**: https://doi.org/10.5281/zenodo.18234461
