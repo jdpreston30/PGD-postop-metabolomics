@@ -162,9 +162,9 @@ source("All_Run/run.R")
 
 ## 🔬 Analysis Workflow
 
-The pipeline executes 12 scripts in sequence:
+The pipeline executes 15 scripts in sequence (00a-00c, then 01-12):
 
-1. **00a_environment_setup**: Load packages, set conflict preferences, verify dependencies
+1. **00a_environment_setup**: Load 79 packages, set conflict preferences, verify dependencies
 2. **00b_setup**: Load utility functions from R/Utilities/
 3. **00c_clinical_metadata**: Process patient demographics and clinical data
 4. **01_FTs**: Generate feature tables, apply QC filters (80% uniqueness threshold)
@@ -174,11 +174,11 @@ The pipeline executes 12 scripts in sequence:
 8. **05_targeted_volcano_diverge**: Volcano and balloon plots for identified metabolites
 9. **06_targeted_subject_based**: Individual subject trajectory plots
 10. **07_results_numbers**: Compile statistics for manuscript text
-11. **08_assign_figures**: Map plots to final figure panels
-12. **09_render_figures**: Generate publication-ready PDFs/PNGs
+11. **08_assign_figures**: Map plots to final figure panels (Fig 1-4, SF1)
+12. **09_render_figures**: Generate publication-ready PDFs and PNGs
 13. **10_tables**: Create descriptive and results tables (using TernTablesR)
-14. **11_supplementary**: Generate supplementary materials
-15. **12_session_info**: Document complete session information
+14. **11_supplementary**: Generate supplementary materials (Excel files)
+15. **12_session_info**: Document complete session information to session_info.txt
 
 **Runtime**: ~5-10 minutes on standard laptop (excluding initial package installation)
 
