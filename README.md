@@ -5,7 +5,7 @@
 ## 📖 Citation
 
 This code is associated with the analysis presented in the following manuscript:
-> Rust et al. (2025). Plasma Metabolomic Signatures of Mitochondrial Energetic Disruption in Severe Primary Graft Dysfunction After Heart Transplantation. *Eur J Cardiothorac Surg*.
+> Rust et al. (2025). Plasma Metabolomic Signatures of Mitochondrial Energetic Disruption in Severe Primary Graft Dysfunction After Heart Transplantation *Eur J Cardiothorac Surg*.
 
 ## 🚀 Quick Start for Reproduction
 
