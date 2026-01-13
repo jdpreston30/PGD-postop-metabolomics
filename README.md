@@ -48,12 +48,13 @@ docker run --rm -v $(pwd)/Outputs:/analysis/Outputs pgd-postop-metabolomics
 
 The Docker container provides a completely isolated, reproducible environment with:
 - **R 4.5.1** (2025-06-13) with all required packages at pinned versions
-- **Package management**: Uses `renv` to lock exact versions of 57 R packages
-- **Bioconductor 3.21**: mixOmics, limma, xcms, CAMERA, fgsea, and more
+- **Package management**: Uses `renv` to lock exact versions of 246+ R packages
+- **Bioconductor 3.21**: 16 packages including mixOmics, limma, xcms, CAMERA, fgsea, RBGL, Rgraphviz
+- **GitHub packages**: TernTablesR, MetaboAnalystR (both automatically installed from lockfile)
 - **System dependencies**: Pandoc, ImageMagick, GraphViz, GDAL, HDF5, LaTeX
 - **Guaranteed identical results** regardless of host system or when run
-- **Key packages**: mixOmics 6.32.0, limma, ggplot2 3.5.2, igraph, MetaboAnalystR
-- **Automatic loading**: All dependencies from `DESCRIPTION` loaded via helper functions
+- **Key packages**: mixOmics 6.32.0, limma 3.64.3, ggplot2 4.0.1, igraph 2.2.1, MetaboAnalystR 4.2.0
+- **Automatic loading**: All 79 dependencies from `DESCRIPTION` loaded via helper functions
 
 All outputs (figures, tables, pathway results) will be saved to your local `Outputs/` directory.
 
@@ -100,6 +101,7 @@ cd PGD-postop-metabolomics
 # (renv automatically activates via .Rprofile)
 
 # 3. Restore all packages at exact versions (first time: ~10-20 minutes)
+# renv automatically activates and prompts to restore on first launch
 renv::restore()
 
 # 4. Check system dependencies
@@ -111,13 +113,13 @@ source("All_Run/run.R")
 ```
 
 **What happens during `renv::restore()`**:
-- Installs 57 R packages at exact versions from `renv.lock`
-- CRAN packages (ggplot2, dplyr, purrr, tidyr, etc.)
-- Bioconductor 3.21 packages (limma, mixOmics, xcms, CAMERA, fgsea, etc.)
-- GitHub packages (TernTablesR, MetaboAnalystR)
+- Installs 246+ R packages at exact versions from `renv.lock`
+- CRAN packages: ggplot2 4.0.1, dplyr, tidyr, purrr, data.table, Cairo, and 200+ more
+- Bioconductor 3.21 packages (16 total): limma 3.64.3, mixOmics 6.32.0, xcms 4.6.4, CAMERA 1.64.0, fgsea, RBGL, Rgraphviz, and 9 more
+- GitHub packages (2): jdpreston30/TernTablesR, xia-lab/MetaboAnalystR 4.2.0
 - Creates isolated project library (doesn't affect system R packages)
-- Only needed once per computer
-- Packages auto-loaded from `DESCRIPTION` during pipeline execution
+- Only needed once per computer (or after deleting renv/library)
+- All 79 packages from `DESCRIPTION` auto-load during pipeline execution
 
 ## 📁 Project Structure
 
@@ -150,17 +152,27 @@ source("All_Run/run.R")
 
 ## 🔬 Analysis Workflow
 
-The pipeline executes in sequence:
+The pipeline executes 12 scripts in sequence:
 
-1. **00a-00d**: Environment setup, clinical metadata, feature tables
-2. **01**: Data cleanup and QC filtering
-3. **02**: PCA, PLS-DA, heatmap generation
-4. **03**: LIMMA differential analysis (group, time, interaction)
-5. **04**: Pathway enrichment (mummichog)
-6. **05**: Targeted metabolite balloon/volcano plots
-7. **06**: Subject-based trajectories
-8. **07**: Results number compilation
-9. **08**: Supplemental materials
+1. **00a_environment_setup**: Load 79 packages, set conflict preferences, verify dependencies
+2. **00b_setup**: Load utility functions from R/Utilities/
+3. **00c_clinical_metadata**: Process patient demographics and clinical data
+4. **01_FTs**: Generate feature tables, apply QC filters (80% uniqueness threshold)
+5. **02_PCA_PLSDA_heatmaps**: Multivariate analysis with permutation testing (1000 permutations)
+6. **03_limma**: Differential analysis for PGD effect, time effect, and interaction
+7. **04_pathway_enrichment**: Mummichog pathway analysis (3 contrasts, 100 permutations each)
+8. **05_targeted_volcano_diverge**: Volcano and balloon plots for identified metabolites
+9. **06_targeted_subject_based**: Individual subject trajectory plots
+10. **07_results_numbers**: Compile statistics for manuscript text
+11. **08_assign_figures**: Map plots to final figure panels
+12. **09_render_figures**: Generate publication-ready PDFs/PNGs
+13. **10_tables**: Create descriptive and results tables (using TernTablesR)
+14. **11_supplementary**: Generate supplementary materials
+15. **12_session_info**: Document complete session information
+
+**Runtime**: ~5-10 minutes on standard laptop (excluding initial package installation)
+
+**Outputs**: All results saved to `Outputs/` with organized subdirectories for figures, tables, pathway analyses
 
 ## 💻 System Requirements
 
@@ -189,7 +201,23 @@ All R package dependencies specified in `DESCRIPTION`. Key packages:
 
 ### Bioconductor 3.21
 - **Metabolomics**: xcms, CAMERA, MSnbase
-- **Differential analysis**: limma
+- **� Data Availability
+
+**Note**: The raw metabolomics data underlying this analysis are not included in this repository due to patient privacy protections and institutional data sharing agreements.
+
+**For Researchers**:
+- De-identified data may be available upon reasonable request to the corresponding author
+- Requests will be evaluated on a case-by-case basis following institutional review and appropriate data use agreements
+- This code repository demonstrates the complete analysis pipeline and can be adapted for similar metabolomics datasets
+
+**Repository Purpose**: This repository provides:
+- ✅ Complete, reproducible analysis code
+- ✅ All custom functions and utilities
+- ✅ Exact computational environment (via renv + Docker)
+- ✅ Analysis workflow documentation
+- ✅ Example database structures (IDX_IROA, KEGG pathways)
+
+## �Differential analysis**: limma
 - **Pathway analysis**: fgsea, globaltest, GlobalAncova
 - **Network analysis**: RBGL, Rgraphviz
 
@@ -200,17 +228,20 @@ All R package dependencies specified in `DESCRIPTION`. Key packages:
 *See `DESCRIPTION` for complete list.*
 
 ## 🔄 Reproducibility Features
+ for maximum reproducibility:
 
-Best practices implemented:
-
-- ✅ **Version Control**: Complete code on GitHub
-- ✅ **Package Management**: `renv` with `renv.lock` pinning 57 packages
-- ✅ **Dependency Declaration**: All dependencies in `DESCRIPTION` with auto-loading
-- ✅ **Containerization**: Docker image with R 4.5.1, Bioconductor 3.21
-- ✅ **Conflict Resolution**: `conflicted` package for predictable behavior
-- ✅ **Configuration-Driven**: All parameters in `config_dynamic.yaml`
-- ✅ **System Validation**: Automated dependency checking
-- ✅ **Documentation**: Function documentation and workflow comments
+- ✅ **Version Control**: Complete code on GitHub with full history
+- ✅ **Package Management**: `renv` with `renv.lock` pinning 246+ packages at exact versions
+- ✅ **Dependency Declaration**: All 79 dependencies in `DESCRIPTION` with auto-loading via helper functions
+- ✅ **Containerization**: Docker image with R 4.5.1, Bioconductor 3.21, all system dependencies
+- ✅ **Explicit Snapshots**: renv configured with `snapshot.type: explicit` for complete control
+- ✅ **GitHub Packages**: TernTablesR and MetaboAnalystR captured in lockfile with full definitions
+- ✅ **Conflict Resolution**: `conflicted` package for predictable function behavior (32 preferences set)
+- ✅ **Configuration-Driven**: All analysis parameters in `config_dynamic.yaml`
+- ✅ **System Validation**: Automated dependency checking for Pandoc, ImageMagick, LaTeX
+- ✅ **Documentation**: Function documentation with roxygen2, workflow comments following style guide
+- ✅ **Session Info**: Complete package versions, system info saved in `session_info.txt`
+- ✅ **Automated Testing**: Nuclear test validated (rm -rf renv/library → restore → run pipeline)low comments
 - ✅ **Session Info**: Exact package versions documented
 
 ## 🤝 For Reviewers & Collaborators
@@ -232,7 +263,71 @@ docker run --rm jdpreston30/pgd-postop-metabolomics:latest Rscript -e "packageVe
 docker run --rm -v $(pwd)/Outputs:/analysis/Outputs jdpreston30/pgd-postop-metabolomics:latest
 ```
 
-If issues occur:
+## 🐛 Troubleshooting
+
+### Docker Issues
+
+**Container fails to start**:
+```bash
+# Check Docker is running
+docker info
+
+# View recent logs
+docker ps -a
+docker logs <container_id>
+```
+
+**No output files generated**:
+- Verify volume mount is correct: `-v $(pwd)/Outputs:/analysis/Outputs`
+- Check directory permissions: `ls -la Outputs/`
+- Ensure you're in repository root: `pwd` should show `.../PGD-postop-metabolomics`
+
+### Manual Installation Issues
+
+**renv::restore() fails on Bioconductor packages**:
+```r
+# Verify Bioconductor version
+BiocManager::version()  # Should be 3.21
+
+# Manual install if needed
+BiocManager::install(c("limma", "mixOmics", "xcms", "CAMERA"))
+```
+
+**GitHub packages fail to install**:
+```r
+# Install remotes if needed
+install.packages("remotes")
+
+# Manual GitHub package installation
+remotes::install_github("jdpreston30/TernTablesR")
+remotes::install_github("xia-lab/MetaboAnalystR")
+
+# Then update lockfile
+renv::snapshot()
+```
+
+**Package conflicts or loading errors**:
+```r
+# Nuclear option: delete library and restore
+unlink("renv/library", recursive = TRUE)
+
+# Restart R, then:
+renv::restore()
+```
+
+**System dependencies missing** (Linux/macOS):
+```bash
+# Check what's needed
+Rscript -e "source('R/Utilities/Helpers/check_system_dependencies.R'); check_system_dependencies()"
+
+# Ubuntu/Debian example
+sudo apt-get install pandoc imagemagick graphviz
+
+# macOS example
+brew install pandoc imagemagick graphviz
+```
+
+If issues persist:
 1. Verify Docker Desktop is running
 2. Ensure you're in repository root directory
 3. Check output directories are writable
