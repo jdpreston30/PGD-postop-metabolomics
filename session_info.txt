@@ -1,4 +1,4 @@
-Analysis run on: 2026-01-13 07:30:07 EST
+Analysis run on: 2026-01-13 08:10:59 EST
 
 R version 4.5.1 (2025-06-13)
 Platform: aarch64-apple-darwin23.6.0
@@ -30,28 +30,28 @@ other attached packages:
 [25] corpcor_1.6.10       globaltest_5.62.0    survival_3.8-3      
 [28] fgsea_1.34.2         Rgraphviz_2.52.0     RBGL_1.84.0         
 [31] graph_1.86.0         BiocGenerics_0.54.0  generics_0.1.4      
-[34] mixOmics_6.32.0      MASS_7.3-65          rlang_1.1.6         
-[37] renv_1.1.5           remotes_2.5.0        pheatmap_1.0.13     
-[40] crayon_1.5.3         tinytex_0.58         knitr_1.51          
-[43] rmarkdown_2.30       png_0.1-8            flextable_0.9.10    
-[46] officer_0.7.2        glue_1.8.0           jsonlite_2.0.0      
-[49] cowplot_1.2.0        BiocManager_1.30.27  metap_1.12          
-[52] qqconf_1.3.2         gtable_0.3.6         devtools_2.4.6      
-[55] usethis_3.2.1        scatterplot3d_0.3-44 caret_7.0-1         
-[58] lattice_0.22-7       pls_2.8-5            Cairo_1.6-5         
-[61] randomForest_4.7-1.2 caTools_1.18.3       e1071_1.7-16        
-[64] gplots_3.2.0         RJSONIO_2.0.0        som_0.3-5.2         
-[67] xtable_1.8-4         RColorBrewer_1.1-3   igraph_2.1.4        
-[70] patchwork_1.3.2      gridExtra_2.3        magick_2.8.7        
-[73] raster_3.6-32        sp_2.2-0             pwr_1.3-0           
-[76] data.table_1.18.0    viridis_0.6.5        viridisLite_0.4.2   
-[79] scales_1.4.0         janitor_2.2.1        writexl_1.5.4       
-[82] readxl_1.4.5         forcats_1.0.0        tibble_3.3.0        
-[85] magrittr_2.0.4       ggprism_1.0.7        ggraph_2.2.2        
-[88] ggplot2_3.5.2        stringr_1.6.0        tidyr_1.3.2         
-[91] readr_2.1.6          dplyr_1.1.4          purrr_1.2.0         
-[94] lubridate_1.9.4      broom_1.0.10         here_1.0.2          
-[97] yaml_2.3.12          conflicted_1.2.0     limma_3.64.3        
+[34] mixOmics_6.32.0      MASS_7.3-65          limma_3.64.3        
+[37] rlang_1.1.6          renv_1.1.5           remotes_2.5.0       
+[40] pheatmap_1.0.13      crayon_1.5.3         tinytex_0.58        
+[43] knitr_1.51           rmarkdown_2.30       png_0.1-8           
+[46] flextable_0.9.10     officer_0.7.2        glue_1.8.0          
+[49] jsonlite_2.0.0       cowplot_1.2.0        BiocManager_1.30.27 
+[52] metap_1.12           qqconf_1.3.2         gtable_0.3.6        
+[55] devtools_2.4.6       usethis_3.2.1        scatterplot3d_0.3-44
+[58] caret_7.0-1          lattice_0.22-7       pls_2.8-5           
+[61] Cairo_1.6-5          randomForest_4.7-1.2 caTools_1.18.3      
+[64] e1071_1.7-16         gplots_3.2.0         RJSONIO_2.0.0       
+[67] som_0.3-5.2          xtable_1.8-4         RColorBrewer_1.1-3  
+[70] igraph_2.1.4         patchwork_1.3.2      gridExtra_2.3       
+[73] magick_2.8.7         raster_3.6-32        sp_2.2-0            
+[76] pwr_1.3-0            data.table_1.18.0    viridis_0.6.5       
+[79] viridisLite_0.4.2    scales_1.4.0         janitor_2.2.1       
+[82] writexl_1.5.4        readxl_1.4.5         forcats_1.0.0       
+[85] tibble_3.3.0         magrittr_2.0.4       ggprism_1.0.7       
+[88] ggraph_2.2.2         ggplot2_3.5.2        stringr_1.6.0       
+[91] tidyr_1.3.2          readr_2.1.6          dplyr_1.1.4         
+[94] purrr_1.2.0          lubridate_1.9.4      broom_1.0.10        
+[97] here_1.0.2           yaml_2.3.12          conflicted_1.2.0    
 
 loaded via a namespace (and not attached):
   [1] vroom_1.6.7                 GSEABase_1.70.1            
