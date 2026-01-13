@@ -13,8 +13,8 @@ Description: Metabolomics analysis pipeline for postoperative primary graft dysf
     This project contains all code and analysis scripts for reproducing the results
     in Rust et al. 2026, Eur J Cardiothorac Surg.
     Reproducible computational environment available via Docker Hub 
-    (jdpreston30/pgd-postop-metabolomics) and archived at Zenodo (pending; see manuscript for DOI).
-URL: https://github.com/jdpreston30/PGD-postop-metabolomics, https://hub.docker.com/r/jdpreston30/pgd-postop-metabolomics
+    (jdpreston30/pgd-postop-metabolomics) and archived at Zenodo (https://doi.org/10.5281/zenodo.18234461).
+URL: https://github.com/jdpreston30/PGD-postop-metabolomics, https://hub.docker.com/r/jdpreston30/pgd-postop-metabolomics, https://doi.org/10.5281/zenodo.18234461
 Depends: 
     R (>= 4.5.1)
 Imports:
