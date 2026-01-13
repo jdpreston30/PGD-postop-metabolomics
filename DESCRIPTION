@@ -7,7 +7,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0001-9834-3017")),
     person("Amshu", "Chakragiri",
            role = "aut",
-           comment = c(ORCID = "pending"))
+           comment = c(ORCID = "0009-0005-9143-6583"))
 )
 Description: Metabolomics analysis pipeline for preoperative primary graft dysfunction study.
     This project contains all code and analysis scripts for reproducing the results
