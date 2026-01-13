@@ -1,4 +1,4 @@
-# Oxidative Stress-Dominant Metabolomic Signatures Characterize Primary Graft Dysfunction After Heart Transplantation
+# Plasma Metabolomic Signatures of Mitochondrial Energetic Disruption in Severe Primary Graft Dysfunction After Heart Transplantation
 
 **Reproducible analysis code for academic publication**
 
