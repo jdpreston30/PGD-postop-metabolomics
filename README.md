@@ -5,7 +5,7 @@
 ## 📖 Citation
 
 This code is associated with the analysis presented in the following manuscript:
-> Rust et al. (2025). Oxidative Stress-Dominant Metabolomic Signatures Characterize Primary Graft Dysfunction After Heart Transplantation. *EJCTS*. (Submitted)
+> Rust et al. (2025). Plasma Metabolomic Signatures of Mitochondrial Energetic Disruption in Severe Primary Graft Dysfunction After Heart Transplantation. *Eur J Cardiothorac Surg*.
 
 ## 🚀 Quick Start for Reproduction
 
@@ -54,9 +54,9 @@ The Docker container provides a completely isolated, reproducible environment wi
 - **System dependencies**: Pandoc, ImageMagick, GraphViz, GDAL, HDF5, LaTeX
 - **Guaranteed identical results** regardless of host system or when run
 - **Key packages**: mixOmics 6.32.0, limma 3.64.3, ggplot2 4.0.1, igraph 2.2.1, MetaboAnalystR 4.2.0
-- **Automatic loading**: All 79 dependencies from `DESCRIPTION` loaded via helper functions
+- **Automatic loading**: All dependencies from `DESCRIPTION` loaded via helper functions
 
-All outputs (figures, tables, pathway results) will be saved to your local `Outputs/` directory.
+All outputs (figures, tables, etc.) will be saved to your local `Outputs/` directory.
 
 #### Testing the Container
 
@@ -119,42 +119,52 @@ source("All_Run/run.R")
 - GitHub packages (2): jdpreston30/TernTablesR, xia-lab/MetaboAnalystR 4.2.0
 - Creates isolated project library (doesn't affect system R packages)
 - Only needed once per computer (or after deleting renv/library)
-- All 79 packages from `DESCRIPTION` auto-load during pipeline execution
+- All dependencies from `DESCRIPTION` auto-load during pipeline execution
 
 ## 📁 Project Structure
 
 ```
 ├── DESCRIPTION              # R package dependencies (CRAN, Bioconductor, GitHub)
 ├── Dockerfile              # Docker container for reproducibility
-├── renv.lock               # Exact package versions
+├── renv.lock               # Exact package versions (246+ packages)
+├── session_info.txt        # Complete R session information
 ├── All_Run/
-│   ├── config_dynamic.yaml # Analysis configuration
-│   └── run.R              # Main pipeline script
+│   ├── config_dynamic.yaml # Computer-specific configuration
+│   └── run.R              # Main pipeline orchestration script
 ├── R/
-│   ├── Scripts/           # Analysis workflow (00a-08)
+│   ├── QC/                # Quality control scripts
+│   ├── Scripts/           # Analysis workflow (00a-12)
 │   └── Utilities/         # Custom functions
 │       ├── Analysis/      # Statistical and pathway analysis
-│       ├── Helpers/       # Utility functions
-│       ├── Preprocessing/ # Data cleaning
-│       └── Visualization/ # Plotting
+│       ├── Helpers/       # Utility functions (config, renv, etc.)
+│       ├── Preprocessing/ # Data cleaning and transformation
+│       └── Visualization/ # Plotting functions
 ├── Databases/
 │   ├── IDX_IROA/         # IROA quantification standards
-│   └── MetaboAnalystR/   # KEGG pathway databases
-├── Outputs/              # Generated results
-│   ├── Balloon_and_Volcano/
-│   ├── Enrichment/       # Pathway analysis
-│   ├── Heatmaps/
-│   ├── LIMMA/           # Differential analysis
-│   ├── PCA/
-│   └── PLSDA/
-└── Supporting Information/
+│   ├── MetaboAnalystR/   # KEGG pathway databases (hsa_kegg.qs, hsa_mfn.qs)
+│   └── QC/               # QC reference databases
+├── Outputs/              # Generated results (created by pipeline)
+│   ├── Enrichment/       # Pathway analysis results
+│   │   ├── PGD/         # PGD contrast enrichment
+│   │   ├── Time/        # Time contrast enrichment
+│   │   └── Interaction/ # Interaction contrast enrichment
+│   ├── Figures/
+│   │   ├── Raw/         # Individual plot objects
+│   │   └── Final/       # Publication-ready figures (PDF/PNG)
+│   ├── Permutation/     # PLS-DA permutation test results
+│   ├── Supplementary/   # Supplementary materials (Excel)
+│   └── Tables/          # Generated tables
+└── renv/                # Package management (managed by renv)
+    ├── activate.R
+    ├── settings.json    # renv configuration
+    └── library/         # Isolated package library (auto-created)
 ```
 
 ## 🔬 Analysis Workflow
 
 The pipeline executes 12 scripts in sequence:
 
-1. **00a_environment_setup**: Load 79 packages, set conflict preferences, verify dependencies
+1. **00a_environment_setup**: Load packages, set conflict preferences, verify dependencies
 2. **00b_setup**: Load utility functions from R/Utilities/
 3. **00c_clinical_metadata**: Process patient demographics and clinical data
 4. **01_FTs**: Generate feature tables, apply QC filters (80% uniqueness threshold)
