@@ -77,10 +77,7 @@ Imports:
     pheatmap,
     remotes,
     renv,
-    rlang
-Additional_repositories: 
-    https://bioconductor.org/packages/release/bioc
-Bioconductor:
+    rlang,
     limma,
     mixOmics,
     RBGL,
@@ -97,6 +94,8 @@ Bioconductor:
     xcms,
     CAMERA,
     multtest
+Additional_repositories: 
+    https://bioconductor.org/packages/release/bioc
 Remotes:
     jdpreston30/TernTablesR,
     xia-lab/MetaboAnalystR
