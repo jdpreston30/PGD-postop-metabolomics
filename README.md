@@ -61,14 +61,17 @@ All outputs (figures, tables, pathway results) will be saved to your local works
 
 #### Testing the Container
 
-To verify the Docker image was built correctly before running the full analysis:
+To verify the Docker image before running the full analysis:
 
 ```bash
-# Quick verification (< 1 minute)
+# If you used Method A (pulled pre-built image):
+docker run --rm jdpreston30/pgd-postop-metabolomics:latest Rscript -e "packageVersion('mixOmics'); packageVersion('limma')"
+
+# If you used Method B (built locally):
 docker run --rm pgd-postop-metabolomics Rscript -e "packageVersion('mixOmics'); packageVersion('limma')"
 ```
 
-This should display package versions. If it succeeds, the container is ready for the full analysis.
+This should display package versions (mixOmics 6.32.0, limma 3.64.3). If it succeeds, the container is ready for the full analysis.
 
 #### Troubleshooting
 
