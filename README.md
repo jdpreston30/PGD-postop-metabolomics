@@ -124,40 +124,40 @@ source("All_Run/run.R")
 ## 📁 Project Structure
 
 ```
-├── DESCRIPTION              # R package dependencies (CRAN, Bioconductor, GitHub)
+├── DESCRIPTION             # R package dependencies
 ├── Dockerfile              # Docker container for reproducibility
-├── renv.lock               # Exact package versions (246+ packages)
+├── renv.lock               # Exact package versions
 ├── session_info.txt        # Complete R session information
 ├── All_Run/
 │   ├── config_dynamic.yaml # Computer-specific configuration
-│   └── run.R              # Main pipeline orchestration script
+│   └── run.R               # Main pipeline orchestration script
 ├── R/
-│   ├── QC/                # Quality control scripts
-│   ├── Scripts/           # Analysis workflow (00a-12)
-│   └── Utilities/         # Custom functions
-│       ├── Analysis/      # Statistical and pathway analysis
-│       ├── Helpers/       # Utility functions (config, renv, etc.)
-│       ├── Preprocessing/ # Data cleaning and transformation
-│       └── Visualization/ # Plotting functions
+│   ├── QC/                 # QC scripts
+│   ├── Scripts/            # Analysis workflow
+│   └── Utilities/          # Custom functions
+│       ├── Analysis/       # Statistical and pathway analysis
+│       ├── Helpers/        # Utility functions
+│       ├── Preprocessing/  # Data cleaning and transformation
+│       └── Visualization/  # Plotting functions
 ├── Databases/
-│   ├── IDX_IROA/         # IROA quantification standards
-│   ├── MetaboAnalystR/   # KEGG pathway databases (hsa_kegg.qs, hsa_mfn.qs)
-│   └── QC/               # QC reference databases
-├── Outputs/              # Generated results (created by pipeline)
-│   ├── Enrichment/       # Pathway analysis results
-│   │   ├── PGD/         # PGD contrast enrichment
-│   │   ├── Time/        # Time contrast enrichment
-│   │   └── Interaction/ # Interaction contrast enrichment
+│   ├── IDX_IROA/           # IROA quantification standards
+│   ├── MetaboAnalystR/     # KEGG pathway databases
+│   └── QC/                 # QC reference databases
+├── Outputs/                # Generated pipeline results
+│   ├── Enrichment/         # Pathway analysis results
+│   │   ├── PGD/            # PGD contrast enrichment
+│   │   ├── Time/           # Time contrast enrichment
+│   │   └── Interaction/    # Interaction contrast enrichment
 │   ├── Figures/
-│   │   ├── Raw/         # Individual plot objects
-│   │   └── Final/       # Publication-ready figures (PDF/PNG)
-│   ├── Permutation/     # PLS-DA permutation test results
-│   ├── Supplementary/   # Supplementary materials (Excel)
-│   └── Tables/          # Generated tables
-└── renv/                # Package management (managed by renv)
+│   │   ├── Raw/            # Individual plot objects
+│   │   └── Final/          # Publication figures
+│   ├── Permutation/        # PLS-DA permutation test results
+│   ├── Supplementary/      # Supplementary materials
+│   └── Tables/             # Generated tables
+└── renv/                   # Package management
     ├── activate.R
-    ├── settings.json    # renv configuration
-    └── library/         # Isolated package library (auto-created)
+    ├── settings.json       # renv configuration
+    └── library/            # Isolated package library
 ```
 
 ## 🔬 Analysis Workflow
