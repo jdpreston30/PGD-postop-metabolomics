@@ -11,8 +11,8 @@ Authors@R: c(
 )
 Description: Metabolomics analysis pipeline for postoperative primary graft dysfunction study.
     This project contains all code and analysis scripts for reproducing the results
-    in Rust et al. 2025, Eur J Cardiothorac Surg.
-     Reproducible computational environment available via Docker Hub 
+    in Rust et al. 2026, Eur J Cardiothorac Surg.
+    Reproducible computational environment available via Docker Hub 
     (jdpreston30/pgd-postop-metabolomics) and archived at Zenodo (pending; see manuscript for DOI).
 URL: https://github.com/jdpreston30/PGD-postop-metabolomics, https://hub.docker.com/r/jdpreston30/pgd-postop-metabolomics
 Depends: 
