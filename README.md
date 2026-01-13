@@ -12,7 +12,7 @@ This code is associated with the analysis presented in the following manuscript:
 **⚠️ Data Availability Notice**: 
 - **No data files** (raw data, processed feature tables, or clinical metadata) are included in this repository
 - **All instructions below assume you have obtained data files or are using your own data**
-- **To reproduce this analysis**: Contact the authors (clayton.james.rust@emory.edu, joshua.preston@emory.edu, joshua.chan@emory.edu) to obtain the data files—this is the easiest and recommended approach
+- **To reproduce this analysis**: Contact the authors (clayton.james.rust@emory.edu, joshua.preston@emory.edu, joshua.chan@emory.edu) to obtain the raw data files.
 - **To run analyses with your own data or provided data files**: Update file paths in `All_Run/config_dynamic.yaml` to match your system
 
 ### Option 1: Using Docker (Recommended for Exact Reproducibility)
@@ -114,7 +114,7 @@ source("All_Run/run.R")
 ```
 
 **What happens during `renv::restore()`**:
-- Installs 246 R packages at exact versions from `renv.lock`
+- Installs all R packages at exact versions from `renv.lock`
 - Installs CRAN packages (e.g., ggplot2, dplyr, broom, conflicted)
 - Installs Bioconductor 3.21 packages (e.g., limma, mixOmics, xcms, CAMERA)
 - Installs GitHub packages (TernTablesR, MetaboAnalystR)
@@ -125,53 +125,53 @@ source("All_Run/run.R")
 ## 📁 Project Structure
 
 ```
-├── DESCRIPTION                 # R package dependencies (CRAN, Bioconductor, GitHub)
-├── Dockerfile                  # Docker container for reproducible environment
-├── renv.lock                   # Exact package versions for reproducibility
-├── session_info.txt            # Timestamped session and package information
-├── All_Run/                    # Pipeline execution
-│   ├── config_dynamic.yaml     # Analysis configuration (update paths for your system)
-│   └── run.R                   # Main pipeline execution script
-├── R/                          # Analysis code
-│   ├── QC/                     # QC scripts
-│   ├── Scripts/                # Analysis workflow scripts (00a-12)
-│   └── Utilities/              # Custom analysis functions
-│       ├── Analysis/           # Statistical and pathway analysis
-│       ├── Helpers/            # Helper functions
-│       ├── Preprocessing/      # Data preprocessing functions
-│       └── Visualization/      # Plotting functions
-├── Databases/                  # Reference databases/metabolite libraries
-│   ├── IDX_IROA/               # Library of standards
-│   ├── MetaboAnalystR/         # Pathway databases
-│   └── QC/                     # Manual QC
-├── Outputs/                    # Generated results
-│   ├── Enrichment/             # Pathway enrichment results (PGD, Time, Interaction)
-│   ├── Figures/                # Publication figures (Raw, Final)
-│   ├── Permutation/            # PLS-DA permutation test results
-│   ├── Supplementary/          # Supplementary materials
-│   └── Tables/                 # Generated tables
-└── renv/                       # Package management
-    ├── activate.R              # renv activation (sourced by .Rprofile)
-    ├── settings.json           # renv configuration
-    └── library/                # Isolated package library
+├── DESCRIPTION              # R package dependencies
+├── Dockerfile               # Docker container for reproducibility
+├── renv.lock                # Package versions for reproducibility
+├── session_info.txt         # Timestamped session/ package info
+├── All_Run/                 # Pipeline execution
+│   ├── config_dynamic.yaml  # System analysis configuration
+│   └── run.R                # Main pipeline execution script
+├── R/                       # Analysis code
+│   ├── QC/                  # QC scripts
+│   ├── Scripts/             # Analysis workflow scripts (00a-12)
+│   └── Utilities/           # Custom analysis functions
+│       ├── Analysis/        # Statistical and pathway analysis
+│       ├── Helpers/         # Helper functions
+│       ├── Preprocessing/   # Data preprocessing functions
+│       └── Visualization/   # Plotting functions
+├── Databases/               # Reference databases/libraries
+│   ├── IDX_IROA/            # Library of standards
+│   ├── MetaboAnalystR/      # Pathway databases
+│   └── QC/                  # Manual QC
+├── Outputs/                 # Generated results
+│   ├── Enrichment/          # Pathway enrichment results
+│   ├── Figures/             # Publication figures
+│   ├── Permutation/         # PLS-DA permutation test results
+│   ├── Supplementary/       # Supplementary materials
+│   └── Tables/              # Generated tables
+└── renv/                    # Package management
+    ├── activate.R           # renv activation
+    ├── settings.json        # renv configuration
+    └── library/             # Isolated package library
 ```
 
 ## 🔬 Analysis Workflow
 
 The complete pipeline executes in sequence:
 
-1. **00a-00c**: Environment setup, clinical metadata, feature tables
+1. **00a-00c**: Environment setup, configuration, clinical metadata
 2. **01_FTs**: Generate feature tables, apply QC filters
 3. **02_PCA_PLSDA_heatmaps**: Multivariate analysis with permutation testing
-4. **03_limma**: Differential analysis (PGD effect, time effect, interaction)
+4. **03_limma**: LIMMA analysis (PGD effect, time effect, interaction)
 5. **04_pathway_enrichment**: Mummichog pathway analysis (3 contrasts)
 6. **05_targeted_volcano_diverge**: Volcano and balloon plots for annotated metabolites
 7. **06_targeted_subject_based**: Individual subject trajectory plots
-8. **07_results_numbers**: Compile statistics for manuscript text
+8. **07_results_numbers**: Statistics for manuscript text
 9. **08_assign_figures**: Map plots to final figure panels
-10. **09_render_figures**: Generate publication-ready PDFs and PNGs
-11. **10_tables**: Create tables using TernTablesR
-12. **11_supplementary**: Generate supplementary materials (Excel files)
+10. **09_render_figures**: Generate publication figures
+11. **10_tables**: Generate publication tables
+12. **11_supplementary**: Generate supplementary materials
 13. **12_session_info**: Document session information to session_info.txt
 
 ## 💻 System Requirements
@@ -182,10 +182,8 @@ The complete pipeline executes in sequence:
 - **Note**: Standard modern computer sufficient; no special hardware required
 
 ### System Dependencies
-- **Pandoc**: R Markdown rendering
-- **ImageMagick**: Image processing
-- **GraphViz**: Network visualization (Rgraphviz)
-- **TinyTeX/LaTeX**: PDF generation
+- **ImageMagick**: Image processing (magick package)
+- **GraphViz**: Network visualization (Rgraphviz package)
 
 *Note: All system dependencies are automatically installed in the Docker container. For manual installation, run `check_system_dependencies()` for platform-specific instructions.*
 
@@ -194,15 +192,13 @@ The complete pipeline executes in sequence:
 All R package dependencies are specified in `DESCRIPTION`. Key packages include:
 
 ### CRAN Packages
-- **Data manipulation**: tidyverse (dplyr, tidyr, purrr, readr, etc.)
-- **Visualization**: ggplot2, ggraph, patchwork, Cairo, magick
-- **Statistical modeling**: mixOmics, caret, randomForest, e1071
-- **Reporting**: rmarkdown, knitr, officer, flextable
+- **Data manipulation**: dplyr, tidyr, purrr, readr, stringr, forcats
+- **Visualization**: ggplot2, ggraph, patchwork, cowplot, Cairo, magick, scales
+- **Statistical modeling**: mixOmics, caret
+- **Utilities**: conflicted, here, crayon, jsonlite, readxl
 
 ### Bioconductor Packages (Bioconductor 3.21)
-- **Metabolomics**: xcms, CAMERA, MSnbase
 - **Differential analysis**: limma
-- **Pathway analysis**: fgsea, globaltest, GlobalAncova
 - **Network analysis**: RBGL, Rgraphviz
 
 ### GitHub Packages
@@ -217,7 +213,7 @@ All R package dependencies are specified in `DESCRIPTION`. Key packages include:
 This project implements best practices for computational reproducibility:
 
 - ✅ **Version Control**: Complete analysis code on GitHub
-- ✅ **Package Management**: `renv` with `renv.lock` pinning all 246 packages to exact versions
+- ✅ **Package Management**: `renv` with `renv.lock` pinning all packages to exact versions
 - ✅ **Dependency Declaration**: All dependencies specified in `DESCRIPTION` with automatic loading
 - ✅ **Containerization**: Docker image (R 4.5.1, Bioconductor 3.21) available at `jdpreston30/pgd-postop-metabolomics:latest`
 - ✅ **Conflict Resolution**: `conflicted` package ensures predictable function behavior
