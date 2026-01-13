@@ -5,14 +5,14 @@
 ## 📖 Citation
 
 This code is associated with the analysis presented in the following manuscript:
-> Rust et al. (2025). Plasma Metabolomic Signatures of Mitochondrial Energetic Disruption in Severe Primary Graft Dysfunction After Heart Transplantation *Eur J Cardiothorac Surg*.
+> Rust et al. (2026). Plasma Metabolomic Signatures of Mitochondrial Energetic Disruption in Severe Primary Graft Dysfunction After Heart Transplantation. *Eur J Cardiothorac Surg*.
 
 ## 🚀 Quick Start for Reproduction
 
 **⚠️ Data Availability Notice**: 
 - **No data files** (raw data, processed feature tables, or clinical metadata) are included in this repository
 - **All instructions below assume you have obtained data files or are using your own data**
-- **To reproduce this analysis**: Contact the senior author (Joshua L. Chan, joshua.chan@emory.edu) or first author (Joshua D. Preston, joshua.preston@emory.edu) to obtain the data files—this is the easiest and recommended approach
+- **To reproduce this analysis**: Contact the authors (clayton.james.rust@emory.edu, joshua.preston@emory.edu, joshua.chan@emory.edu) to obtain the data files—this is the easiest and recommended approach
 - **To run analyses with your own data or provided data files**: Update file paths in `All_Run/config_dynamic.yaml` to match your system
 
 ### Option 1: Using Docker (Recommended for Exact Reproducibility)
