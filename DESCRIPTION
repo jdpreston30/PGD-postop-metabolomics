@@ -1,5 +1,5 @@
 Type: Project
-Title: Oxidative Stress-Dominant Metabolomic Signatures Characterize Primary Graft Dysfunction After Heart Transplantation, Transplantation
+Title: Plasma Metabolomic Signatures of Mitochondrial Energetic Disruption in Severe Primary Graft Dysfunction After Heart Transplantation
 Authors@R: c(
     person("Joshua", "Preston",
            email = "joshua.preston@emory.edu",
@@ -9,11 +9,12 @@ Authors@R: c(
            role = "aut",
            comment = c(ORCID = "0009-0005-9143-6583"))
 )
-Description: Metabolomics analysis pipeline for preoperative primary graft dysfunction study.
+Description: Metabolomics analysis pipeline for postoperative primary graft dysfunction study.
     This project contains all code and analysis scripts for reproducing the results
-    submitted to EJCTS, Rust et al. 2025.
-License: MIT + file LICENSE
-URL: https://github.com/jdpreston30/PGD-postop-metabolomics
+    in Rust et al. 2025, Eur J Cardiothorac Surg.
+     Reproducible computational environment available via Docker Hub 
+    (jdpreston30/pgd-postop-metabolomics) and archived at Zenodo (pending; see manuscript for DOI).
+URL: https://github.com/jdpreston30/PGD-postop-metabolomics, https://hub.docker.com/r/jdpreston30/pgd-postop-metabolomics
 Depends: 
     R (>= 4.5.1)
 Imports:
@@ -103,4 +104,3 @@ Remotes:
     xia-lab/MetaboAnalystR
 Config/renv/snapshot/type: explicit
 Encoding: UTF-8
-RoxygenNote: 7.3.3
