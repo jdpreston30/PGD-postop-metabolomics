@@ -1,6 +1,6 @@
 # Mummichog Analysis Parameters
 
-**Analysis Date:** 2025-12-30
+**Analysis Date:** 2026-01-13
 
 **Database:** hsa_mfn
 
@@ -18,7 +18,7 @@
 **Analysis Parameters:**
 - Peak filtering method: Top 10% of peaks (dynamic)
 - Peak filtering threshold (rounded): 0.05
-- Peak filtering threshold (precise): 0.0744426858099568
+- Peak filtering threshold (precise): 0.0744428039061391
 - Peaks analyzed: 848 out of 16283
 - Pathways analyzed: 73
 - Significant pathways (p < 0.05): 3
@@ -30,5 +30,5 @@
 
 **Input Data:**
 - Number of features: 16283
-- Output directory: /Users/JoshsMacbook2015/Desktop/PGD-postop-metabolomics/Outputs/Enrichment/PGD
+- Output directory: /Users/jdp2019/Desktop/PGD-postop-metabolomics/Outputs/Enrichment/PGD
 

@@ -132,6 +132,9 @@ conflicts_prefer(dplyr::desc)           # dplyr vs various
 conflicts_prefer(purrr::compact)        # purrr vs plyr
 conflicts_prefer(scales::alpha)         # scales vs ggplot2
 conflicts_prefer(base::unname)          # base vs Matrix, S4Vectors
+conflicts_prefer(here::here)            # here vs plyr
+conflicts_prefer(dplyr::id)             # dplyr vs plyr (if plyr gets loaded by MetaboAnalystR)
+conflicts_prefer(dplyr::failwith)       # dplyr vs plyr
 #+ 0a.4: Load all packages from DESCRIPTION file
 cat("📚 Loading required packages...\n")
 source("R/Utilities/Helpers/load_packages_from_description.R")
