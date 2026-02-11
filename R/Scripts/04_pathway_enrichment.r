@@ -75,12 +75,16 @@ MFN_enrichment <- bind_rows(PGD_MFN, time_MFN, interaction_MFN) %>%
         if (tolower(w) == "epa") {
           return("EPA")
         }
+        if (tolower(w) == "coa") {
+          return("CoA")
+        }
         return(w_clean)
       }), collapse = " ")
       new_name
     }
   ) %>%
   ungroup() %>%
+  mutate(pathway_name = str_replace(pathway_name, "CoA Catabolism", "CoA Metabolism")) %>%
   filter(p_fisher <= 0.05) %>%
   mutate(
     Comparisons = factor(Comparisons, levels = c("PGD", "Time", "Interaction")),
